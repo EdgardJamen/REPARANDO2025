@@ -146,7 +146,7 @@ foreach ($task in $tasksToDisable) {
 }
 
 Write-Host "Tareas programadas deshabilitadas correctamente." -ForegroundColor Cyan
-# --- Deshabilitación de tareas adicionales ---  
+# --- Deshabilitación de tareas adicionales ---
 $tasksExtra = @(  
     "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator",  
     "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip",  
@@ -157,19 +157,16 @@ $tasksExtra = @(
 )
 
 foreach ($task in $tasksExtra) {  
-    try {  
-        # Verificar si la tarea existe antes de deshabilitarla  
-        $taskInfo = schtasks /Query /TN $task 2>$null  
-        if ($taskInfo) {  
-            schtasks /Change /TN $task /Disable 2>$null  
-            Write-Host "Tarea deshabilitada: $task" -ForegroundColor Cyan  
-        } else {  
-            Write-Host "Tarea no encontrada: $task" -ForegroundColor Yellow  
-        }  
-    } catch {  
-        Write-Host "Error al deshabilitar la tarea $task: $($_.Exception.Message)" -ForegroundColor Red  
+    # Verificar si la tarea existe antes de intentar deshabilitarla  
+    $taskInfo = schtasks /Query /TN $task 2>$null  
+    if ($?) {  # Verificar si el comando anterior tuvo éxito
+        schtasks /Change /TN $task /Disable 2>$null  
+        Write-Host "Tarea deshabilitada: $task" -ForegroundColor Cyan  
+    } else {  
+        Write-Host "Tarea no encontrada o ya deshabilitada: $task" -ForegroundColor Yellow  
     }  
 }
+
 Write-Host "Tareas adicionales deshabilitadas correctamente." -ForegroundColor Green  
 Write-Host "Continuando con la optimización del sistema..." -ForegroundColor Cyan
 
