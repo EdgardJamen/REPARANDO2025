@@ -30,7 +30,7 @@ $OneDrivePath = "$env:SystemRoot\System32\OneDriveSetup.exe"
 if (Test-Path $OneDrivePath) {
     Start-Process -FilePath $OneDrivePath -ArgumentList "/uninstall" -NoNewWindow -Wait
 } else {
-    Write-Host "Error: No se encontró OneDriveSetup.exe en System32. Revisar ubicación." -ForegroundColor Red
+    Write-Host "Error: No se encontró OneDriveSetup.exe en System32. Revisar ubicacion." -ForegroundColor Red
 }
 
 $pathsToRemove = @("$env:LOCALAPPDATA\Microsoft\OneDrive", "$env:ProgramData\Microsoft OneDrive")
@@ -78,7 +78,7 @@ if ($OutlookApp) {
     Write-Host "Outlook encontrado, eliminando..." -ForegroundColor Yellow
     $OutlookApp.Uninstall()
 } else {
-    Write-Host "Outlook no está instalado, probando método alternativo..." -ForegroundColor Cyan
+    Write-Host "Outlook no esta instalado, probando metodo alternativo..." -ForegroundColor Cyan
 }
 
 # Verificar si Outlook es parte de Office y eliminar Office si es necesario
@@ -87,7 +87,7 @@ if ($OfficePath) {
     Write-Host "Microsoft Office encontrado, eliminando..." -ForegroundColor Yellow
     $OfficePath.Uninstall()
 } else {
-    Write-Host "No se encontró instalación de Outlook ni Office." -ForegroundColor Cyan
+    Write-Host "No se encontró instalacion de Outlook ni Office." -ForegroundColor Cyan
 }
 
 Write-Host "Proceso de eliminación de Outlook terminado." -ForegroundColor Green
@@ -146,6 +146,32 @@ foreach ($task in $tasksToDisable) {
 }
 
 Write-Host "Tareas programadas deshabilitadas correctamente." -ForegroundColor Cyan
+# --- Deshabilitación de tareas adicionales ---  
+$tasksExtra = @(  
+    "\Microsoft\Windows\Customer Experience Improvement Program\Consolidator",  
+    "\Microsoft\Windows\Customer Experience Improvement Program\UsbCeip",  
+    "\Microsoft\Windows\Defrag\ScheduledDefrag",  
+    "\Microsoft\Windows\Diagnosis\Scheduled",  
+    "\Microsoft\Windows\Maintenance\WinSAT",  
+    "\Microsoft\Windows\Windows Defender\Windows Defender Scheduled Scan"  
+)
+
+foreach ($task in $tasksExtra) {  
+    try {  
+        # Verificar si la tarea existe antes de deshabilitarla  
+        $taskInfo = schtasks /Query /TN $task 2>$null  
+        if ($taskInfo) {  
+            schtasks /Change /TN $task /Disable 2>$null  
+            Write-Host "Tarea deshabilitada: $task" -ForegroundColor Cyan  
+        } else {  
+            Write-Host "Tarea no encontrada: $task" -ForegroundColor Yellow  
+        }  
+    } catch {  
+        Write-Host "Error al deshabilitar la tarea $task: $($_.Exception.Message)" -ForegroundColor Red  
+    }  
+}
+Write-Host "Tareas adicionales deshabilitadas correctamente." -ForegroundColor Green  
+Write-Host "Continuando con la optimización del sistema..." -ForegroundColor Cyan
 
 # --- Optimización de memoria RAM ---
 Write-Host "Optimizando uso de memoria RAM..." -ForegroundColor Green
