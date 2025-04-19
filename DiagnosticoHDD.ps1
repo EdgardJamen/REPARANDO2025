@@ -9,6 +9,14 @@ Write-Host ""
 Write-Host "Obteniendo lista de discos conectados..." -ForegroundColor Green
 $discos = Get-PhysicalDisk | Select-Object DeviceId, MediaType, Size
 
+# Validar si hay discos disponibles
+if ($discos.Count -eq 0) {
+    Write-Host "No se encontraron discos físicos en el sistema." -ForegroundColor Red
+    Write-Host "`nProceso abortado. Presiona Enter para cerrar..." -ForegroundColor Cyan
+    Read-Host
+    Exit
+}
+
 # Mostrar la lista de discos
 $discos | Format-Table -AutoSize
 Write-Host "`nSeleccione el disco que desea analizar con CHKDSK."
