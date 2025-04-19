@@ -133,28 +133,26 @@ switch ($opcion) {
 }
 
 "6" {
-    Write-Host "Ejecutando diagnóstico del disco SSD..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de diagnostico..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoSSD.ps1"
     $scriptPath = "$env:TEMP\DiagnosticoSSD.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
 
     # Verificar si la descarga fue exitosa antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Write-Host "Ejecutando DiagnosticoSSD.ps1..." -ForegroundColor Green
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
             -WindowStyle Normal -Wait -Verb RunAs
     } else {
-        Write-Host "Error: No se pudo descargar DiagnosticoSSD.ps1." -ForegroundColor Red
+        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
     }
 
-    Write-Host "`nDiagnóstico completado. Presiona Enter para limpiar archivos y volver al menú..." -ForegroundColor Cyan
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 
-    # Eliminar el archivo descargado después de que el usuario presione Enter
+    # Eliminar el archivo descargado de forma silenciosa
     Remove-Item "$scriptPath" -Force -ErrorAction SilentlyContinue
 }
-
 "7" {
     Write-Host "Creando un punto de restauración del sistema..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
