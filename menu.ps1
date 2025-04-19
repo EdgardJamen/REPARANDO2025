@@ -1,7 +1,7 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# 🔒 AUTENTICACIÓN ANTES DE MOSTRAR EL MENÚ
-Write-Host "Descargando lista de usuarios desde GitHub..." -ForegroundColor Yellow
+# 🔒 AUTENTICACION ANTES DE MOSTRAR EL MENU
+Write-Host "Autenticando..." -ForegroundColor Yellow
 
 # Descargar el archivo de usuarios desde GitHub
 $usuariosUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/usuarios.csv"
@@ -22,7 +22,7 @@ $autenticado = $usuarios | Where-Object {
 }
 
 if ($autenticado) {
-    Write-Host "Autenticación exitosa. Cargando el menú..." -ForegroundColor Green
+    Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
     Start-Sleep -Seconds 2
 } else {
     Write-Host "Error: Nombre o contraseña incorrectos." -ForegroundColor Red
@@ -83,19 +83,21 @@ do {
 switch ($opcion) {
 
 "1" {
-    Write-Host "Ejecutando optimización del sistema..." -ForegroundColor Green
-
-    # Descargar el script desde GitHub
+    Write-Host "Ejecutando proceso de optimizacion..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/optimizacion.ps1"
     $scriptPath = "$env:TEMP\optimizacion.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
 
-    # Ejecutar el script descargado
-    Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-        -WindowStyle Hidden -Wait -Verb RunAs
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Hidden -Wait -Verb RunAs
+    } else {
+        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+    }
 
-    Write-Host "`nOptimización completada. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
 
