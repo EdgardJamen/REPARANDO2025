@@ -102,12 +102,12 @@ switch ($opcion) {
 }
 
 "2" {
-    Write-Host "Esta función aún no está implementada." -ForegroundColor Yellow
+    Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
     Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
 }
 "3" {
-    Write-Host "Esta función aún no está implementada." -ForegroundColor Yellow
+    Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
     Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
 }
@@ -129,21 +129,26 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
-
- "5" {
-    Write-Host "Ejecutando diagnóstico del disco HDD..." -ForegroundColor Green
+"5" {
+    Write-Host "Ejecutando proceso de diagnostico..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoHDD.ps1"
     $scriptPath = "$env:TEMP\DiagnosticoHDD.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-    Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-        -WindowStyle Hidden -Wait -Verb RunAs
-    Write-Host "`nDiagnóstico completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Hidden -Wait -Verb RunAs
+    } else {
+        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+    }
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
-
 "6" {
-    Write-Host "Ejecutando proceso de diagnóstico..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de diagnostico..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoSSD.ps1"
     $scriptPath = "$env:TEMP\DiagnosticoSSD.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
@@ -162,46 +167,67 @@ switch ($opcion) {
 }
 
 "7" {
-    Write-Host "Creando un punto de restauración del sistema..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de restauracion..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
     $scriptPath = "$env:TEMP\CrearPuntoRestauracion.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-    Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-        -WindowStyle Hidden -Wait -Verb RunAs
-    Write-Host "`nPunto de restauración creado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Hidden -Wait -Verb RunAs
+    } else {
+        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+    }
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
-
 "8" {
-    Write-Host "Optimizando los servicios de inicio..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de optimizacion..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
     $scriptPath = "$env:TEMP\OptimizarInicioServicios.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-    Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-        -WindowStyle Hidden -Wait -Verb RunAs
-    Write-Host "`nOptimización completada. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Hidden -Wait -Verb RunAs
+    } else {
+        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+    }
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
-
 "9" {
-    Write-Host "Registrando actividad del sistema..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de registro..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/RegistroActividades.ps1"
     $scriptPath = "$env:TEMP\RegistroActividades.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-    Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-        -WindowStyle Hidden -Wait -Verb RunAs
-    Write-Host "`nRegistro completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Hidden -Wait -Verb RunAs
+    } else {
+        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+    }
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
 "10" {
-    Write-Host "Listando los archivos disponibles en el repositorio..." -ForegroundColor Green
+    Write-Host "Accediendo a los archivos disponibles..." -ForegroundColor Green
     Start-Process "cmd.exe" -ArgumentList "/c start https://github.com/EdgardJamen/REPARANDO2025"
-    Write-Host "`nLista de archivos abierta en el navegador. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+
 "11" {
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
     Exit
