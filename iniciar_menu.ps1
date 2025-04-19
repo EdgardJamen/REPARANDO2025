@@ -1,8 +1,16 @@
-$menuUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/menu.ps1"
-$menuPath = "$env:TEMP\menu.ps1"
+Write-Host "Descargando menu.ps1 desde GitHub..." -ForegroundColor Yellow
 
-# Descargar el script desde GitHub
+# Ruta del menú en GitHub
+$menuUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/menu.ps1"
+
+# Guardar el archivo en la carpeta temporal del sistema
+$menuPath = "$env:TEMP\menu.ps1"
 Invoke-WebRequest -Uri $menuUrl -OutFile $menuPath
 
-# Ejecutar el script descargado
-Start-Process -FilePath "powershell.exe" -ArgumentList "-ExecutionPolicy Bypass -File $menuPath" -Wait
+# Verificar si la descarga fue exitosa
+if (Test-Path $menuPath) {
+    Write-Host "Ejecución de menu.ps1..." -ForegroundColor Green
+    Start-Process -FilePath "powershell.exe" -ArgumentList "-ExecutionPolicy Bypass -File $menuPath" -Wait
+} else {
+    Write-Host "Error: No se pudo descargar menu.ps1." -ForegroundColor Red
+}
