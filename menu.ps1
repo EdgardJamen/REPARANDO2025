@@ -133,7 +133,7 @@ switch ($opcion) {
 }
 
 "6" {
-    Write-Host "Ejecutando diagnostico del disco SSD..." -ForegroundColor Green
+    Write-Host "Ejecutando diagnóstico del disco SSD..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoSSD.ps1"
     $scriptPath = "$env:TEMP\DiagnosticoSSD.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
@@ -148,9 +148,13 @@ switch ($opcion) {
         Write-Host "Error: No se pudo descargar DiagnosticoSSD.ps1." -ForegroundColor Red
     }
 
-    Write-Host "`nDiagnóstico completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+    Write-Host "`nDiagnóstico completado. Presiona Enter para limpiar archivos y volver al menú..." -ForegroundColor Cyan
     Read-Host
+
+    # Eliminar el archivo descargado después de que el usuario presione Enter
+    Remove-Item "$scriptPath" -Force -ErrorAction SilentlyContinue
 }
+
 "7" {
     Write-Host "Creando un punto de restauración del sistema..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
