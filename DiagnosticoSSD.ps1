@@ -5,7 +5,7 @@ Clear-Host
 
 # Encabezado
 Write-Host "============================================" -ForegroundColor Cyan
-Write-Host "  Diagnóstico y Optimizacion del SSD" -ForegroundColor Yellow
+Write-Host "  Diagnostico y Optimizacion del SSD" -ForegroundColor Yellow
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -39,3 +39,8 @@ Write-Host ""
 # Espera para que la ventana permanezca abierta
 Write-Host "`nProceso completo. Presiona Enter para cerrar..." -ForegroundColor Cyan
 Read-Host
+# Esperar unos segundos antes de limpiar los archivos
+Start-Sleep -Seconds 2  
+
+# Eliminar el archivo descargado de forma silenciosa
+Remove-Item "$PSCommandPath" -Force -ErrorAction SilentlyContinue
