@@ -7,7 +7,7 @@ Write-Host ""
 
 # Paso 1: Obtener lista de discos disponibles
 Write-Host "Obteniendo lista de discos conectados..." -ForegroundColor Green
-$discos = Get-PhysicalDisk | Select-Object DeviceId, MediaType, Size
+$discos = Get-Disk | Select-Object Number, FriendlyName, MediaType, Size
 
 # Validar si hay discos disponibles
 if (!$discos -or $discos.Count -eq 0) {
@@ -20,10 +20,10 @@ if (!$discos -or $discos.Count -eq 0) {
 # Mostrar la lista de discos
 $discos | Format-Table -AutoSize
 Write-Host "`nSeleccione el disco que desea analizar con CHKDSK."
-$discoSeleccionado = Read-Host "Ingrese el número del disco (DeviceId)"
+$discoSeleccionado = Read-Host "Ingrese el número del disco (Number)"
 
 # Verificar si la entrada es válida
-if ($discoSeleccionado -match "^\d+$" -and ($discos.DeviceId -contains [int]$discoSeleccionado)) {
+if ($discoSeleccionado -match "^\d+$" -and ($discos.Number -contains [int]$discoSeleccionado)) {
     # Obtener la letra de unidad del disco seleccionado
     $unidad = (Get-Partition | Where-Object { $_.DiskNumber -eq [int]$discoSeleccionado } | Select-Object -ExpandProperty DriveLetter)
 
