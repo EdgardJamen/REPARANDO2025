@@ -165,9 +165,8 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
-
 "7" {
-    Write-Host "Ejecutando proceso de restauracion..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de restauración..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
     $scriptPath = "$env:TEMP\CrearPuntoRestauracion.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
@@ -176,7 +175,7 @@ switch ($opcion) {
     if (Test-Path $scriptPath) {
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Hidden -Wait -Verb RunAs
+            -WindowStyle Normal -Verb RunAs
     } else {
         Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
     }
@@ -184,6 +183,7 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+
 "8" {
     Write-Host "Ejecutando proceso de optimizacion..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
