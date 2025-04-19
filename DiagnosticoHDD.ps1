@@ -1,7 +1,7 @@
-# Diagnóstico y optimizacion del disco HDD
+# Diagnóstico y optimización del disco HDD
 Clear-Host
 Write-Host "============================================" -ForegroundColor Cyan
-Write-Host " Diagnostico y Optimizacion del HDD" -ForegroundColor Yellow
+Write-Host " Diagnóstico y Optimización del HDD" -ForegroundColor Yellow
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 
@@ -23,25 +23,25 @@ if ($discos.DeviceId -contains [int]$discoSeleccionado) {
         Write-Host "`nEjecutando CHKDSK en la unidad $unidad: (puede requerir tiempo...)" -ForegroundColor Green
         Start-Process -FilePath "cmd.exe" -ArgumentList "/c chkdsk $unidad: /f /r" -WindowStyle Normal -Wait
     } else {
-        Write-Host "No se encontro una letra de unidad asignada al disco seleccionado. CHKDSK no se ejecutara." -ForegroundColor Red
+        Write-Host "No se encontró una letra de unidad asignada al disco seleccionado. CHKDSK no se ejecutará." -ForegroundColor Red
     }
 } else {
-    Write-Host "Selección invalida. No se ejecutara CHKDSK." -ForegroundColor Red
+    Write-Host "Selección inválida. No se ejecutará CHKDSK." -ForegroundColor Red
 }
 
 Start-Sleep -Seconds 2
 
-# Paso 2: Desfragmentación del disco (optimizacion para HDD)
-Write-Host "Ejecutando desfragmentacion del disco..." -ForegroundColor Green
+# Paso 2: Desfragmentación del disco (optimización para HDD)
+Write-Host "Ejecutando desfragmentación del disco..." -ForegroundColor Green
 Optimize-Volume -DriveLetter C -Defrag -Verbose
 Write-Host ""
 Start-Sleep -Seconds 2
 
 # Paso 3: Limpieza de archivos temporales para liberar espacio
-Write-Host "Limpiando ..." -ForegroundColor Green
+Write-Host "Limpiando archivos temporales..." -ForegroundColor Green
 Remove-Item -Path "C:\Windows\Temp\*" -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item -Path "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
-Write-Host "Su disco se optimizo al maximo" -ForegroundColor Green
+Write-Host ""
 Start-Sleep -Seconds 2
 
 # Paso 4: Mantener la ventana abierta para visualizar resultados
