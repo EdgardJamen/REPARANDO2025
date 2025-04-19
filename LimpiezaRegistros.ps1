@@ -15,16 +15,16 @@ Write-Host ""
 
 # Mostrar una advertencia muy visible mediante un MessageBox
 Add-Type -AssemblyName System.Windows.Forms
-$mensajeAlerta = "¡¡¡¡ ADVERTENCIA CRÍTICA !!!!" + [Environment]::NewLine +
+$mensajeAlerta = "¡¡¡¡ ADVERTENCIA CRITICA !!!!" + [Environment]::NewLine +
                  "Se recomienda crear una COPIA DE SEGURIDAD DEL REGISTRO" + [Environment]::NewLine +
                  "ANTES DE PROCEDER." + [Environment]::NewLine + [Environment]::NewLine +
                  "¿Desea continuar?"
-$resultado = [System.Windows.Forms.MessageBox]::Show($mensajeAlerta, "ALERTA CRÍTICA", `
+$resultado = [System.Windows.Forms.MessageBox]::Show($mensajeAlerta, "ALERTA CRITICA", `
                 [System.Windows.Forms.MessageBoxButtons]::YesNo, `
                 [System.Windows.Forms.MessageBoxIcon]::Warning)
 
 if ($resultado -ne [System.Windows.Forms.DialogResult]::Yes) {
-    Write-Host "Operación cancelada." -ForegroundColor Red
+    Write-Host "Operacion cancelada." -ForegroundColor Red
     Exit
 }
 
@@ -54,7 +54,7 @@ foreach ($key in $runKeys) {
             
             # Verificar que el archivo exista
             if (-not (Test-Path $executable)) {
-                Write-Host "Entrada inválida encontrada: $entryName => $entryValue" -ForegroundColor Red
+                Write-Host "Entrada invalida encontrada: $entryName => $entryValue" -ForegroundColor Red
                 try {
                     Remove-ItemProperty -Path $key -Name $entryName -ErrorAction Stop
                     Write-Host "Entrada eliminada: $entryName" -ForegroundColor Green
@@ -62,7 +62,7 @@ foreach ($key in $runKeys) {
                     Write-Host "Error al eliminar la entrada: $entryName" -ForegroundColor Red
                 }
             } else {
-                Write-Host "Entrada válida: $entryName => $entryValue" -ForegroundColor Green
+                Write-Host "Entrada valida: $entryName => $entryValue" -ForegroundColor Green
             }
         }
     } catch {
