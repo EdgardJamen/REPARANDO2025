@@ -142,11 +142,16 @@ switch ($opcion) {
     if (Test-Path $scriptPath) {
         Write-Host "Ejecutando DiagnosticoSSD.ps1..." -ForegroundColor Green
         Start-Process -FilePath "powershell.exe" `
-            -ArgumentList "-NoExit -ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Wait -Verb RunAs
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Hidden -Wait -Verb RunAs
+        Write-Host "Diagnóstico completado. Presiona Enter para cerrar la ventana..." -ForegroundColor Cyan
+        Pause
+        Exit
     } else {
         Write-Host "Error: No se pudo descargar DiagnosticoSSD.ps1." -ForegroundColor Red
     }
+}
+
 
     Write-Host "`nDiagnóstico completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
