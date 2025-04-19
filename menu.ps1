@@ -169,15 +169,19 @@ switch ($opcion) {
     Write-Host "Ejecutando proceso de restauración..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
     $scriptPath = "$env:TEMP\CrearPuntoRestauracion.ps1"
-    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
 
-    # Verificar si la descarga fue exitosa antes de ejecutarlo
-    if (Test-Path $scriptPath) {
+    # Descargar el script y verificar que la descarga se complete
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Sleep -Seconds 2
+
+    # Verificar si el archivo existe y tiene contenido antes de ejecutarlo
+    if (Test-Path $scriptPath -and (Get-Content $scriptPath).Length -gt 0) {
+        Write-Host "Proceso descargado correctamente. Ejecutando..." -ForegroundColor Green
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
             -WindowStyle Normal -Verb RunAs
     } else {
-        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+        Write-Host "Error: La descarga no se completó correctamente." -ForegroundColor Red
     }
 
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
