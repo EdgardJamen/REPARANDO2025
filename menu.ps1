@@ -29,7 +29,30 @@ if ($autenticado) {
     Exit
 }
 
-# 🔹 CONTINÚA EL MENÚ
+# Obtener el nombre y la fecha de vencimiento del usuario autenticado
+$nombreUsuario = $autenticado.Nombre
+$fechaVencimiento = $autenticado.Vence
+
+# 🏷 Mostrar nombre y fecha de vencimiento en el menú
+Clear-Host
+Write-Host "============================================" -ForegroundColor Cyan
+Write-Host " Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow
+Write-Host "============================================" -ForegroundColor Cyan
+Write-Host ""
+
+# Verificar si el usuario tiene acceso ilimitado
+if ($fechaVencimiento -eq "Acceso de por vida") {
+    Write-Host "👨‍🔧 Técnico: $nombreUsuario" -ForegroundColor Yellow
+    Write-Host "📅 Vence: Acceso de por vida" -ForegroundColor Yellow
+} else {
+    Write-Host "👨‍🔧 Técnico: $nombreUsuario" -ForegroundColor Yellow
+    Write-Host "📅 Vence: $fechaVencimiento" -ForegroundColor Yellow
+}
+
+Write-Host ""
+
+# 🔹 CONTINÚA EL MENÚ...
+
 do {
     # Obtener el ancho de la ventana (en cada iteracion para adaptarse a cambios)
     $width = $Host.UI.RawUI.WindowSize.Width
