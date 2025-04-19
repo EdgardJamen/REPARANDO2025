@@ -147,14 +147,10 @@ switch ($opcion) {
         Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
     }
 
-    # Mostrar mensaje antes de limpiar los archivos
-    Write-Host "`nFINALIZANDO..." -ForegroundColor Cyan
-    Start-Sleep -Seconds 2  # Pausa para mostrar el mensaje antes de eliminar el archivo
-    Remove-Item "$scriptPath" -Force -ErrorAction SilentlyContinue
-
-    Write-Host "Presiona Enter para volver al menú..." -ForegroundColor Cyan
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+
 "7" {
     Write-Host "Creando un punto de restauración del sistema..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
