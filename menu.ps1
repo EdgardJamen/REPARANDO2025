@@ -120,7 +120,7 @@ switch ($opcion) {
     if (Test-Path $scriptPath) {
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Hidden -Wait -Verb RunAs
+            -WindowStyle Normal -Wait -Verb RunAs
     } else {
         Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
     }
@@ -128,6 +128,7 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+
 "5" {
     Write-Host "Ejecutando proceso de diagnostico..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoHDD.ps1"
