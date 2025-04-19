@@ -15,7 +15,7 @@ $usuarios = Import-Csv $usuariosPath
 $nombreIngresado = Read-Host "Ingrese su nombre"
 $contrasenaIngresada = Read-Host "Ingrese su contrasena"
 
-# Limpieza de espacios y comparación sin diferenciar mayúsculas/minúsculas
+# Limpieza de espacios y comparación sin diferenciar mayusculas/minusculas
 $autenticado = $usuarios | Where-Object { 
     $_.Nombre.Trim() -ieq $nombreIngresado.Trim() -and 
     $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim() 
@@ -183,10 +183,10 @@ switch ($opcion) {
             -WindowStyle Normal -Verb RunAs
 
         # Mantener la ventana abierta para ver errores
-        Write-Host "`n⚠️ Si hubo un error, se mostrará aquí. Presiona Enter para continuar." -ForegroundColor Yellow
+        Write-Host "Creando punto de restauracion .Espere." -ForegroundColor Yellow
         Read-Host
     } else {
-        Write-Host "❌ Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
+        Write-Host " Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
     }
 }
 
