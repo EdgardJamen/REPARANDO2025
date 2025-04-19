@@ -5,53 +5,31 @@ Write-Host " Diagnóstico y Optimización del HDD" -ForegroundColor Yellow
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 
-# Paso 1: Obtener lista de discos disponibles
-Write-Host "Obteniendo lista de discos conectados..." -ForegroundColor Green
-$discos = Get-Disk | Select-Object Number, FriendlyName, MediaType, Size
+# Paso 1: Mostrar información del disco
+Write-Host "Obteniendo información del disco..." -ForegroundColor Green
+Get-PhysicalDisk | Select-Object MediaType, HealthStatus, Size | Format-Table -AutoSize
+Start-Sleep -Seconds 2
+Write-Host ""
 
-# Validar si hay discos disponibles
-if (!$discos -or $discos.Count -eq 0) {
-    Write-Host "⚠️ No se encontraron discos físicos en el sistema. CHKDSK no se ejecutará." -ForegroundColor Red
-    Write-Host "`nProceso abortado. Presiona Enter para cerrar..." -ForegroundColor Cyan
-    Read-Host
-    Exit
-}
-
-# Mostrar la lista de discos
-$discos | Format-Table -AutoSize
-Write-Host "`nSeleccione el disco que desea analizar con CHKDSK."
-$discoSeleccionado = Read-Host "Ingrese el número del disco (Number)"
-
-# Verificar si la entrada es válida
-if ($discoSeleccionado -match "^\d+$" -and ($discos.Number -contains [int]$discoSeleccionado)) {
-    # Obtener la letra de unidad del disco seleccionado
-    $unidad = (Get-Partition | Where-Object { $_.DiskNumber -eq [int]$discoSeleccionado } | Select-Object -ExpandProperty DriveLetter)
-
-    if ($unidad) {
-        Write-Host "`n🔍 Ejecutando CHKDSK en la unidad $unidad: (puede requerir tiempo...)" -ForegroundColor Green
-        Start-Process -FilePath "cmd.exe" -ArgumentList "/c chkdsk $unidad: /f /r" -WindowStyle Normal -Wait
-    } else {
-        Write-Host "⚠️ No se encontró una letra de unidad asignada al disco seleccionado. CHKDSK no se ejecutará." -ForegroundColor Red
-    }
-} else {
-    Write-Host "⚠️ Selección inválida. No se ejecutará CHKDSK." -ForegroundColor Red
-}
-
+# Paso 2: Ejecutar CHKDSK para detectar y reparar errores en el disco
+Write-Host "Ejecutando CHKDSK en el disco C: (puede requerir tiempo...)" -ForegroundColor Green
+Start-Process -FilePath "cmd.exe" -ArgumentList "/c chkdsk C: /f /r" -WindowStyle Normal -Wait
+Write-Host ""
 Start-Sleep -Seconds 2
 
-# Paso 2: Desfragmentación del disco (optimización para HDD)
-Write-Host "🛠 Ejecutando desfragmentación del disco..." -ForegroundColor Green
+# Paso 3: Desfragmentación del disco (optimización para HDD)
+Write-Host "Ejecutando desfragmentación del disco..." -ForegroundColor Green
 Optimize-Volume -DriveLetter C -Defrag -Verbose
 Write-Host ""
 Start-Sleep -Seconds 2
 
-# Paso 3: Limpieza de archivos temporales para liberar espacio
-Write-Host "🗑️ Limpiando archivos temporales..." -ForegroundColor Green
+# Paso 4: Limpieza de archivos temporales para liberar espacio
+Write-Host "Limpiando archivos temporales..." -ForegroundColor Green
 Remove-Item -Path "C:\Windows\Temp\*" -Recurse -Force -ErrorAction SilentlyContinue
 Remove-Item -Path "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
 Write-Host ""
 Start-Sleep -Seconds 2
 
-# Paso 4: Mantener la ventana abierta para visualizar resultados
-Write-Host "`n✅ Proceso completado. Presiona Enter para cerrar..." -ForegroundColor Cyan
+# Paso 5: Mantener la ventana abierta para visualizar resultados
+Write-Host "`nProceso completado. Presiona Enter para cerrar..." -ForegroundColor Cyan
 Read-Host
