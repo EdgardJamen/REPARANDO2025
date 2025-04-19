@@ -112,16 +112,24 @@ switch ($opcion) {
     Read-Host
 }
 "4" {
-    Write-Host "Ejecutando limpieza de registros..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de limpieza..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/LimpiezaRegistros.ps1"
     $scriptPath = "$env:TEMP\LimpiezaRegistros.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-    Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-        -WindowStyle Hidden -Wait -Verb RunAs
-    Write-Host "`nLimpieza completada. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Hidden -Wait -Verb RunAs
+    } else {
+        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+    }
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+
  "5" {
     Write-Host "Ejecutando diagnóstico del disco HDD..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoHDD.ps1"
