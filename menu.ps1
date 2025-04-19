@@ -53,7 +53,7 @@ do {
     Clear-Host
     # Encabezado con fondo oscuro para resaltar
     Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
-    Write-Centered "Reparando MERCEDES 2025" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Centered "Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow -BackgroundColor Black
     Write-Centered "Tecnico: Gabriel Jamen" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
     Write-Host ""
