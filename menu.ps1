@@ -133,7 +133,7 @@ switch ($opcion) {
 }
 
 "6" {
-    Write-Host "Ejecutando proceso de diagnostico..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de diagnóstico..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoSSD.ps1"
     $scriptPath = "$env:TEMP\DiagnosticoSSD.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
@@ -147,12 +147,14 @@ switch ($opcion) {
         Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
     }
 
+    # Mostrar mensaje antes de limpiar los archivos
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 
     # Eliminar el archivo descargado de forma silenciosa
     Remove-Item "$scriptPath" -Force -ErrorAction SilentlyContinue
 }
+
 "7" {
     Write-Host "Creando un punto de restauración del sistema..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
