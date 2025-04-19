@@ -174,23 +174,22 @@ switch ($opcion) {
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
     Start-Sleep -Seconds 2
 
-    # Verificar si el archivo existe y tiene contenido antes de ejecutarlo
+    # Verificar si el archivo existe antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        if ((Get-Content $scriptPath).Length -gt 0) {
-            Write-Host "Proceso descargado correctamente. Ejecutando..." -ForegroundColor Green
-            Start-Process -FilePath "powershell.exe" `
-                -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-                -WindowStyle Normal -Verb RunAs
-        } else {
-            Write-Host "Error: El archivo descargado está vacío." -ForegroundColor Red
-        }
-    } else {
-        Write-Host "Error: La descarga no se completó correctamente." -ForegroundColor Red
-    }
+        Write-Host "✅ Archivo descargado correctamente. Procediendo con la ejecución..." -ForegroundColor Green
+        
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Normal -Verb RunAs
 
-    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
-    Read-Host
+        # Mantener la ventana abierta para ver errores
+        Write-Host "`n⚠️ Si hubo un error, se mostrará aquí. Presiona Enter para continuar." -ForegroundColor Yellow
+        Read-Host
+    } else {
+        Write-Host "❌ Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
+    }
 }
+
 "8" {
     Write-Host "Ejecutando proceso de optimizacion..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
