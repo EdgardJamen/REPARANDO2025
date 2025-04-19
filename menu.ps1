@@ -170,16 +170,20 @@ switch ($opcion) {
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
     $scriptPath = "$env:TEMP\CrearPuntoRestauracion.ps1"
 
-    # Descargar el script y verificar que la descarga se complete
+    # Descargar el script
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
     Start-Sleep -Seconds 2
 
     # Verificar si el archivo existe y tiene contenido antes de ejecutarlo
-    if (Test-Path $scriptPath -and (Get-Content $scriptPath).Length -gt 0) {
-        Write-Host "Proceso descargado correctamente. Ejecutando..." -ForegroundColor Green
-        Start-Process -FilePath "powershell.exe" `
-            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Verb RunAs
+    if (Test-Path $scriptPath) {
+        if ((Get-Content $scriptPath).Length -gt 0) {
+            Write-Host "Proceso descargado correctamente. Ejecutando..." -ForegroundColor Green
+            Start-Process -FilePath "powershell.exe" `
+                -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+                -WindowStyle Normal -Verb RunAs
+        } else {
+            Write-Host "Error: El archivo descargado está vacío." -ForegroundColor Red
+        }
     } else {
         Write-Host "Error: La descarga no se completó correctamente." -ForegroundColor Red
     }
@@ -187,7 +191,6 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
-
 "8" {
     Write-Host "Ejecutando proceso de optimizacion..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
