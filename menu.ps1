@@ -133,7 +133,7 @@ switch ($opcion) {
 }
 
 "6" {
-    Write-Host "Ejecutando diagnóstico del disco SSD..." -ForegroundColor Green
+    Write-Host "Ejecutando diagnostico del disco SSD..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoSSD.ps1"
     $scriptPath = "$env:TEMP\DiagnosticoSSD.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
@@ -144,16 +144,13 @@ switch ($opcion) {
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
             -WindowStyle Normal -Wait -Verb RunAs
-
-        Write-Host "`nDiagnóstico completado. Presiona Enter para cerrar..." -ForegroundColor Cyan
-        Read-Host
-        Exit
     } else {
         Write-Host "Error: No se pudo descargar DiagnosticoSSD.ps1." -ForegroundColor Red
     }
+
+    Write-Host "`nDiagnóstico completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+    Read-Host
 }
-
-
 "7" {
     Write-Host "Creando un punto de restauración del sistema..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
