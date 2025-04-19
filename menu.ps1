@@ -1,10 +1,10 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
 # 🔒 AUTENTICACIÓN ANTES DE MOSTRAR EL MENÚ
-Write-Host "Descargando lista de usuarios desde la base de datos..." -ForegroundColor Yellow
+Write-Host "Descargando lista de usuarios desde GitHub..." -ForegroundColor Yellow
 
-# Descargar el archivo de Google Drive
-$usuariosUrl = "https://drive.google.com/uc?id=1uTlgJQ_q1kU_52IVswok1rUyRSAUfi2X"
+# Descargar el archivo de usuarios desde GitHub
+$usuariosUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/usuarios.csv"
 $usuariosPath = "$env:TEMP\usuarios.csv"
 Invoke-WebRequest -Uri $usuariosUrl -OutFile $usuariosPath
 
@@ -83,18 +83,22 @@ do {
 switch ($opcion) {
 
 "1" {
-    Write-Host "Ejecutando optimización ..." -ForegroundColor Green
-    
-    # Descargar y ejecutar el script desde Google Drive
-    $scriptUrl = "https://drive.google.com/uc?id=1PElKaMeOl-a2ku2intKEt6KVgG9S6UIm"
-    $scriptContent = (Invoke-WebRequest -Uri $scriptUrl).Content
-    
-    # Ejecutar el script en tiempo real
-    Invoke-Expression $scriptContent
-    
+    Write-Host "Ejecutando optimización del sistema..." -ForegroundColor Green
+
+    # Descargar el script desde GitHub
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/optimizacion.ps1"
+    $scriptPath = "$env:TEMP\optimizacion.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+
+    # Ejecutar el script descargado
+    Start-Process -FilePath "powershell.exe" `
+        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+        -WindowStyle Hidden -Wait -Verb RunAs
+
     Write-Host "`nOptimización completada. Presiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
 }
+
 "2" {
     Write-Host "Esta función aún no está implementada." -ForegroundColor Yellow
     Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
@@ -107,97 +111,81 @@ switch ($opcion) {
 }
 "4" {
     Write-Host "Ejecutando limpieza de registros..." -ForegroundColor Green
-    
-    # Descargar y ejecutar el script desde Google Drive
-    $scriptUrl = "https://drive.google.com/uc?id=1jko6e0AJGhmNHyDXSJQ8NMPqIP2iUdpT"
-    $scriptContent = (Invoke-WebRequest -Uri $scriptUrl).Content
-    
-    # Ejecutar el script en tiempo real
-    Invoke-Expression $scriptContent
-    
-    Write-Host "`nProceso completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/LimpiezaRegistros.ps1"
+    $scriptPath = "$env:TEMP\LimpiezaRegistros.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Process -FilePath "powershell.exe" `
+        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+        -WindowStyle Hidden -Wait -Verb RunAs
+    Write-Host "`nLimpieza completada. Presiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
 }
  "5" {
-    Write-Host "Ejecutando optimizacion de disco hdd..." -ForegroundColor Green
-    
-    # Descargar y ejecutar el script desde Google Drive
-    $scriptUrl = "https://drive.google.com/uc?id=1XuD6Rx_sMHay_RFN-Inoo1rxpgmilqFU"
-    $scriptContent = (Invoke-WebRequest -Uri $scriptUrl).Content
-    
-    # Ejecutar el script en tiempo real
-    Invoke-Expression $scriptContent
-    
-    Write-Host "`nProceso completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+    Write-Host "Ejecutando diagnóstico del disco HDD..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoHDD.ps1"
+    $scriptPath = "$env:TEMP\DiagnosticoHDD.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Process -FilePath "powershell.exe" `
+        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+        -WindowStyle Hidden -Wait -Verb RunAs
+    Write-Host "`nDiagnóstico completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
 }
 
-"6" {
-    Write-Host "Ejecutando optmizacion de disco ssd..." -ForegroundColor Green
-    
-    # Descargar y ejecutar el script desde Google Drive
-    $scriptUrl = "https://drive.google.com/uc?id=1BpaGT088vXMAbZ2zuhGAGyTIKboU-W83"
-    $scriptContent = (Invoke-WebRequest -Uri $scriptUrl).Content
-    
-    # Ejecutar el script en tiempo real
-    Invoke-Expression $scriptContent
-    
-    Write-Host "`nProceso completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+"6"{
+    Write-Host "Ejecutando diagnóstico del disco SSD..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoSSD.ps1"
+    $scriptPath = "$env:TEMP\DiagnosticoSSD.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Process -FilePath "powershell.exe" `
+        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+        -WindowStyle Hidden -Wait -Verb RunAs
+    Write-Host "`nDiagnóstico completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
 }
 "7" {
-    Write-Host "Ejecutando punto de restauracion..." -ForegroundColor Green
-    
-    # Descargar y ejecutar el script desde Google Drive
-    $scriptUrl = "https://drive.google.com/uc?id=1FJEXEldX9of1O71lc4KmFEDdEGlAcJc8"
-    $scriptContent = (Invoke-WebRequest -Uri $scriptUrl).Content
-    
-    # Ejecutar el script en tiempo real
-    Invoke-Expression $scriptContent
-    
-    Write-Host "`nProceso completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+    Write-Host "Creando un punto de restauración del sistema..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
+    $scriptPath = "$env:TEMP\CrearPuntoRestauracion.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Process -FilePath "powershell.exe" `
+        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+        -WindowStyle Hidden -Wait -Verb RunAs
+    Write-Host "`nPunto de restauración creado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
 }
 
 "8" {
-    Write-Host "Ejecutando optimización de servicios..." -ForegroundColor Green
-    
-    # Descargar y ejecutar el script desde Google Drive
-    $scriptUrl = "https://drive.google.com/uc?id=15kBauJ3wlrY5ChciPSSuIXICxY8FECL_"
-    $scriptContent = (Invoke-WebRequest -Uri $scriptUrl).Content
-    
-    # Ejecutar el script en tiempo real
-    Invoke-Expression $scriptContent
-    
-    Write-Host "`nProceso completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+    Write-Host "Optimizando los servicios de inicio..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
+    $scriptPath = "$env:TEMP\OptimizarInicioServicios.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Process -FilePath "powershell.exe" `
+        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+        -WindowStyle Hidden -Wait -Verb RunAs
+    Write-Host "`nOptimización completada. Presiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
 }
 
 "9" {
-    Write-Host "Ejecutando registro de actividades..." -ForegroundColor Green
-    
-    # Descargar y ejecutar el script desde Google Drive
-    $scriptUrl = "https://drive.google.com/uc?id=1bbG4yyHXWeK8p8FAbMSspoqd0dG0qudh"
-    $scriptContent = (Invoke-WebRequest -Uri $scriptUrl).Content
-    
-    # Ejecutar el script en tiempo real
-    Invoke-Expression $scriptContent
-    
-    Write-Host "`nProceso completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
+    Write-Host "Registrando actividad del sistema..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/RegistroActividades.ps1"
+    $scriptPath = "$env:TEMP\RegistroActividades.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Process -FilePath "powershell.exe" `
+        -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+        -WindowStyle Hidden -Wait -Verb RunAs
+    Write-Host "`nRegistro completado. Presiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
 }
 "10" {
-    Write-Host "`nListando archivos disponibles del programa..." -ForegroundColor Blue
-    
-    # Abrir la carpeta en el navegador para visualizar archivos manualmente
-    $driveUrl = "https://drive.google.com/drive/folders/1Gd20B0-nv7P9oSsyXC98uqe_xCaKsDht"
-    Start-Process $driveUrl
-
-    Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
+    Write-Host "Listando los archivos disponibles en el repositorio..." -ForegroundColor Green
+    Start-Process "cmd.exe" -ArgumentList "/c start https://github.com/EdgardJamen/REPARANDO2025"
+    Write-Host "`nLista de archivos abierta en el navegador. Presiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
 }
 "11" {
-    Write-Host "Saliendo..." -ForegroundColor Red
+    Write-Host "Saliendo del sistema..." -ForegroundColor Red
     Exit
 }
 Default {
