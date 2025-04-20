@@ -1,3 +1,6 @@
+# Establecer la codificación para evitar errores con caracteres especiales
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
 # Definir la ruta del archivo de usuarios
 $usuariosArchivo = "$env:TEMP\usuarios.csv"
 
@@ -55,5 +58,3 @@ if (Test-Path $menuLocal) {
     Write-Host "❌ Error: No se pudo descargar menu.ps1." -ForegroundColor Red
     Read-Host
 }
-
-# Asegurar que todas las llaves de cierre estén correctamente colocadas
