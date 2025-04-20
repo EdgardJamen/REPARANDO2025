@@ -1,7 +1,7 @@
 Write-Host "Descargando menu.ps1 desde GitHub..." -ForegroundColor Yellow
 
 # Ruta del menú en GitHub
-$menuUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/menu.ps1"
+$menuUrl = https://github.com/EdgardJamen/REPARANDO2025/blob/main/menu.ps1
 
 
 # Guardar el archivo en la carpeta temporal del sistema
