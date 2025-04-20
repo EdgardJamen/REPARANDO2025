@@ -25,12 +25,19 @@ if ($usuarioActivo) {
     $nombreUsuario = $usuarioActivo.Nombre
     $suscripcionVence = $usuarioActivo.Vence
 
+    # Verificar si la suscripcion ha caducado
+    if ($suscripcionVence -ne "Acceso de por vida" -and (Get-Date) -gt (Get-Date $suscripcionVence)) {
+        Write-Host "USUARIO EXPIRADO: La suscripcion ha caducado el $suscripcionVence." -ForegroundColor Red
+        Exit
+    }
+
     Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
     Start-Sleep -Seconds 2
 } else {
     Write-Host "Error: Nombre o contrasena incorrectos." -ForegroundColor Red
     Exit
 }
+
 # Iniciar el menu despues de autenticacion
 do {
  # Obtener el ancho de la ventana
