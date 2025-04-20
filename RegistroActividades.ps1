@@ -2,7 +2,7 @@
 Clear-Host
 
 # Definir la ruta del archivo de log
-$logFile = "C:\Users\gabriel\Desktop\REPARANDO2025\system_log.txt"
+$logFile = "$env:TEMP\system_log.txt"
 
 # Obtener el ancho de la ventana y crear una línea de "=" para el encabezado
 $width = $Host.UI.RawUI.WindowSize.Width
