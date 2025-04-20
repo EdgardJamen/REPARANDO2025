@@ -175,6 +175,30 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+"7" {
+    Write-Host "Ejecutando proceso de restauración..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
+    $scriptPath = "$env:TEMP\CrearPuntoRestauracion.ps1"
+
+    # Descargar el script
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Sleep -Seconds 2
+
+    # Verificar si el archivo existe antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Write-Host "✅ Archivo descargado correctamente. Procediendo con la ejecución..." -ForegroundColor Green
+        
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Normal -Verb RunAs
+
+        # Mantener la ventana abierta para ver errores
+        Write-Host "Creando punto de restauracion .Espere." -ForegroundColor Yellow
+        Read-Host
+    } else {
+        Write-Host " Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
+    }
+}
 
     "11" {
         Write-Host "Saliendo del sistema..." -ForegroundColor Red
