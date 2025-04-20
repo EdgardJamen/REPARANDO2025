@@ -186,7 +186,7 @@ switch ($opcion) {
 
     # Verificar si el archivo existe antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Write-Host "✅ Archivo descargado correctamente. Procediendo con la ejecución..." -ForegroundColor Green
+        Write-Host "✅  Procediendo con la ejecución..." -ForegroundColor Green
         
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
@@ -196,7 +196,7 @@ switch ($opcion) {
         Write-Host "Creando punto de restauracion .Espere." -ForegroundColor Yellow
         Read-Host
     } else {
-        Write-Host " Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
+        Write-Host " Error: No se pudo encontrar el archivo." -ForegroundColor Red
     }
 }
 "8" {
@@ -210,7 +210,7 @@ switch ($opcion) {
 
     # Verificar si el archivo existe antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Write-Host "✅ Archivo descargado correctamente. Procediendo con la ejecucion..." -ForegroundColor Green
+        Write-Host "✅   Procediendo con la ejecucion..." -ForegroundColor Green
         
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
@@ -220,7 +220,7 @@ switch ($opcion) {
         Write-Host "Optimizando inicio y servicios. Espere..." -ForegroundColor Yellow
         Read-Host
     } else {
-        Write-Host "❌ Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
+        Write-Host "❌ Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
     }
 }
 "9" {
@@ -234,7 +234,7 @@ switch ($opcion) {
 
     # Verificar si el archivo existe antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Write-Host "✅ Archivo descargado correctamente. Procediendo con la ejecución..." -ForegroundColor Green
+        Write-Host "✅ Archivo encontrado. Procediendo con la ejecución..." -ForegroundColor Green
         
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
@@ -244,7 +244,7 @@ switch ($opcion) {
         Write-Host "Registrando actividades. Espere..." -ForegroundColor Yellow
         Read-Host
     } else {
-        Write-Host "❌ Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
+        Write-Host "❌ Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
     }
 }
 "10" {
