@@ -14,7 +14,7 @@ $usuarios = Import-Csv $usuariosPath
 
 # Solicitar credenciales
 $nombreIngresado = Read-Host "Ingrese su nombre"
-$contrasenaIngresada = Read-Host "Ingrese su contrasena"
+$contrasenaIngresada = Read-Host "Ingrese su contraseña"
 
 # Limpieza de espacios y comparación sin diferenciar mayúsculas/minúsculas
 $autenticado = $usuarios | Where-Object { 
@@ -40,7 +40,7 @@ do {
     Write-Host "=" * ($Host.UI.RawUI.WindowSize.Width) -ForegroundColor Cyan
     Write-Host ""
 
-    Write-Host "💡 POR SUSCRIPCIÓN: COMUNICARSE AL +598 096790694" -ForegroundColor Magenta
+    Write-Host "INFORMACIÓN: POR SUSCRIPCIÓN, COMUNICARSE AL +598 096790694" -ForegroundColor Magenta
     Write-Host ""
 
     Write-Host "Elige una opción:" -ForegroundColor White -BackgroundColor DarkBlue
@@ -63,4 +63,4 @@ do {
         Write-Host "❌ Saliendo del sistema..." -ForegroundColor Red
         break
     }
-} while ($true)  # ✅ Se asegura que el bucle tenga su cierre correcto
+} while ($true)
