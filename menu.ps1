@@ -273,7 +273,7 @@ switch ($opcion) {
 
 "11" {
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
-    Stop-Process -Name "powershell" -Force
+    Stop-Process -Id $PID -Force
 }
 Default {
     Write-Host "Opcion no valida. Intenta nuevamente." -ForegroundColor Red
@@ -285,5 +285,4 @@ if ($opcion -ne "11") {
     Write-Host "Presiona Enter para volver al menu ..." -ForegroundColor Cyan
     Read-Host
 }
-
 } while ($true)  # ✅ Cierre correcto del bucle
