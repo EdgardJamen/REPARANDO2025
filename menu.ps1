@@ -29,3 +29,38 @@ if ($autenticado) {
     Write-Host "❌ Error: Nombre o contraseña incorrectos." -ForegroundColor Red
     Exit
 }
+
+# 🔹 INICIAR EL MENÚ DESPUÉS DE AUTENTICACIÓN
+do {
+    Clear-Host
+    Write-Host "=" * ($Host.UI.RawUI.WindowSize.Width) -ForegroundColor Cyan
+
+    Write-Host "📌 Reparando.mercedes desarrollado por:" -ForegroundColor Yellow
+    Write-Host "   Técnico: Gabriel Jamen" -ForegroundColor Yellow
+    Write-Host "=" * ($Host.UI.RawUI.WindowSize.Width) -ForegroundColor Cyan
+    Write-Host ""
+
+    Write-Host "💡 POR SUSCRIPCIÓN: COMUNICARSE AL +598 096790694" -ForegroundColor Magenta
+    Write-Host ""
+
+    Write-Host "Elige una opción:" -ForegroundColor White -BackgroundColor DarkBlue
+    Write-Host " 1. Optimización del sistema" -ForegroundColor Green
+    Write-Host " 2. Activador de Windows /En desarrollo" -ForegroundColor Yellow
+    Write-Host " 3. Activador de Excel /En desarrollo" -ForegroundColor Yellow
+    Write-Host " 4. Limpieza de registros" -ForegroundColor Green
+    Write-Host " 5. Diagnóstico y optimización del disco duro HDD" -ForegroundColor Green
+    Write-Host " 6. Diagnóstico y optimización del disco duro SSD" -ForegroundColor Green
+    Write-Host " 7. Crear Punto de Restauración" -ForegroundColor Green
+    Write-Host " 8. Optimizar inicio y servicios" -ForegroundColor Red
+    Write-Host " 9. Registro de Actividades (Logs)" -ForegroundColor Green
+    Write-Host " 10. Listar los archivos disponibles" -ForegroundColor Green
+    Write-Host " 11. Salir" -ForegroundColor Red
+
+    # Capturar elección del usuario
+    $opcion = Read-Host "Selecciona una opción (1-11)"
+
+    if ($opcion -eq "11") {
+        Write-Host "❌ Saliendo del sistema..." -ForegroundColor Red
+        break
+    }
+} while ($true)  # ✅ Se asegura que el bucle tenga su cierre correcto
