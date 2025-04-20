@@ -94,4 +94,5 @@ Write-Host "Seleccione una opcion:" -ForegroundColor White
         Write-Host "Saliendo del sistema..." -ForegroundColor Red
         break
     }
-} while ($true)  # ✅ Se asegura que
+} while ($true)  # ✅ Se asegura que el bucle tenga su cierre correcto
+
