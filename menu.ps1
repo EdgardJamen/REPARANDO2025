@@ -137,6 +137,23 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+"5" {
+    Write-Host "Ejecutando proceso de diagnóstico..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoHDD.ps1"
+    $scriptPath = "$env:TEMP\DiagnosticoHDD.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Normal -Wait -Verb RunAs
+    } else {
+        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+    }
+     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
+    Read-Host
+}
 
     "11" {
         Write-Host "Saliendo del sistema..." -ForegroundColor Red
