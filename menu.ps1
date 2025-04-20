@@ -189,30 +189,22 @@ switch ($opcion) {
         Write-Host " Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
     }
 }
+        "8" {
+            Write-Host "Ejecutando proceso de optimización..." -ForegroundColor Green
+            $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
+            $scriptPath = "$env:TEMP\OptimizarInicioServicios.ps1"
+            Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
 
-"8" {
-    Write-Host "Ejecutando proceso de optimización..." -ForegroundColor Green
-    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
-    $scriptPath = "$env:TEMP\OptimizarInicioServicios.ps1"
-    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-
-    # Verificar si la descarga fue exitosa antes de ejecutarlo
-    if (Test-Path $scriptPath) {
-        Write-Host "✅ Script descargado correctamente en: $scriptPath" -ForegroundColor Cyan
-        
-        # Pausar para ver que el archivo descargado esté presente
-        Read-Host "Presiona Enter para ejecutar el script"
-        
-        Start-Process -FilePath "powershell.exe" `
-            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Wait -Verb RunAs
-
-        Write-Host "📌 Proceso completado. Presiona Enter para continuar..." -ForegroundColor Cyan
-        Read-Host
-    } else {
-        Write-Host "❌ Error: No se pudo descargar OptimizarInicioServicios.ps1." -ForegroundColor Red
-        Read-Host
-    }
+            if (Test-Path $scriptPath) {
+                Write-Host "✅ Script descargado correctamente. Ejecutando..." -ForegroundColor Cyan
+                & "$scriptPath"
+                Write-Host "📌 Proceso completado. Presiona Enter para continuar..." -ForegroundColor Cyan
+                Read-Host
+            } else {
+                Write-Host "❌ Error: No se pudo descargar OptimizarInicioServicios.ps1." -ForegroundColor Red
+                Read-Host
+            }
+        }
 }
 
 "9" {
