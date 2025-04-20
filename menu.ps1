@@ -88,7 +88,10 @@ Write-Host "Seleccione una opcion:" -ForegroundColor White
     Write-Host " 8. Optimizar inicio y servicios" -ForegroundColor Red
     Write-Host " 9. Registro de actividades (Logs)" -ForegroundColor Green
     Write-Host " 10. Listar los archivos disponibles" -ForegroundColor Green
-    Write-Host " 11. Salir" -ForegroundColor Red
+    Write-Host " 11. [Disponible para futuras funciones]" -ForegroundColor Yellow
+    Write-Host " 12. [Disponible para futuras funciones]" -ForegroundColor Yellow
+    Write-Host " 13. Descripción del programa" -ForegroundColor Cyan
+    Write-Host " X. Salir" -ForegroundColor Red
 
     # Capturar eleccion del usuario
 $opcion = Read-Host "Ingrese una opcion (1-11)"
@@ -270,7 +273,7 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
-"11" {
+"X" {
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
     Start-Sleep -Seconds 1
     Clear-Host
@@ -283,7 +286,7 @@ Default {
 } # Cierre correcto del bloque switch
 
 # Si no se escogió la opción de salir, se pide presionar Enter para continuar.
-if ($opcion -ne "11") {
+if ($opcion -ne "X") {
     Write-Host ""
     Write-Host "Presiona Enter para volver al menu ..." -ForegroundColor Cyan
     Read-Host
