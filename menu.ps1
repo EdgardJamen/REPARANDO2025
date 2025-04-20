@@ -1,21 +1,6 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# 🔹 Cargar el menú directamente sin autenticación
-Write-Host "Cargando el menú..." -ForegroundColor Green
-Start-Sleep -Seconds 2
 
-# 🔹 CONTINÚA EL MENÚ
-do {
-    # Limpiar pantalla en cada iteración del menú
-    Clear-Host
-
-    Write-Host "============================================" -ForegroundColor Cyan
-    Write-Host " Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow
-    Write-Host "============================================" -ForegroundColor Cyan
-    Write-Host ""
-
-    Write-Host "POR SUSCRIPCIÓN: COMUNICARSE AL +598 096790694" -ForegroundColor Magenta -BackgroundColor Black
-    Write-Host ""
 
     Write-Host "Elige una opción:" -ForegroundColor White -BackgroundColor DarkBlue
     Write-Host ""
