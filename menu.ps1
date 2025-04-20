@@ -31,15 +31,6 @@ if ($usuarioActivo) {
     Write-Host "Error: Nombre o contrasena incorrectos." -ForegroundColor Red
     Exit
 }
-# Mostrar informacion del usuario logueado
-Write-Host "Usuario: $nombreUsuario" -ForegroundColor White
-Write-Host "Suscripcion vence el: $suscripcionVence" -ForegroundColor Yellow
-Write-Host ""
-
-# Mensaje de suscripcion
-Write-Host "Por suscripcion, comunicarse al +598 096790694" -ForegroundColor Magenta
-Write-Host ""
-
 # Iniciar el menu despues de autenticacion
 do {
  # Obtener el ancho de la ventana
@@ -68,8 +59,18 @@ Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
 Write-Host ""
 
 # Eliminar fondo azul del texto del menu
-Write-Host "Seleccione una opcion:" -ForegroundColor White
+
+# Mostrar informacion del usuario logueado
+Write-Host "Usuario: $nombreUsuario" -ForegroundColor White
+Write-Host "Suscripcion vence el: $suscripcionVence" -ForegroundColor Yellow
+Write-Host ""
+
+# Mensaje de suscripcion
 Write-Host "Por suscripcion, comunicarse al +598 096790694" -ForegroundColor Magenta
+Write-Host ""
+
+Write-Host "Seleccione una opcion:" -ForegroundColor White
+
     Write-Host ""
 
     Write-Host "Seleccione una opcion:" -ForegroundColor White -BackgroundColor DarkBlue
