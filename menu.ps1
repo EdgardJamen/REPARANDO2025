@@ -209,8 +209,6 @@ switch ($opcion) {
         Write-Host "❌ Error: No se pudo descargar OptimizarInicioServicios.ps1." -ForegroundColor Red
         Read-Host
     }
-}
-
 "9" {
     Write-Host "Ejecutando proceso de registro..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/RegistroActividades.ps1"
