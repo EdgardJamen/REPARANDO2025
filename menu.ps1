@@ -39,12 +39,16 @@ $line = "=" * $width
 # Crear un recuadro elegante para la cabecera
 Clear-Host
 Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
-Write-Host (" " * (($width - 40) / 2)) + "SISTEMA DESARROLLADO POR" -ForegroundColor White -BackgroundColor Black
-Write-Host (" " * (($width - 40) / 2)) + "TECNICO: GABRIEL JAMEN" -ForegroundColor Yellow -BackgroundColor Black
+Write-Host "" -BackgroundColor Black
+Write-Host (" " * ($width / 4)) + "SISTEMA DESARROLLADO POR" -ForegroundColor White -BackgroundColor Black
+Write-Host (" " * ($width / 4)) + "TECNICO: GABRIEL JAMEN" -ForegroundColor Yellow -BackgroundColor Black
+Write-Host "" -BackgroundColor Black
 Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
 Write-Host ""
 
- Write-Host "Por suscripcion, comunicarse al +598 096790694" -ForegroundColor Magenta
+# Eliminar fondo azul del texto del menu
+Write-Host "Seleccione una opcion:" -ForegroundColor White
+Write-Host "Por suscripcion, comunicarse al +598 096790694" -ForegroundColor Magenta
     Write-Host ""
 
     Write-Host "Seleccione una opcion:" -ForegroundColor White -BackgroundColor DarkBlue
