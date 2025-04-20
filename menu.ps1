@@ -96,9 +96,4 @@ Write-Host "Seleccione una opcion:" -ForegroundColor White
 
     # Capturar eleccion del usuario
     $opcion = Read-Host "Ingrese una opcion (1-11)"
-    if ($opcion -eq "11") {
-        Write-Host "Saliendo del sistema..." -ForegroundColor Red
-        break
-    }
-} while ($true)  # ✅ Se asegura que el bucle tenga su cierre correcto
-
+    
