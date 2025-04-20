@@ -15,7 +15,7 @@ $usuarios = Import-Csv $usuariosPath
 $nombreIngresado = Read-Host "Ingrese su nombre"
 $contrasenaIngresada = Read-Host "Ingrese su contrasena"
 
-# Limpieza de espacios y comparacion sin diferenciar mayúsculas/minúsculas
+# Limpieza de espacios y comparación sin diferenciar mayúsculas/minúsculas
 $autenticado = $usuarios | Where-Object { 
     $_.Nombre.Trim() -ieq $nombreIngresado.Trim() -and 
     $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim() 
@@ -25,12 +25,9 @@ if ($autenticado) {
     Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
     Start-Sleep -Seconds 2
 } else {
-    Write-Host "❌ Error: Nombre o contraseña incorrectos." -ForegroundColor Red
+    Write-Host "Error: Nombre o contraseña incorrectos." -ForegroundColor Red
     Exit
 }
-
-# 🔹 Limpiar pantalla después de la autenticación exitosa
-Clear-Host
 
 # 🔹 CONTINÚA EL MENÚ...
 
