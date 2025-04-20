@@ -1,43 +1,12 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# 🔒 AUTENTICACIÓN ANTES DE MOSTRAR EL MENÚ
-Write-Host "Autenticando..." -ForegroundColor Yellow
-
-# Descargar el archivo de usuarios desde GitHub
-$usuariosUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/usuarios.csv"
-$usuariosPath = "$env:TEMP\usuarios.csv"
-Invoke-WebRequest -Uri $usuariosUrl -OutFile $usuariosPath
-
-# Validar si el archivo de usuarios se descargó correctamente
-if (!(Test-Path $usuariosPath)) {
-    Write-Host "❌ Error: No se pudo descargar usuarios.csv." -ForegroundColor Red
-    Exit
-}
-
-# Importar datos de usuarios desde el CSV descargado
-$usuarios = Import-Csv $usuariosPath
-
-# Solicitar credenciales
-$nombreIngresado = Read-Host "Ingrese su nombre"
-$contrasenaIngresada = Read-Host "Ingrese su contrasena"
-
-# Comparación sin diferenciar mayúsculas/minúsculas
-$autenticado = $usuarios | Where-Object {
-    $_.Nombre.Trim() -ieq $nombreIngresado.Trim() -and
-    $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim()
-}
-
-if ($autenticado) {
-    Write-Host "✅ Autenticación exitosa. Cargando el menú..." -ForegroundColor Green
-    Start-Sleep -Seconds 2
-} else {
-    Write-Host "❌ Error: Nombre o contraseña incorrectos." -ForegroundColor Red
-    Exit
-}
+# 🔹 Cargar el menú directamente sin autenticación
+Write-Host "Cargando el menú..." -ForegroundColor Green
+Start-Sleep -Seconds 2
 
 # 🔹 CONTINÚA EL MENÚ
 do {
-    # Limpiar pantalla para cada iteración del menú
+    # Limpiar pantalla en cada iteración del menú
     Clear-Host
 
     Write-Host "============================================" -ForegroundColor Cyan
@@ -63,6 +32,8 @@ do {
     Write-Host " 11. Salir" -ForegroundColor Red
 
     $opcion = Read-Host "Selecciona una opción (1-11)"
+
+} while ($true)
 
     switch ($opcion) {
         "1" {
