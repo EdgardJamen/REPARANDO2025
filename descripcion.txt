@@ -10,36 +10,36 @@
 
 4. Limpieza de registros :Esta opcion se encarga de limpiar el registro de Windows eliminando entradas innecesarias en las claves de ejecucion automatica (Run) de HKLM y HKCU.
 
-- ¿Que hace? - Detecta y elimina referencias a programas que ya no existen en el inicio del sistema. - Verifica que los archivos ejecutables asociados a entradas de registro sean validos. - Si una entrada apunta a un archivo que no existe, la borra del registro para optimizar el sistema. - Incluye una advertencia para que el usuario haga una copia de seguridad antes de proceder.
+¿Que hace? - Detecta y elimina referencias a programas que ya no existen en el inicio del sistema. - Verifica que los archivos ejecutables asociados a entradas de registro sean validos. - Si una entrada apunta a un archivo que no existe, la borra del registro para optimizar el sistema. - Incluye una advertencia para que el usuario haga una copia de seguridad antes de proceder.
 
 - Resultado esperado: Mejora el rendimiento del sistema al eliminar referencias innecesarias en el registro, evitando que Windows cargue procesos que no existen al iniciar.
 
 5. Diagnostico y optimizacion del disco duro hdd: Esta opcion esta disenada para mejorar el rendimiento y la salud de un disco HDD mediante varias tareas de mantenimiento.
 
-- ¿Que hace? - Obtiene informacion del disco, incluyendo su tipo, estado de salud y tamano. - Ejecuta CHKDSK para detectar y reparar errores en el disco duro. - Realiza una desfragmentacion, optimizando la distribucion de archivos en el disco para mejorar la velocidad de acceso. - Limpia archivos temporales, liberando espacio innecesario que puede ralentizar el sistema.
+¿Que hace? - Obtiene informacion del disco, incluyendo su tipo, estado de salud y tamano. - Ejecuta CHKDSK para detectar y reparar errores en el disco duro. - Realiza una desfragmentacion, optimizando la distribucion de archivos en el disco para mejorar la velocidad de acceso. - Limpia archivos temporales, liberando espacio innecesario que puede ralentizar el sistema.
 
 - Resultado esperado: El disco duro tendra mejor rendimiento, reducira errores y optimizara su velocidad de operacion.
 
 6. Diagnostico y optimizacion del disco duro ssd: Esta opcion realiza un diagnostico y optimizacion del SSD, asegurando su buen funcionamiento y eficiencia.
 
-- ¿Que hace? - Obtiene informacion del disco, verificando su tipo, estado de salud y tamano. - Revisa si la funcion TRIM esta activada, esencial para la optimizacion y durabilidad del SSD. - Ejecuta manualmente TRIM con Optimize-Volume, mejorando la velocidad y eficiencia del almacenamiento. - Limpia archivos temporales, eliminando datos innecesarios que pueden afectar el rendimiento.
+¿Que hace? - Obtiene informacion del disco, verificando su tipo, estado de salud y tamano. - Revisa si la funcion TRIM esta activada, esencial para la optimizacion y durabilidad del SSD. - Ejecuta manualmente TRIM con Optimize-Volume, mejorando la velocidad y eficiencia del almacenamiento. - Limpia archivos temporales, eliminando datos innecesarios que pueden afectar el rendimiento.
 
 - Resultado esperado: El SSD funcionara de manera optima, con mejor desempeno y mayor vida util.
 
 7. Crear Punto de Restauracion : Este modulo permite la creacion de un punto de restauracion del sistema, asegurando que el usuario pueda revertir cambios en caso de problemas.
 
-- ¿Que hace? - Verifica si la ejecucion tiene privilegios de administrador y, si no, reinicia el proceso con permisos elevados. - Comprueba si la proteccion del sistema esta deshabilitada y la activa automaticamente si es necesario. - Inicia el servicio de restauracion del sistema, asegurando que la funcion de recuperacion este operativa. - Genera un punto de restauracion, permitiendo al usuario volver a una configuracion anterior en caso de fallos o cambios no deseados. - Notifica si hay errores en el proceso, asegurando que el usuario reciba informacion clara sobre el estado de la operacion.
+¿Que hace? - Verifica si la ejecucion tiene privilegios de administrador y, si no, reinicia el proceso con permisos elevados. - Comprueba si la proteccion del sistema esta deshabilitada y la activa automaticamente si es necesario. - Inicia el servicio de restauracion del sistema, asegurando que la funcion de recuperacion este operativa. - Genera un punto de restauracion, permitiendo al usuario volver a una configuracion anterior en caso de fallos o cambios no deseados. - Notifica si hay errores en el proceso, asegurando que el usuario reciba informacion clara sobre el estado de la operacion.
 
 - Resultado esperado: Se crea un respaldo del sistema que permite restaurar configuraciones previas si hay problemas, manteniendo la estabilidad y seguridad del equipo.
 
 8. Optimizar inicio y servicios: Este modulo optimiza el arranque del sistema y mejora el rendimiento al eliminar accesos directos innecesarios y deshabilitar servicios que no son criticos.
 
-- ¿Que hace? - Limpia la carpeta de inicio, eliminando accesos directos de programas que ralentizan el arranque. - Desactiva servicios no esenciales, como Fax, RemoteRegistry y XblGameSave, reduciendo el consumo de recursos. -Solicita confirmacion antes de ejecutar, asegurando que el usuario este consciente de los cambios.
+¿Que hace? - Limpia la carpeta de inicio, eliminando accesos directos de programas que ralentizan el arranque. - Desactiva servicios no esenciales, como Fax, RemoteRegistry y XblGameSave, reduciendo el consumo de recursos. -Solicita confirmacion antes de ejecutar, asegurando que el usuario este consciente de los cambios.
 Resultado esperado: El sistema arrancara mas rapido y consumira menos recursos, manteniendo solo los servicios esenciales.
 
 9. Registro de actividades (Logs) : Este modulo permite gestionar un registro de actividades del sistema, facilitando la revision y limpieza de eventos registrados.
 
-- ¿Que hace? - Permite visualizar el registro de actividades, mostrando los eventos guardados en un archivo de log. - Ofrece la opcion de borrar el registro, eliminando las entradas existentes si el usuario lo confirma. - Proporciona una interfaz organizada, con encabezados y opciones claras para facilitar la navegacion. - Verifica si el archivo de registro existe, evitando errores si no hay datos almacenados. - Incluye una opcion para salir del modulo, manteniendo el control sobre la ejecucion del programa.
+¿Que hace? - Permite visualizar el registro de actividades, mostrando los eventos guardados en un archivo de log. - Ofrece la opcion de borrar el registro, eliminando las entradas existentes si el usuario lo confirma. - Proporciona una interfaz organizada, con encabezados y opciones claras para facilitar la navegacion. - Verifica si el archivo de registro existe, evitando errores si no hay datos almacenados. - Incluye una opcion para salir del modulo, manteniendo el control sobre la ejecucion del programa.
 
 🚀 Resultado esperado: Los usuarios pueden revisar y gestionar el registro de actividades del sistema, eliminando datos antiguos si lo desean.
 
