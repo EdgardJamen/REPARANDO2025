@@ -88,10 +88,32 @@ Write-Host "Seleccione una opcion:" -ForegroundColor White
     Write-Host " 11. Salir" -ForegroundColor Red
 
     # Capturar eleccion del usuario
-    $opcion = Read-Host "Ingrese una opcion (1-11)"
+$opcion = Read-Host "Ingrese una opcion (1-11)"
 
-    if ($opcion -eq "11") {
+switch ($opcion) {
+    "1" {
+        Write-Host "Ejecutando proceso de optimizacion..." -ForegroundColor Green
+        $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/optimizacion.ps1"
+        $scriptPath = "$env:TEMP\optimizacion.ps1"
+        Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+
+        # Verificar si la descarga fue exitosa antes de ejecutarlo
+        if (Test-Path $scriptPath) {
+            Start-Process -FilePath "powershell.exe" `
+                -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+                -WindowStyle Normal -Verb RunAs
+        } else {
+            Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+        }
+
+        Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
+        Read-Host
+    }
+
+    "11" {
         Write-Host "Saliendo del sistema..." -ForegroundColor Red
         break
     }
-} while ($true)  # ✅ Se asegura que el bucle tenga su cierre correcto
+}
+
+} while ($true)  # ✅ Cierre correcto del bucle
