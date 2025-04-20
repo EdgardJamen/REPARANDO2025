@@ -189,7 +189,7 @@ switch ($opcion) {
 
     # Verificar si el archivo existe antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Write-Host "✅  Procediendo con la ejecución..." -ForegroundColor Green
+        Write-Host "  Procediendo con la ejecución..." -ForegroundColor Green
         
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
@@ -213,7 +213,7 @@ switch ($opcion) {
 
     # Verificar si el archivo existe antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Write-Host "✅   Procediendo con la ejecucion..." -ForegroundColor Green
+        Write-Host "   Procediendo con la ejecucion..." -ForegroundColor Green
         
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
@@ -223,7 +223,7 @@ switch ($opcion) {
         Write-Host "Optimizando inicio y servicios. Espere..." -ForegroundColor Yellow
         Read-Host
     } else {
-        Write-Host "❌ Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
+        Write-Host " Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
     }
 }
 "9" {
@@ -237,7 +237,7 @@ switch ($opcion) {
 
     # Verificar si el archivo existe antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Write-Host "✅ Archivo encontrado. Procediendo con la ejecución..." -ForegroundColor Green
+        Write-Host " Archivo encontrado. Procediendo con la ejecución..." -ForegroundColor Green
         
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
@@ -247,7 +247,7 @@ switch ($opcion) {
         Write-Host "Registrando actividades. Espere..." -ForegroundColor Yellow
         Read-Host
     } else {
-        Write-Host "❌ Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
+        Write-Host " Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
     }
 }
 "10" {
@@ -274,7 +274,7 @@ switch ($opcion) {
     Read-Host
 }
 "13" {
-    Write-Host "Cargando descripción del programa..." -ForegroundColor Cyan
+    Write-Host "Cargando descripcion del programa..." -ForegroundColor Cyan
     $descripcionUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/descripcion.txt"
     $descripcionPath = "$env:TEMP\descripcion.txt"
 
@@ -284,10 +284,10 @@ switch ($opcion) {
 
     # Verificar si el archivo existe antes de mostrarlo
     if (Test-Path $descripcionPath) {
-        Write-Host "`nDescripción del programa:" -ForegroundColor Green
+        Write-Host "`nDescripcion del programa:" -ForegroundColor Green
         Get-Content $descripcionPath | ForEach-Object { Write-Host $_ }
     } else {
-        Write-Host "❌ Error: No se pudo obtener la descripción del programa." -ForegroundColor Red
+        Write-Host " Error: No se pudo obtener la descripcion del programa." -ForegroundColor Red
     }
 
     Write-Host "`nPresiona Enter para continuar..." -ForegroundColor Cyan
