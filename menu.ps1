@@ -225,22 +225,29 @@ switch ($opcion) {
 }
  "9" {
     Write-Host "Ejecutando proceso de registro..." -ForegroundColor Green
-    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/RegistroActividades.ps1"
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/RegistroActividades.ps1"
     $scriptPath = "$env:TEMP\RegistroActividades.ps1"
+    
+    # Descargar el script
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Sleep -Seconds 2
 
     # Verificar si la descarga fue exitosa antes de ejecutarlo
     if (Test-Path $scriptPath) {
+        Write-Host "✅ Archivo descargado correctamente. Procediendo con la ejecución..." -ForegroundColor Green
+        
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Hidden -Wait -Verb RunAs
-    } else {
-        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
-    }
+            -WindowStyle Normal -Wait -Verb RunAs
 
-    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
-    Read-Host
+        Write-Host "📌 Proceso completado. Presiona Enter para continuar..." -ForegroundColor Cyan
+        Read-Host
+    } else {
+        Write-Host "❌ Error: No se pudo completar el proceso." -ForegroundColor Red
+        Read-Host
+    }
 }
+
  "11" {
         Write-Host "Saliendo del sistema..." -ForegroundColor Red
         break
