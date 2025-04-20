@@ -1,12 +1,18 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# 🔒 AUTENTICACION ANTES DE MOSTRAR EL MENU
+# 🔒 AUTENTICACIÓN ANTES DE MOSTRAR EL MENÚ
 Write-Host "Autenticando..." -ForegroundColor Yellow
 
 # Descargar el archivo de usuarios desde GitHub
 $usuariosUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/usuarios.csv"
 $usuariosPath = "$env:TEMP\usuarios.csv"
-Invoke-WebRequest -Uri $usuariosUrl -Outfile $usuariosPath
+Invoke-WebRequest -Uri $usuariosUrl -OutFile $usuariosPath
+
+# Validar si el archivo de usuarios se descargó correctamente
+if (!(Test-Path $usuariosPath)) {
+    Write-Host "❌ Error: No se pudo descargar usuarios.csv." -ForegroundColor Red
+    Exit
+}
 
 # Importar datos de usuarios desde el CSV descargado
 $usuarios = Import-Csv $usuariosPath
@@ -15,27 +21,24 @@ $usuarios = Import-Csv $usuariosPath
 $nombreIngresado = Read-Host "Ingrese su nombre"
 $contrasenaIngresada = Read-Host "Ingrese su contrasena"
 
-# Limpieza de espacios y comparación sin diferenciar mayusculas/minusculas
+# Comparación sin diferenciar mayúsculas/minúsculas
 $autenticado = $usuarios | Where-Object {
-    $_.Nombre.Trim() -eq $nombreIngresado.Trim() -and
-    $_.Contrasena.Trim() -eq $contrasenaIngresada.Trim()
+    $_.Nombre.Trim() -ieq $nombreIngresado.Trim() -and
+    $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim()
 }
 
 if ($autenticado) {
-    Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
+    Write-Host "✅ Autenticación exitosa. Cargando el menú..." -ForegroundColor Green
     Start-Sleep -Seconds 2
 } else {
-    Write-Host "Error: Nombre o contrasena incorrectos." -ForegroundColor Red
+    Write-Host "❌ Error: Nombre o contraseña incorrectos." -ForegroundColor Red
     Exit
 }
 
 # 🔹 CONTINÚA EL MENÚ
 do {
-    # Obtener el ancho de la ventana (en cada iteracion para adaptarse a cambios)
-    $width = $Host.UI.RawUI.WindowSize.Width
-    # Crear una linea de "=" que llene el ancho de la ventana
-    $line = "=" * $width
-}
+    # Limpiar pantalla para cada iteración del menú
+    Clear-Host
 
     Write-Host "============================================" -ForegroundColor Cyan
     Write-Host " Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow
@@ -61,7 +64,35 @@ do {
 
     $opcion = Read-Host "Selecciona una opción (1-11)"
 
+    switch ($opcion) {
+        "1" {
+            Write-Host "Ejecutando proceso de optimización..." -ForegroundColor Green
+            $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/optimizacion.ps1"
+            $scriptPath = "$env:TEMP\optimizacion.ps1"
+            Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+
+            if (Test-Path $scriptPath) {
+                Start-Process -FilePath "powershell.exe" `
+                    -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+                    -WindowStyle Normal -Verb RunAs
+            } else {
+                Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+            }
+
+            Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
+            Read-Host
+        }
+        "11" {
+            Write-Host "Saliendo del sistema..." -ForegroundColor Red
+            Exit
+        }
+        Default {
+            Write-Host "Opción no válida. Intenta nuevamente." -ForegroundColor Red
+        }
+    }
+
 } while ($true)
+
 
 
 switch ($opcion) {
