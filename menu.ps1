@@ -36,13 +36,24 @@ do {
 $width = $Host.UI.RawUI.WindowSize.Width
 $line = "=" * $width
 
+# Función para escribir texto centrado
+function Write-Centered {
+    param(
+        [string]$text,
+        [ConsoleColor]$ForegroundColor = "White",
+        [ConsoleColor]$BackgroundColor = "Black"
+    )
+    $padding = ($width - $text.Length) / 2
+    if ($padding -lt 0) { $padding = 0 }
+    $leftSpaces = " " * [Math]::Floor($padding)
+    Write-Host "$leftSpaces$text" -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor
+}
+
 # Crear un recuadro elegante para la cabecera
 Clear-Host
 Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
-Write-Host "" -BackgroundColor Black
-Write-Host (" " * ($width / 4)) + "SISTEMA DESARROLLADO POR" -ForegroundColor White -BackgroundColor Black
-Write-Host (" " * ($width / 4)) + "TECNICO: GABRIEL JAMEN" -ForegroundColor Yellow -BackgroundColor Black
-Write-Host "" -BackgroundColor Black
+Write-Centered "SISTEMA DESARROLLADO POR" -ForegroundColor White -BackgroundColor Black
+Write-Centered "TECNICO: GABRIEL JAMEN" -ForegroundColor Yellow -BackgroundColor Black
 Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
 Write-Host ""
 
