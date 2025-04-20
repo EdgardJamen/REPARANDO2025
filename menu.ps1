@@ -199,25 +199,7 @@ switch ($opcion) {
         Write-Host " Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
     }
 }
-"8" {
-            Write-Host "Ejecutando proceso de optimización..." -ForegroundColor Green
-            $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
-            $scriptPath = "$env:TEMP\OptimizarInicioServicios.ps1"
-            Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-
-            if (Test-Path $scriptPath) {
-                Write-Host "✅  Ejecutando..." -ForegroundColor Cyan
-                & "$scriptPath"
-                Write-Host "📌 Proceso completado. Presiona Enter para continuar..." -ForegroundColor Cyan
-                Read-Host
-            } else {
-                Write-Host "❌ Error: No se pudo descargar OptimizarInicioServicios.ps1." -ForegroundColor Red
-                Read-Host
-            }
-        }
-}
-
-    "11" {
+ "11" {
         Write-Host "Saliendo del sistema..." -ForegroundColor Red
         break
     }
