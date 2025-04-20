@@ -191,23 +191,26 @@ switch ($opcion) {
 }
 
 "8" {
-    Write-Host "Ejecutando proceso de optimizacion..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de optimización..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
     $scriptPath = "$env:TEMP\OptimizarInicioServicios.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
 
     # Verificar si la descarga fue exitosa antes de ejecutarlo
     if (Test-Path $scriptPath) {
+        Write-Host "✅ Script descargado correctamente. Ejecutando..." -ForegroundColor Cyan
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Hidden -Wait -Verb RunAs
-    } else {
-        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
-    }
+            -WindowStyle Normal -Wait -Verb RunAs
 
-    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
-    Read-Host
+        Write-Host "📌 Proceso completado. Presiona Enter para continuar..." -ForegroundColor Cyan
+        Read-Host
+    } else {
+        Write-Host "❌ Error: No se pudo descargar OptimizarInicioServicios.ps1." -ForegroundColor Red
+        Read-Host
+    }
 }
+
 "9" {
     Write-Host "Ejecutando proceso de registro..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/RegistroActividades.ps1"
