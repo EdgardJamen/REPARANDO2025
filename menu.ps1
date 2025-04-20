@@ -90,7 +90,7 @@ Write-Host "Seleccione una opcion:" -ForegroundColor White
     Write-Host " 10. Listar los archivos disponibles" -ForegroundColor Green
     Write-Host " 11. [Disponible para futuras funciones]" -ForegroundColor Yellow
     Write-Host " 12. [Disponible para futuras funciones]" -ForegroundColor Yellow
-    Write-Host " 13. Descripción del programa" -ForegroundColor Cyan
+    Write-Host " 13. Descripcion del programa" -ForegroundColor Cyan
     Write-Host " X. Salir" -ForegroundColor Red
 
     # Capturar eleccion del usuario
