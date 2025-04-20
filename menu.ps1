@@ -1,6 +1,4 @@
 # Establecer la codificacion para evitar errores con caracteres especiales
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-
 # Autenticacion antes de mostrar el menu
 Write-Host "Autenticando..." -ForegroundColor Yellow
 
@@ -17,18 +15,29 @@ $nombreIngresado = Read-Host "Ingrese su nombre"
 $contrasenaIngresada = Read-Host "Ingrese su contrasena"
 
 # Limpieza de espacios y comparacion sin diferenciar mayusculas/minusculas
-$autenticado = $usuarios | Where-Object { 
+$usuarioActivo = $usuarios | Where-Object { 
     $_.Nombre.Trim() -ieq $nombreIngresado.Trim() -and 
     $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim() 
 }
 
-if ($autenticado) {
+if ($usuarioActivo) {
+    $nombreUsuario = $usuarioActivo.Nombre
+    $suscripcionVence = $usuarioActivo.Vence
+
     Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
     Start-Sleep -Seconds 2
 } else {
     Write-Host "Error: Nombre o contrasena incorrectos." -ForegroundColor Red
     Exit
 }
+# Mostrar informacion del usuario logueado
+Write-Host "Usuario: $nombreUsuario" -ForegroundColor White
+Write-Host "Suscripcion vence el: $suscripcionVence" -ForegroundColor Yellow
+Write-Host ""
+
+# Mensaje de suscripcion
+Write-Host "Por suscripcion, comunicarse al +598 096790694" -ForegroundColor Magenta
+Write-Host ""
 
 # Iniciar el menu despues de autenticacion
 do {
