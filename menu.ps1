@@ -94,7 +94,7 @@ Write-Host "Seleccione una opcion:" -ForegroundColor White
     Write-Host " X. Salir" -ForegroundColor Red
 
     # Capturar eleccion del usuario
-$opcion = Read-Host "Ingrese una opcion (1-11)"
+$opcion = Read-Host "Ingrese una opcion (1-13)"
 
 switch ($opcion) {
     "1" {
