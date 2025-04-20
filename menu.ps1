@@ -1,7 +1,7 @@
 # Establecer la codificación para evitar errores con caracteres especiales
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# 🔒 AUTENTICACION ANTES DE MOSTRAR EL MENU
+# Autenticación antes de mostrar el menú
 Write-Host "Autenticando..." -ForegroundColor Yellow
 
 # Descargar el archivo de usuarios desde GitHub
@@ -23,44 +23,44 @@ $autenticado = $usuarios | Where-Object {
 }
 
 if ($autenticado) {
-    Write-Host "✅ Autenticación exitosa. Cargando el menú..." -ForegroundColor Green
+    Write-Host "Autenticación exitosa. Cargando el menú..." -ForegroundColor Green
     Start-Sleep -Seconds 2
 } else {
-    Write-Host "❌ Error: Nombre o contraseña incorrectos." -ForegroundColor Red
+    Write-Host "Error: Nombre o contraseña incorrectos." -ForegroundColor Red
     Exit
 }
 
-# 🔹 INICIAR EL MENÚ DESPUÉS DE AUTENTICACIÓN
+# Iniciar el menú después de autenticación
 do {
     Clear-Host
     Write-Host "=" * ($Host.UI.RawUI.WindowSize.Width) -ForegroundColor Cyan
 
-    Write-Host "📌 Reparando.mercedes desarrollado por:" -ForegroundColor Yellow
-    Write-Host "   Técnico: Gabriel Jamen" -ForegroundColor Yellow
+    Write-Host "Sistema desarrollado por:" -ForegroundColor Yellow
+    Write-Host "Técnico: Gabriel Jamen" -ForegroundColor Yellow
     Write-Host "=" * ($Host.UI.RawUI.WindowSize.Width) -ForegroundColor Cyan
     Write-Host ""
 
-    Write-Host "INFORMACIÓN: POR SUSCRIPCIÓN, COMUNICARSE AL +598 096790694" -ForegroundColor Magenta
+    Write-Host "Por suscripción, comunicarse al +598 096790694" -ForegroundColor Magenta
     Write-Host ""
 
-    Write-Host "Elige una opción:" -ForegroundColor White -BackgroundColor DarkBlue
+    Write-Host "Seleccione una opción:" -ForegroundColor White -BackgroundColor DarkBlue
     Write-Host " 1. Optimización del sistema" -ForegroundColor Green
-    Write-Host " 2. Activador de Windows /En desarrollo" -ForegroundColor Yellow
-    Write-Host " 3. Activador de Excel /En desarrollo" -ForegroundColor Yellow
+    Write-Host " 2. Activador de Windows (En desarrollo)" -ForegroundColor Yellow
+    Write-Host " 3. Activador de Excel (En desarrollo)" -ForegroundColor Yellow
     Write-Host " 4. Limpieza de registros" -ForegroundColor Green
     Write-Host " 5. Diagnóstico y optimización del disco duro HDD" -ForegroundColor Green
     Write-Host " 6. Diagnóstico y optimización del disco duro SSD" -ForegroundColor Green
     Write-Host " 7. Crear Punto de Restauración" -ForegroundColor Green
     Write-Host " 8. Optimizar inicio y servicios" -ForegroundColor Red
-    Write-Host " 9. Registro de Actividades (Logs)" -ForegroundColor Green
+    Write-Host " 9. Registro de actividades (Logs)" -ForegroundColor Green
     Write-Host " 10. Listar los archivos disponibles" -ForegroundColor Green
     Write-Host " 11. Salir" -ForegroundColor Red
 
     # Capturar elección del usuario
-    $opcion = Read-Host "Selecciona una opción (1-11)"
+    $opcion = Read-Host "Ingrese una opción (1-11)"
 
     if ($opcion -eq "11") {
-        Write-Host "❌ Saliendo del sistema..." -ForegroundColor Red
+        Write-Host "Saliendo del sistema..." -ForegroundColor Red
         break
     }
-} while ($true)
+} while ($true)  # ✅ Se asegura que el bucle tenga su cierre correcto
