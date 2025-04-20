@@ -199,6 +199,35 @@ switch ($opcion) {
         Write-Host " Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
     }
 }
+"8" {
+    Write-Host "Ejecutando proceso de optimizacion..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
+    $scriptPath = "$env:TEMP\OptimizarInicioServicios.ps1"
+
+    # Intentar descargar el script con validación de éxito
+    try {
+        Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath -ErrorAction Stop
+    }
+    catch {
+        Write-Host "❌ Error: No se pudo descargar OptimizarInicioServicios.ps1." -ForegroundColor Red
+        return
+    }
+
+    # Verificar si el archivo se descargó correctamente antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Write-Host "✅ Ejecutando..." -ForegroundColor Cyan
+        
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Normal -Verb RunAs
+
+        Write-Host "📌 Proceso completado. Presiona Enter para continuar..." -ForegroundColor Cyan
+        Read-Host
+    } else {
+        Write-Host "❌ Error: No se encontró OptimizarInicioServicios.ps1 después de la descarga." -ForegroundColor Red
+        Read-Host
+    }
+}
 
     "11" {
         Write-Host "Saliendo del sistema..." -ForegroundColor Red
