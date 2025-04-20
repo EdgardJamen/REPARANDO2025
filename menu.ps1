@@ -278,7 +278,6 @@ switch ($opcion) {
 Default {
     Write-Host "Opción no válida. Intenta nuevamente." -ForegroundColor Red
 }
-}
 
 # Si no se escogió la opción de salir, se pide presionar Enter para continuar.
 if ($opcion -ne "10") {
