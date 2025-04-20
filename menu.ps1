@@ -1,6 +1,6 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# 🔒 AUTENTICACIÓN ANTES DE MOSTRAR EL MENÚ
+# 🔒 AUTENTICACION ANTES DE MOSTRAR EL MENU
 Write-Host "Autenticando..." -ForegroundColor Yellow
 
 # Descargar el archivo de usuarios desde GitHub
@@ -13,64 +13,94 @@ $usuarios = Import-Csv $usuariosPath
 
 # Solicitar credenciales
 $nombreIngresado = Read-Host "Ingrese su nombre"
-$contrasenaIngresada = Read-Host "Ingrese su contraseña"
+$contrasenaIngresada = Read-Host "Ingrese su contrasena"
 
-# Limpieza de espacios y comparación sin diferenciar mayúsculas/minúsculas
+# Limpieza de espacios y comparacion sin diferenciar mayúsculas/minúsculas
 $autenticado = $usuarios | Where-Object { 
-    $_.Nombre.Trim() -ieq $nombreIngresado.Trim() -and 
-    $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim() 
+    $_.Nombre.Trim() -ieq $nombreIngresado.Trim() -and $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim() 
 }
 
 if ($autenticado) {
-    Write-Host "✅ Autenticación exitosa. Cargando el menú..." -ForegroundColor Green
+    Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
     Start-Sleep -Seconds 2
 } else {
     Write-Host "❌ Error: Nombre o contraseña incorrectos." -ForegroundColor Red
     Exit
 }
 
-# 🏷 Obtener el nombre y la fecha de vencimiento del usuario autenticado
-$nombreUsuario = $autenticado | Select-Object -ExpandProperty Nombre
-$fechaVencimiento = $autenticado | Select-Object -ExpandProperty Vence
+# 🔹 Limpiar pantalla después de la autenticación exitosa
+Clear-Host
+
+# 🏷 Mostrar nombre y fecha de vencimiento en el menú
+Write-Host "============================================" -ForegroundColor Cyan
+Write-Host " Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow
+Write-Host "============================================" -ForegroundColor Cyan
+Write-Host ""
+
+# Obtener el nombre y la fecha de vencimiento del usuario autenticado
+$nombreUsuario = $autenticado | Select-Object -First 1 -ExpandProperty Nombre
+$fechaVencimiento = $autenticado | Select-Object -First 1 -ExpandProperty Vence
+
+# Verificar si el usuario tiene acceso ilimitado
+if ($fechaVencimiento -eq "Acceso de por vida") {
+    Write-Host "👨‍🔧 Tecnico: $nombreUsuario" -ForegroundColor Yellow
+    Write-Host "📅 Vence: Acceso de por vida" -ForegroundColor Yellow
+} else {
+    Write-Host "👨‍🔧 Tecnico: $nombreUsuario" -ForegroundColor Yellow
+    Write-Host "📅 Vence: $fechaVencimiento" -ForegroundColor Yellow
+}
+
+Write-Host ""
 
 # 🔹 CONTINÚA EL MENÚ...
 
 do {
-    # Obtener el ancho de la ventana
+    # Obtener el ancho de la ventana (en cada iteracion para adaptarse a cambios)
     $width = $Host.UI.RawUI.WindowSize.Width
+    # Crear una linea de "=" que llene el ancho de la ventana
     $line = "=" * $width
 
-    Clear-Host
-    Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
-    Write-Centered "Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Centered "Técnico: $nombreUsuario" -ForegroundColor Yellow -BackgroundColor Black
-
-    # Verificar si el usuario tiene acceso ilimitado
-    if ($fechaVencimiento -eq "Acceso de por vida") {
-        Write-Centered "Vence: Acceso de por vida" -ForegroundColor Yellow -BackgroundColor Black
-    } else {
-        Write-Centered "Vence: $fechaVencimiento" -ForegroundColor Yellow -BackgroundColor Black
+    # Funcion para escribir un texto centrado en la consola
+    function Write-Centered {
+        param(
+            [string]$text,
+            [ConsoleColor]$ForegroundColor = "White",
+            [ConsoleColor]$BackgroundColor = "Black"
+        )
+        # Calcular la cantidad de espacios a la izquierda para centrar
+        $padding = ($width - $text.Length) / 2
+        if ($padding -lt 0) { $padding = 0 }
+        $leftSpaces = " " * [Math]::Floor($padding)
+        Write-Host "$leftSpaces$text" -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor
     }
 
+    Clear-Host
+    # Encabezado con fondo oscuro para resaltar
+    Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
+    Write-Centered "Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Centered "Tecnico: Gabriel Jamen" -ForegroundColor Yellow -BackgroundColor Black
     Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
     Write-Host ""
 
-    Write-Host "POR SUSCRIPCIÓN: COMUNICARSE AL +598 096790694" -ForegroundColor Magenta -BackgroundColor Black
+    # Mensaje de suscripcion bien visible
+    Write-Host "POR SUSCRIPCION: COMUNICARSE AL +598 096790694" -ForegroundColor Magenta -BackgroundColor Black
     Write-Host ""
 
-    Write-Host "Elige una opción:" -ForegroundColor White -BackgroundColor DarkBlue
+    # Menú de opciones con encabezado llamativo
+    Write-Host "Elige una opcion:" -ForegroundColor White -BackgroundColor DarkBlue
     Write-Host ""
-    Write-Host " 1. Optimización del sistema" -ForegroundColor Green
+    Write-Host " 1. Optimizacion del sistema" -ForegroundColor Green
     Write-Host " 2. Activador de Windows /En desarrollo" -ForegroundColor Yellow
     Write-Host " 3. Activador de Excel /En desarrollo" -ForegroundColor Yellow
     Write-Host " 4. Limpieza de registros" -ForegroundColor Green
-    Write-Host " 5. Diagnóstico y optimización del disco duro HDD" -ForegroundColor Green
-    Write-Host " 6. Diagnóstico y optimización del disco duro SSD" -ForegroundColor Green
-    Write-Host " 7. Crear Punto de Restauración" -ForegroundColor Green
+    Write-Host " 5. Diagnostico y optimizacion del disco duro HDD" -ForegroundColor Green
+    Write-Host " 6. Diagnostico y optimizacion del disco duro SSD" -ForegroundColor Green
+    Write-Host " 7. Crear Punto de Restauracion" -ForegroundColor Green
     Write-Host " 8. Optimizar inicio y servicios" -ForegroundColor Red
     Write-Host " 9. Registro de Actividades (Logs)" -ForegroundColor Green
     Write-Host " 10. Listar los archivos disponibles" -ForegroundColor Green
     Write-Host " 11. Salir" -ForegroundColor Red
+}
 
     $opcion = Read-Host "Selecciona una opción (1-11)"
 
