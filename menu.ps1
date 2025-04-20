@@ -29,11 +29,15 @@ if ($autenticado) {
     Exit
 }
 
-# Obtener el nombre y la fecha de vencimiento del usuario autenticado
-$nombreUsuario = $autenticado | Select-Object -First 1 -ExpandProperty Nombre
-$fechaVencimiento = $autenticado | Select-Object -First 1 -ExpandProperty Vence
+# 🏷 Extraer datos del usuario autenticado
+$nombreUsuario = $autenticado.Nombre
+$fechaVencimiento = $autenticado.Vence
 
-
+# Asegurar que los valores no estén vacíos
+if (-not $nombreUsuario -or -not $fechaVencimiento) {
+    Write-Host "❌ Error: No se pudieron obtener los datos del usuario." -ForegroundColor Red
+    Exit
+}
 
 # 🏷 Mostrar nombre y fecha de vencimiento en el menú
 Clear-Host
@@ -52,6 +56,7 @@ if ($fechaVencimiento -eq "Acceso de por vida") {
 }
 
 Write-Host ""
+
 
 # 🔹 CONTINÚA EL MENÚ...
 
