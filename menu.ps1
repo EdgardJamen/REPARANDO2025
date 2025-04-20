@@ -29,3 +29,101 @@ if ($autenticado) {
     Write-Host "❌ Error: Nombre o contraseña incorrectos." -ForegroundColor Red
     Exit
 }
+# 🔹 INTERFAZ MEJORADA DEL MENÚ
+
+# Obtener el ancho de la ventana para adaptarse a cambios
+$width = $Host.UI.RawUI.WindowSize.Width
+$line = "=" * $width
+
+# Función para escribir un texto centrado en la consola
+function Write-Centered {
+    param(
+        [string]$text,
+        [ConsoleColor]$ForegroundColor = "White",
+        [ConsoleColor]$BackgroundColor = "Black"
+    )
+    # Calcular la cantidad de espacios a la izquierda para centrar
+    $padding = ($width - $text.Length) / 2
+    if ($padding -lt 0) { $padding = 0 }
+    $leftSpaces = " " * [Math]::Floor($padding)
+    Write-Host "$leftSpaces$text" -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor
+}
+
+Clear-Host
+# Encabezado con fondo oscuro para resaltar
+Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
+Write-Centered "Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow -BackgroundColor Black
+Write-Centered "Técnico: Gabriel Jamen" -ForegroundColor Yellow -BackgroundColor Black
+Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
+Write-Host ""
+
+# Mensaje de suscripción bien visible
+Write-Host "POR SUSCRIPCIÓN: COMUNICARSE AL +598 096790694" -ForegroundColor Magenta -BackgroundColor Black
+Write-Host ""
+
+# Menú de opciones con encabezado llamativo
+Write-Host "Elige una opción:" -ForegroundColor White -BackgroundColor DarkBlue
+Write-Host ""
+Write-Host " 1. Optimización del sistema" -ForegroundColor Green
+Write-Host " 2. Activador de Windows /En desarrollo" -ForegroundColor Yellow
+Write-Host " 3. Activador de Excel /En desarrollo" -ForegroundColor Yellow
+Write-Host " 4. Limpieza de registros" -ForegroundColor Green
+Write-Host " 5. Diagnóstico y optimización del disco duro HDD" -ForegroundColor Green
+Write-Host " 6. Diagnóstico y optimización del disco duro SSD" -ForegroundColor Green
+Write-Host " 7. Crear Punto de Restauración" -ForegroundColor Green
+Write-Host " 8. Optimizar inicio y servicios" -ForegroundColor Red
+Write-Host " 9. Registro de Actividades (Logs)" -ForegroundColor Green
+Write-Host " 10. Listar los archivos disponibles" -ForegroundColor Green
+Write-Host " 11. Salir" -ForegroundColor Red
+
+# Capturar elección del usuario
+$opcion = Read-Host "Selecciona una opción (1-11)"
+# 🔹 INTERFAZ MEJORADA DEL MENÚ
+
+# Obtener el ancho de la ventana para adaptarse a cambios
+$width = $Host.UI.RawUI.WindowSize.Width
+$line = "=" * $width
+
+# Función para escribir un texto centrado en la consola
+function Write-Centered {
+    param(
+        [string]$text,
+        [ConsoleColor]$ForegroundColor = "White",
+        [ConsoleColor]$BackgroundColor = "Black"
+    )
+    # Calcular la cantidad de espacios a la izquierda para centrar
+    $padding = ($width - $text.Length) / 2
+    if ($padding -lt 0) { $padding = 0 }
+    $leftSpaces = " " * [Math]::Floor($padding)
+    Write-Host "$leftSpaces$text" -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor
+}
+
+Clear-Host
+# Encabezado con fondo oscuro para resaltar
+Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
+Write-Centered "Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow -BackgroundColor Black
+Write-Centered "Técnico: Gabriel Jamen" -ForegroundColor Yellow -BackgroundColor Black
+Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
+Write-Host ""
+
+# Mensaje de suscripción bien visible
+Write-Host "POR SUSCRIPCIÓN: COMUNICARSE AL +598 096790694" -ForegroundColor Magenta -BackgroundColor Black
+Write-Host ""
+
+# Menú de opciones con encabezado llamativo
+Write-Host "Elige una opción:" -ForegroundColor White -BackgroundColor DarkBlue
+Write-Host ""
+Write-Host " 1. Optimización del sistema" -ForegroundColor Green
+Write-Host " 2. Activador de Windows /En desarrollo" -ForegroundColor Yellow
+Write-Host " 3. Activador de Excel /En desarrollo" -ForegroundColor Yellow
+Write-Host " 4. Limpieza de registros" -ForegroundColor Green
+Write-Host " 5. Diagnóstico y optimización del disco duro HDD" -ForegroundColor Green
+Write-Host " 6. Diagnóstico y optimización del disco duro SSD" -ForegroundColor Green
+Write-Host " 7. Crear Punto de Restauración" -ForegroundColor Green
+Write-Host " 8. Optimizar inicio y servicios" -ForegroundColor Red
+Write-Host " 9. Registro de Actividades (Logs)" -ForegroundColor Green
+Write-Host " 10. Listar los archivos disponibles" -ForegroundColor Green
+Write-Host " 11. Salir" -ForegroundColor Red
+
+# Capturar elección del usuario
+$opcion = Read-Host "Selecciona una opción (1-11)"
