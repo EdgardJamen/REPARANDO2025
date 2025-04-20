@@ -32,13 +32,17 @@ if ($autenticado) {
 
 # Iniciar el menu despues de autenticacion
 do {
-    Clear-Host
-    Write-Host "=" * ($Host.UI.RawUI.WindowSize.Width) -ForegroundColor Cyan
+    # Obtener el ancho de la ventana
+$width = $Host.UI.RawUI.WindowSize.Width
 
-    Write-Host "Sistema desarrollado por:" -ForegroundColor Yellow
-    Write-Host "Tecnico: Gabriel Jamen" -ForegroundColor Yellow
-    Write-Host "=" * ($Host.UI.RawUI.WindowSize.Width) -ForegroundColor Cyan
-    Write-Host ""
+# Crear un recuadro elegante para la cabecera
+Clear-Host
+Write-Host "" -BackgroundColor Black
+Write-Host (" " * (($width - 40) / 2)) + "SISTEMA DESARROLLADO POR" -ForegroundColor White -BackgroundColor Black
+Write-Host (" " * (($width - 40) / 2)) + "TECNICO: GABRIEL JAMEN" -ForegroundColor Yellow -BackgroundColor Black
+Write-Host "" -BackgroundColor Black
+Write-Host "=" * $width -ForegroundColor Cyan
+
 
     Write-Host "Por suscripcion, comunicarse al +598 096790694" -ForegroundColor Magenta
     Write-Host ""
