@@ -199,7 +199,8 @@ switch ($opcion) {
         Write-Host " Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
     }
 }
- "11" {
+
+    "11" {
         Write-Host "Saliendo del sistema..." -ForegroundColor Red
         break
     }
