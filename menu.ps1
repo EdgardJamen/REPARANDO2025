@@ -280,10 +280,13 @@ Default {
     Write-Host "Opcion no valida. Intenta nuevamente." -ForegroundColor Red
 }
 
-# Si no se escogio la opcion de salir, se pide presionar Enter para continuar.
+} # Cierre correcto del bloque switch
+
+# Si no se escogió la opción de salir, se pide presionar Enter para continuar.
 if ($opcion -ne "11") {
     Write-Host ""
     Write-Host "Presiona Enter para volver al menu ..." -ForegroundColor Cyan
     Read-Host
 }
-} while ($true)  # ✅ Cierre correcto del bucle
+
+} while ($true) # Cierre correcto del bucle do-while
