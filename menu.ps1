@@ -30,8 +30,9 @@ if ($autenticado) {
 }
 
 # Obtener el nombre y la fecha de vencimiento del usuario autenticado
-$nombreUsuario = $autenticado | Select-Object -ExpandProperty Nombre
-$fechaVencimiento = $autenticado | Select-Object -ExpandProperty Vence
+$nombreUsuario = $autenticado | Select-Object -First 1 -ExpandProperty Nombre
+$fechaVencimiento = $autenticado | Select-Object -First 1 -ExpandProperty Vence
+
 
 
 # 🏷 Mostrar nombre y fecha de vencimiento en el menú
