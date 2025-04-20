@@ -8,24 +8,8 @@ $usuariosUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main
 $usuariosPath = "$env:TEMP\usuarios.csv"
 Invoke-WebRequest -Uri $usuariosUrl -OutFile $usuariosPath
 
-# Validar si la descarga de usuarios se completó correctamente
-if (!(Test-Path $usuariosPath)) {
-    Write-Host "❌ Error: No se pudo descargar usuarios.csv." -ForegroundColor Red
-    Write-Host "`nPresiona Enter para cerrar..." -ForegroundColor Cyan
-    Read-Host
-    Exit
-}
-
 # Importar datos de usuarios desde el CSV descargado
 $usuarios = Import-Csv $usuariosPath
-
-# Validar si el archivo contiene datos
-if ($usuarios.Count -eq 0) {
-    Write-Host "❌ Error: El archivo usuarios.csv está vacío o corrupto." -ForegroundColor Red
-    Write-Host "`nPresiona Enter para cerrar..." -ForegroundColor Cyan
-    Read-Host
-    Exit
-}
 
 # Solicitar credenciales
 $nombreIngresado = Read-Host "Ingrese su nombre"
@@ -37,14 +21,11 @@ $autenticado = $usuarios | Where-Object {
     $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim() 
 }
 
-# Verificar autenticación
 if ($autenticado) {
     Write-Host "✅ Autenticación exitosa. Cargando el menú..." -ForegroundColor Green
     Start-Sleep -Seconds 2
 } else {
     Write-Host "❌ Error: Nombre o contraseña incorrectos." -ForegroundColor Red
-    Write-Host "`nPresiona Enter para cerrar..." -ForegroundColor Cyan
-    Read-Host
     Exit
 }
 
@@ -52,33 +33,32 @@ if ($autenticado) {
 $nombreUsuario = $autenticado | Select-Object -ExpandProperty Nombre
 $fechaVencimiento = $autenticado | Select-Object -ExpandProperty Vence
 
-# 🔹 Limpiar pantalla después de la autenticación exitosa
-Clear-Host
+# 🔹 CONTINÚA EL MENÚ...
 
-# 🏷 Mostrar nombre y fecha de vencimiento en el menú
-Write-Host "============================================" -ForegroundColor Cyan
-Write-Host " Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow
-Write-Host "============================================" -ForegroundColor Cyan
-Write-Host ""
+do {
+    # Obtener el ancho de la ventana
+    $width = $Host.UI.RawUI.WindowSize.Width
+    $line = "=" * $width
 
-# Verificar si el usuario tiene acceso ilimitado
-if ($fechaVencimiento -eq "Acceso de por vida") {
-    Write-Host "👨‍🔧 Técnico: $nombreUsuario" -ForegroundColor Yellow
-    Write-Host "📅 Vence: Acceso de por vida" -ForegroundColor Yellow
-} else {
-    Write-Host "👨‍🔧 Técnico: $nombreUsuario" -ForegroundColor Yellow
-    Write-Host "📅 Vence: $fechaVencimiento" -ForegroundColor Yellow
-}
+    Clear-Host
+    Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
+    Write-Centered "Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Centered "Técnico: $nombreUsuario" -ForegroundColor Yellow -BackgroundColor Black
 
-Write-Host ""
+    # Verificar si el usuario tiene acceso ilimitado
+    if ($fechaVencimiento -eq "Acceso de por vida") {
+        Write-Centered "Vence: Acceso de por vida" -ForegroundColor Yellow -BackgroundColor Black
+    } else {
+        Write-Centered "Vence: $fechaVencimiento" -ForegroundColor Yellow -BackgroundColor Black
+    }
 
+    Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
+    Write-Host ""
 
-    # Mensaje de suscripción bien visible
     Write-Host "POR SUSCRIPCIÓN: COMUNICARSE AL +598 096790694" -ForegroundColor Magenta -BackgroundColor Black
     Write-Host ""
 
-    # Menú de opciones con encabezado llamativo
-    Write-Host "Elige una opcion:" -ForegroundColor White -BackgroundColor DarkBlue
+    Write-Host "Elige una opción:" -ForegroundColor White -BackgroundColor DarkBlue
     Write-Host ""
     Write-Host " 1. Optimización del sistema" -ForegroundColor Green
     Write-Host " 2. Activador de Windows /En desarrollo" -ForegroundColor Yellow
@@ -92,7 +72,6 @@ Write-Host ""
     Write-Host " 10. Listar los archivos disponibles" -ForegroundColor Green
     Write-Host " 11. Salir" -ForegroundColor Red
 
-    # Capturar elección del usuario
     $opcion = Read-Host "Selecciona una opción (1-11)"
 
 } while ($true)
