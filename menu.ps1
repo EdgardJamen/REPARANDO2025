@@ -1,23 +1,46 @@
-# Definir la fecha de vencimiento de la suscripción
-$fechaVencimiento = "2025-12-31"
-$usuario = $env:USERNAME
+# Definir la ruta del archivo de usuarios
+$usuariosArchivo = "$env:TEMP\usuarios.csv"
 
-# Verificar si la suscripción ha expirado antes de iniciar el menú
-if ((Get-Date) -gt (Get-Date $fechaVencimiento)) {
-    Write-Host "❌ Tu suscripción ha expirado. Contacta con soporte para renovarla." -ForegroundColor Red
+# Descargar la base de datos de usuarios desde GitHub
+$usuariosUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/usuarios.csv"
+Invoke-WebRequest -Uri $usuariosUrl -OutFile $usuariosArchivo
+
+# Verificar si la base de datos se descargó correctamente
+if (!(Test-Path $usuariosArchivo)) {
+    Write-Host "❌ Error: No se pudo descargar la base de datos de usuarios." -ForegroundColor Red
     Exit
 }
 
-# Mostrar información del usuario una sola vez
-Write-Host "Bienvenido, $usuario"
-Write-Host "Tu suscripción es válida hasta: $fechaVencimiento"
+# Leer usuarios y credenciales desde el archivo CSV
+$usuarios = Import-Csv $usuariosArchivo
 
-# Descargar el menú principal desde GitHub (URL corregida)
+# Obtener el nombre de usuario del sistema
+$usuarioActual = $env:USERNAME
+$usuarioValido = $usuarios | Where-Object { $_.Usuario -eq $usuarioActual }
+
+# Validar si el usuario existe en la base de datos
+if ($usuarioValido) {
+    $fechaVencimiento = $usuarioValido.Vencimiento
+
+    # Verificar si la suscripción ha expirado
+    if ((Get-Date) -gt (Get-Date $fechaVencimiento)) {
+        Write-Host "❌ Tu suscripción ha expirado. Contacta con soporte para renovarla." -ForegroundColor Red
+        Exit
+    }
+
+    Write-Host "✅ Autenticación exitosa. Bienvenido, $usuarioActual" -ForegroundColor Green
+    Write-Host "📌 Tu suscripción es válida hasta: $fechaVencimiento"
+} else {
+    Write-Host "❌ Acceso denegado. Tu usuario no está registrado en el sistema." -ForegroundColor Red
+    Exit
+}
+
+# Descargar el menú principal desde GitHub **sin ejecutarlo automáticamente**
 $menuUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/menu.ps1"
 $menuLocal = "$env:TEMP\menu.ps1"
 Invoke-WebRequest -Uri $menuUrl -OutFile $menuLocal
 
-# Verificar que el archivo se descargó correctamente antes de ejecutarlo
+# Verificar que el menú se descargó correctamente antes de ejecutarlo manualmente
 if (Test-Path $menuLocal) {
     Write-Host "`n✅ Menú descargado correctamente en: $menuLocal" -ForegroundColor Cyan
     Write-Host "📌 Para ejecutarlo manualmente, usa el siguiente comando en PowerShell:" -ForegroundColor Yellow
