@@ -1,4 +1,5 @@
 # Establecer la codificacion para evitar errores con caracteres especiales
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 # Autenticacion antes de mostrar el menu
 Write-Host "Autenticando..." -ForegroundColor Yellow
 
