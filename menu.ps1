@@ -6,7 +6,7 @@ Write-Host "Autenticando..." -ForegroundColor Yellow
 # Descargar el archivo de usuarios desde GitHub
 $usuariosUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/usuarios.csv"
 $usuariosPath = "$env:TEMP\usuarios.csv"
-Invoke-WebRequest -Uri $usuariosUrl -OutFile $usuariosPath
+Invoke-WebRequest -Uri $usuariosUrl -Outfile $usuariosPath
 
 # Importar datos de usuarios desde el CSV descargado
 $usuarios = Import-Csv $usuariosPath
@@ -15,23 +15,28 @@ $usuarios = Import-Csv $usuariosPath
 $nombreIngresado = Read-Host "Ingrese su nombre"
 $contrasenaIngresada = Read-Host "Ingrese su contrasena"
 
-# Limpieza de espacios y comparación sin diferenciar mayúsculas/minúsculas
-$autenticado = $usuarios | Where-Object { 
-    $_.Nombre.Trim() -ieq $nombreIngresado.Trim() -and 
-    $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim() 
+# Limpieza de espacios y comparación sin diferenciar mayusculas/minusculas
+$autenticado = $usuarios | Where-Object {
+    $_.Nombre.Trim() -eq $nombreIngresado.Trim() -and
+    $_.Contrasena.Trim() -eq $contrasenaIngresada.Trim()
 }
 
 if ($autenticado) {
     Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
     Start-Sleep -Seconds 2
 } else {
-    Write-Host "Error: Nombre o contraseña incorrectos." -ForegroundColor Red
+    Write-Host "Error: Nombre o contrasena incorrectos." -ForegroundColor Red
     Exit
 }
 
-# 🔹 CONTINÚA EL MENÚ...
-
+# 🔹 CONTINÚA EL MENÚ
 do {
+    # Obtener el ancho de la ventana (en cada iteracion para adaptarse a cambios)
+    $width = $Host.UI.RawUI.WindowSize.Width
+    # Crear una linea de "=" que llene el ancho de la ventana
+    $line = "=" * $width
+}
+
     Write-Host "============================================" -ForegroundColor Cyan
     Write-Host " Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow
     Write-Host "============================================" -ForegroundColor Cyan
