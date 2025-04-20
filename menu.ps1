@@ -198,7 +198,11 @@ switch ($opcion) {
 
     # Verificar si la descarga fue exitosa antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Write-Host "✅ Script descargado correctamente. Ejecutando..." -ForegroundColor Cyan
+        Write-Host "✅ Script descargado correctamente en: $scriptPath" -ForegroundColor Cyan
+        
+        # Pausar para ver que el archivo descargado esté presente
+        Read-Host "Presiona Enter para ejecutar el script"
+        
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
             -WindowStyle Normal -Wait -Verb RunAs
@@ -209,6 +213,8 @@ switch ($opcion) {
         Write-Host "❌ Error: No se pudo descargar OptimizarInicioServicios.ps1." -ForegroundColor Red
         Read-Host
     }
+}
+
 "9" {
     Write-Host "Ejecutando proceso de registro..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/RegistroActividades.ps1"
