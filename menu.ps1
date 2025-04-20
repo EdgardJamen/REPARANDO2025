@@ -15,7 +15,7 @@ $usuarios = Import-Csv $usuariosPath
 $nombreIngresado = Read-Host "Ingrese su nombre"
 $contrasenaIngresada = Read-Host "Ingrese su contrasena"
 
-# Limpieza de espacios y comparación sin diferenciar mayusculas/minusculas
+# Limpieza de espacios y comparacion sin diferenciar mayúsculas/minúsculas
 $autenticado = $usuarios | Where-Object { 
     $_.Nombre.Trim() -ieq $nombreIngresado.Trim() -and 
     $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim() 
@@ -25,38 +25,33 @@ if ($autenticado) {
     Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
     Start-Sleep -Seconds 2
 } else {
-    Write-Host "Error: Nombre o contraseña incorrectos." -ForegroundColor Red
+    Write-Host "❌ Error: Nombre o contraseña incorrectos." -ForegroundColor Red
     Exit
 }
 
-# 🏷 Extraer datos del usuario autenticado
-$nombreUsuario = $autenticado.Nombre
-$fechaVencimiento = $autenticado.Vence
-
-# Asegurar que los valores no estén vacíos
-if (-not $nombreUsuario -or -not $fechaVencimiento) {
-    Write-Host "❌ Error: No se pudieron obtener los datos del usuario." -ForegroundColor Red
-    Exit
-}
+# 🔹 Limpiar pantalla después de la autenticación exitosa
+Clear-Host
 
 # 🏷 Mostrar nombre y fecha de vencimiento en el menú
-Clear-Host
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host " Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host ""
 
+# Obtener el nombre y la fecha de vencimiento del usuario autenticado
+$nombreUsuario = $autenticado | Select-Object -First 1 -ExpandProperty Nombre
+$fechaVencimiento = $autenticado | Select-Object -First 1 -ExpandProperty Vence
+
 # Verificar si el usuario tiene acceso ilimitado
 if ($fechaVencimiento -eq "Acceso de por vida") {
-    Write-Host "👨‍🔧 Técnico: $nombreUsuario" -ForegroundColor Yellow
+    Write-Host "👨‍🔧 Tecnico: $nombreUsuario" -ForegroundColor Yellow
     Write-Host "📅 Vence: Acceso de por vida" -ForegroundColor Yellow
 } else {
-    Write-Host "👨‍🔧 Técnico: $nombreUsuario" -ForegroundColor Yellow
+    Write-Host "👨‍🔧 Tecnico: $nombreUsuario" -ForegroundColor Yellow
     Write-Host "📅 Vence: $fechaVencimiento" -ForegroundColor Yellow
 }
 
 Write-Host ""
-
 
 # 🔹 CONTINÚA EL MENÚ...
 
