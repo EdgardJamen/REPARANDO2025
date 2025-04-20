@@ -39,8 +39,8 @@ $line = "=" * $width
 # Crear un recuadro elegante para la cabecera
 Clear-Host
 Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
-Write-Host "SISTEMA DESARROLLADO POR" -ForegroundColor White -BackgroundColor Black
-Write-Host "TECNICO: GABRIEL JAMEN" -ForegroundColor Yellow -BackgroundColor Black
+Write-Host "SISTEMA DESARROLLADO POR" -ForegroundColor White -BackgroundColor Blue
+Write-Host "TECNICO: GABRIEL JAMEN" -ForegroundColor Yellow -BackgroundColor Blue
 Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
 Write-Host ""
  Write-Host "Por suscripcion, comunicarse al +598 096790694" -ForegroundColor Magenta
