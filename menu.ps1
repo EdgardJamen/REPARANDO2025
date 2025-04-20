@@ -225,7 +225,7 @@ switch ($opcion) {
 }
  "9" {
     Write-Host "Ejecutando proceso de registro..." -ForegroundColor Green
-    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/RegistroActividades.ps1"
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/RegistroActividades.ps1"
     $scriptPath = "$env:TEMP\RegistroActividades.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
 
