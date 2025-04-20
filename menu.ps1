@@ -50,7 +50,7 @@ Invoke-WebRequest -Uri $menuUrl -OutFile $menuLocal
 if (Test-Path $menuLocal) {
     Write-Host "`n✅ Menú descargado correctamente en: $menuLocal" -ForegroundColor Cyan
     Write-Host "📌 Para ejecutarlo manualmente, usa el siguiente comando en PowerShell:" -ForegroundColor Yellow
-    Write-Host "`n  & `"$menuLocal`"" -ForegroundColor Cyan
+    Write-Host "`n  `"& $menuLocal`"" -ForegroundColor Cyan
 } else {
     Write-Host "❌ Error: No se pudo descargar menu.ps1." -ForegroundColor Red
     Read-Host
