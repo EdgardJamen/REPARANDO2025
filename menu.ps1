@@ -1,60 +1,83 @@
-# Establecer la codificación para evitar errores con caracteres especiales
+versión casi estable del menú.ps1
+
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# Definir la ruta del archivo de usuarios
-$usuariosArchivo = "$env:TEMP\usuarios.csv"
+# 🔒 AUTENTICACION ANTES DE MOSTRAR EL MENU
+Write-Host "Autenticando..." -ForegroundColor Yellow
 
-# Descargar la base de datos de usuarios desde GitHub
+# Descargar el archivo de usuarios desde GitHub
 $usuariosUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/usuarios.csv"
-Invoke-WebRequest -Uri $usuariosUrl -OutFile $usuariosArchivo
+$usuariosPath = "$env:TEMP\usuarios.csv"
+Invoke-WebRequest -Uri $usuariosUrl -OutFile $usuariosPath
 
-# Verificar si la base de datos se descargó correctamente
-if (!(Test-Path $usuariosArchivo)) {
-    Write-Host "`n❌ Error: No se pudo descargar la base de datos de usuarios." -ForegroundColor Red
+# Importar datos de usuarios desde el CSV descargado
+$usuarios = Import-Csv $usuariosPath
+
+# Solicitar credenciales
+$nombreIngresado = Read-Host "Ingrese su nombre"
+$contrasenaIngresada = Read-Host "Ingrese su contrasena"
+
+# Limpieza de espacios y comparación sin diferenciar mayúsculas/minúsculas
+$autenticado = $usuarios | Where-Object { 
+    $_.Nombre.Trim() -ieq $nombreIngresado.Trim() -and 
+    $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim() 
+}
+
+if ($autenticado) {
+    Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
+    Start-Sleep -Seconds 2
+} else {
+    Write-Host "Error: Nombre o contraseña incorrectos." -ForegroundColor Red
     Exit
 }
 
-# Leer usuarios y credenciales desde el archivo CSV
-$usuarios = Import-Csv $usuariosArchivo
+# 🔹 CONTINÚA EL MENÚ
+do {
+    # Obtener el ancho de la ventana (en cada iteracion para adaptarse a cambios)
+    $width = $Host.UI.RawUI.WindowSize.Width
+    # Crear una linea de "=" que llene el ancho de la ventana
+    $line = "=" * $width
 
-# Obtener el nombre de usuario del sistema
-$usuarioActual = $env:USERNAME
-$usuarioValido = $usuarios | Where-Object { $_.Nombre -eq $usuarioActual }
-
-# Validar si el usuario existe en la base de datos
-if ($usuarioValido) {
-    $fechaVencimiento = $usuarioValido.Vence
-
-    # Manejar el caso especial de "Acceso de por vida"
-    if ($fechaVencimiento -eq "Acceso de por vida") {
-        Write-Host "`n✅ Autenticación exitosa. Bienvenido, $usuarioActual" -ForegroundColor Green
-        Write-Host "`📌 Tu suscripción es válida de por vida!"
-    } else {
-        # Verificar si la suscripción ha expirado
-        if ((Get-Date) -gt (Get-Date $fechaVencimiento)) {
-            Write-Host "`n❌ Tu suscripción ha expirado. Contacta con soporte para renovarla." -ForegroundColor Red
-            Exit
-        }
-
-        Write-Host "`n✅ Autenticación exitosa. Bienvenido, $usuarioActual" -ForegroundColor Green
-        Write-Host "`📌 Tu suscripción es válida hasta: $fechaVencimiento"
+    # Funcion para escribir un texto centrado en la consola
+    function Write-Centered {
+        param(
+            [string]$text,
+            [ConsoleColor]$ForegroundColor = "White",
+            [ConsoleColor]$BackgroundColor = "Black"
+        )
+        # Calcular la cantidad de espacios a la izquierda para centrar
+        $padding = ($width - $text.Length) / 2
+        if ($padding -lt 0) { $padding = 0 }
+        $leftSpaces = " " * [Math]::Floor($padding)
+        Write-Host "$leftSpaces$text" -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor
     }
-} else {
-    Write-Host "`n❌ Acceso denegado. Tu usuario no está registrado en el sistema." -ForegroundColor Red
-    Exit
-}
 
-# Descargar el menú principal desde GitHub **sin ejecutarlo automáticamente**
-$menuUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/menu.ps1"
-$menuLocal = "$env:TEMP\menu.ps1"
-Invoke-WebRequest -Uri $menuUrl -OutFile $menuLocal
+    Clear-Host
+    # Encabezado con fondo oscuro para resaltar
+    Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
+    Write-Centered "Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Centered "Tecnico: Gabriel Jamen" -ForegroundColor Yellow -BackgroundColor Black
+    Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
+    Write-Host ""
 
-# Verificar que el menú se descargó correctamente antes de ejecutarlo manualmente
-if (Test-Path $menuLocal) {
-    Write-Host "`n✅ Menú descargado correctamente en: $menuLocal" -ForegroundColor Cyan
-    Write-Host "`📌 Para ejecutarlo manualmente, usa el siguiente comando en PowerShell:" -ForegroundColor Yellow
-    Write-Host "`n  \"& `"$menuLocal`""\" -ForegroundColor Cyan
-} else {
-    Write-Host "`n❌ Error: No se pudo descargar menu.ps1." -ForegroundColor Red
-    Read-Host
-}
+    # Mensaje de suscripcion bien visible
+    Write-Host "POR SUSCRIPCION: COMUNICARSE AL +598 096790694" -ForegroundColor Magenta -BackgroundColor Black
+    Write-Host ""
+
+    # Menú de opciones con encabezado llamativo
+    Write-Host "Elige una opcion:" -ForegroundColor White -BackgroundColor DarkBlue
+    Write-Host ""
+    Write-Host " 1. Optimizacion del sistema" -ForegroundColor Green
+    Write-Host " 2. Activador de Windows /En desarrollo" -ForegroundColor Yellow
+    Write-Host " 3. Activador de Excel /En desarrollo" -ForegroundColor Yellow
+    Write-Host " 4. Limpieza de registros" -ForegroundColor Green
+    Write-Host " 5. Diagnostico y optimizacion del disco duro HDD" -ForegroundColor Green
+    Write-Host " 6. Diagnostico y optimizacion del disco duro SSD" -ForegroundColor Green
+    Write-Host " 7. Crear Punto de Restauracion" -ForegroundColor Green
+    Write-Host " 8. Optimizar inicio y servicios" -ForegroundColor Red
+    Write-Host " 9. Registro de Actividades (Logs)" -ForegroundColor Green
+    Write-Host " 10. Listar los archivos disponibles" -ForegroundColor Green
+    Write-Host " 11. Salir" -ForegroundColor Red
+    
+    # Capturar eleccion del usuario
+    $opcion = Read-Host "Selecciona una opcion (1-10)"
