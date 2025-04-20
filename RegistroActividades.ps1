@@ -75,6 +75,6 @@ switch ($choice) {
     }
 }
 
-Write-Host "`nPresione Enter para salir del script..."
+Write-Host "`nPresione Enter para salir ..."
 Read-Host
 [System.Environment]::Exit(0)
