@@ -247,6 +247,30 @@ switch ($opcion) {
         Write-Host "❌ Error: No se pudo descargar correctamente el archivo." -ForegroundColor Red
     }
 }
+"10" {
+    Write-Host "Obteniendo lista de archivos disponibles..." -ForegroundColor Green
+
+    # Definir los archivos disponibles en línea
+    $archivosDisponibles = @(
+        "optimizacion.ps1",
+        "LimpiezaRegistros.ps1",
+        "DiagnosticoHDD.ps1",
+        "DiagnosticoSSD.ps1",
+        "CrearPuntoRestauracion.ps1",
+        "OptimizarInicioServicios.ps1",
+        "RegistroActividades.ps1"
+    )
+
+    # Mostrar archivos sin revelar la ruta
+    Write-Host "`nOpciones activas:" -ForegroundColor Cyan
+    foreach ($archivo in $archivosDisponibles) {
+        Write-Host " - $archivo" -ForegroundColor Yellow
+    }
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
+    Read-Host
+}
+
  "11" {
         Write-Host "Saliendo del sistema..." -ForegroundColor Red
         break
