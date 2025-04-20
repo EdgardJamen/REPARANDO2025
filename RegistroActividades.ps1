@@ -1,30 +1,16 @@
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-Clear-Host
-
-# Definir la ruta del archivo de log
+# Definir la ruta del archivo de log en TEMP (compatible con cualquier PC)
 $logFile = "$env:TEMP\system_log.txt"
 
-# Obtener el ancho de la ventana y crear una línea de "=" para el encabezado
-$width = $Host.UI.RawUI.WindowSize.Width
-$line = "=" * $width
-
-# Función para escribir un texto centrado en la consola
-function Write-Centered {
-    param(
-        [string]$text,
-        [ConsoleColor]$ForegroundColor = "White",
-        [ConsoleColor]$BackgroundColor = "Black"
-    )
-    $padding = ($width - $text.Length) / 2
-    if ($padding -lt 0) { $padding = 0 }
-    $leftSpaces = " " * ([Math]::Floor($padding))
-    Write-Host "$leftSpaces$text" -ForegroundColor $ForegroundColor -BackgroundColor $BackgroundColor
+# Verificar si el archivo de registro existe, si no, crearlo
+if (!(Test-Path $logFile)) {
+    New-Item -Path $logFile -ItemType File -Force
+    Add-Content -Path $logFile -Value "Registro creado - $(Get-Date)"
 }
 
 # Encabezado
-Write-Host $line -ForegroundColor Magenta -BackgroundColor Black
-Write-Centered "REGISTRO DE ACTIVIDADES" -ForegroundColor Magenta -BackgroundColor Black
-Write-Host $line -ForegroundColor Magenta -BackgroundColor Black
+Write-Host "============================================" -ForegroundColor Magenta
+Write-Host "          REGISTRO DE ACTIVIDADES          " -ForegroundColor Magenta
+Write-Host "============================================" -ForegroundColor Magenta
 Write-Host ""
 
 # Mostrar opciones del submenú
@@ -41,40 +27,39 @@ switch ($choice) {
         if (Test-Path $logFile) {
             Get-Content $logFile | ForEach-Object { Write-Host $_ }
         } else {
-            Write-Host "No se encontró un registro de actividades." -ForegroundColor Yellow
+            Write-Host "No se encontro un registro de actividades." -ForegroundColor Yellow
         }
         Write-Host "`nPresione Enter para continuar..."
         Read-Host
     }
     "2" {
-        Write-Host "`n¿Está seguro de borrar el registro? (Y/N)" -ForegroundColor Red
+        Write-Host "`n¿Esta seguro de borrar el registro? (Y/N)" -ForegroundColor Red
         $confirm = Read-Host "Confirmar (Y/N)"
         if ($confirm -in @("Y", "y")) {
             if (Test-Path $logFile) {
                 Clear-Content $logFile -ErrorAction SilentlyContinue
                 Write-Host "Registro borrado." -ForegroundColor Green
             } else {
-                Write-Host "No se encontró registro para borrar." -ForegroundColor Yellow
+                Write-Host "No se encontro registro para borrar." -ForegroundColor Yellow
             }
         } else {
             Write-Host "No se borró el registro." -ForegroundColor Yellow
         }
-        Write-Host "`nPresione Enter para continuar..."
+        Write-Host "`nPresione Enter para continuar...."
         Read-Host
     }
     "3" {
-        Write-Host "`nSaliendo del modulo de registro de actividades..." -ForegroundColor Red
+        Write-Host "`nSaliendo del modulo de registro de actividades...." -ForegroundColor Red
         Start-Sleep -Seconds 2
-        # Salir del script
         [System.Environment]::Exit(0)
     }
     Default {
-        Write-Host "`nOpción no valida." -ForegroundColor Red
-        Write-Host "Presione Enter para continuar..."
+        Write-Host "`nOpcion no válida." -ForegroundColor Red
+        Write-Host "Presione Enter para continuar...."
         Read-Host
     }
 }
 
-Write-Host "`nPresione Enter para salir ..."
+Write-Host "`nPresione Enter para salir...."
 Read-Host
 [System.Environment]::Exit(0)
