@@ -273,17 +273,17 @@ switch ($opcion) {
 
 "11" {
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
-    Stop-Process -Name "powershell" -Force
+    Exit
 }
 Default {
-    Write-Host "Opcion no valida. Intenta nuevamente." -ForegroundColor Red
+    Write-Host "Opción no válida. Intenta nuevamente." -ForegroundColor Red
+}
 }
 
-# Si no se escogio la opcion de salir, se pide presionar Enter para continuar.
-if ($opcion -ne "11") {
+# Si no se escogió la opción de salir, se pide presionar Enter para continuar.
+if ($opcion -ne "10") {
     Write-Host ""
-    Write-Host "Presiona Enter para volver al menu ..." -ForegroundColor Cyan
+    Write-Host "Presiona Enter para volver al menú ..." -ForegroundColor Cyan
     Read-Host
 }
-
 } while ($true)  # ✅ Cierre correcto del bucle
