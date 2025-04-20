@@ -273,7 +273,8 @@ switch ($opcion) {
 
 "11" {
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
-    Stop-Process -Id $PID -Force
+    Start-Sleep -Seconds 2
+    Stop-Process -Name "powershell" -Force
 }
 Default {
     Write-Host "Opcion no valida. Intenta nuevamente." -ForegroundColor Red
