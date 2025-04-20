@@ -14,11 +14,11 @@ if (-not (Test-Admin)) {
     Exit
 }
 
-# Comprobar si la restauración del sistema está desactivada
-$estadoRestauracion = (vssadmin list shadows 2>&1) -match "No se encuentran copias de seguridad"
+# Comprobar si la protección del sistema está deshabilitada
+$estadoProteccion = (vssadmin list shadows 2>&1) -match "no tiene dispositivos habilitados asociados"
 
-if ($estadoRestauracion) {
-    Write-Host "Activando la protección del sistema en la unidad C:..." -ForegroundColor Yellow
+if ($estadoProteccion) {
+    Write-Host "⚠️ La protección del sistema está deshabilitada. Activándola en C:\..." -ForegroundColor Yellow
     Enable-ComputerRestore -Drive "C:\"
 }
 
@@ -30,10 +30,10 @@ Start-Service -Name "VSS" -ErrorAction SilentlyContinue
 try {
     Write-Host "Creando un punto de restauración. Por favor espere..." -ForegroundColor Cyan
     Checkpoint-Computer -Description "Backup Pre-Optimización" -RestorePointType MODIFY_SETTINGS -ErrorAction Stop
-    Write-Host "Punto de restauración creado exitosamente." -ForegroundColor Green
+    Write-Host "✅ Punto de restauración creado exitosamente." -ForegroundColor Green
 }
 catch {
-    Write-Host "Error al crear el punto de restauración: $($_.Exception.Message)" -ForegroundColor Red
+    Write-Host "❌ Error al crear el punto de restauración: $($_.Exception.Message)" -ForegroundColor Red
 }
 
 Write-Host "Presiona Enter para continuar..."
