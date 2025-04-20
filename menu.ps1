@@ -1,5 +1,8 @@
 # Establecer la codificacion para evitar errores con caracteres especiales
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+# Asegurar que PowerShell tenga permisos para ejecutar scripts
+Set-ExecutionPolicy Bypass -Scope Process -Force
+
 # Autenticacion antes de mostrar el menu
 Write-Host "Autenticando..." -ForegroundColor Yellow
 
