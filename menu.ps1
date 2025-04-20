@@ -273,6 +273,27 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+"13" {
+    Write-Host "Cargando descripción del programa..." -ForegroundColor Cyan
+    $descripcionUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/descripcion.txt"
+    $descripcionPath = "$env:TEMP\descripcion.txt"
+
+    # Descargar el archivo desde GitHub
+    Invoke-WebRequest -Uri $descripcionUrl -OutFile $descripcionPath
+    Start-Sleep -Seconds 2
+
+    # Verificar si el archivo existe antes de mostrarlo
+    if (Test-Path $descripcionPath) {
+        Write-Host "`nDescripción del programa:" -ForegroundColor Green
+        Get-Content $descripcionPath | ForEach-Object { Write-Host $_ }
+    } else {
+        Write-Host "❌ Error: No se pudo obtener la descripción del programa." -ForegroundColor Red
+    }
+
+    Write-Host "`nPresiona Enter para continuar..." -ForegroundColor Cyan
+    Read-Host
+}
+
 "X" {
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
     Start-Sleep -Seconds 1
