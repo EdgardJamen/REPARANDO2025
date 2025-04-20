@@ -271,10 +271,19 @@ switch ($opcion) {
     Read-Host
 }
 
- "11" {
-        Write-Host "Saliendo del sistema..." -ForegroundColor Red
-        break
-    }
+"11" {
+    Write-Host "Saliendo del sistema..." -ForegroundColor Red
+    Exit
+}
+Default {
+    Write-Host "Opción no válida. Intenta nuevamente." -ForegroundColor Red
+}
 }
 
+# Si no se escogió la opción de salir, se pide presionar Enter para continuar.
+if ($opcion -ne "10") {
+    Write-Host ""
+    Write-Host "Presiona Enter para volver al menú ..." -ForegroundColor Cyan
+    Read-Host
+}
 } while ($true)  # ✅ Cierre correcto del bucle
