@@ -1,6 +1,6 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
-# 🔒 AUTENTICACION ANTES DE MOSTRAR EL MENU
+# 🔒 AUTENTICACIÓN ANTES DE MOSTRAR EL MENÚ
 Write-Host "Autenticando..." -ForegroundColor Yellow
 
 # Descargar el archivo de usuarios desde GitHub
@@ -8,12 +8,28 @@ $usuariosUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main
 $usuariosPath = "$env:TEMP\usuarios.csv"
 Invoke-WebRequest -Uri $usuariosUrl -OutFile $usuariosPath
 
+# Validar si la descarga de usuarios se completó correctamente
+if (!(Test-Path $usuariosPath)) {
+    Write-Host "❌ Error: No se pudo descargar usuarios.csv." -ForegroundColor Red
+    Write-Host "`nPresiona Enter para cerrar..." -ForegroundColor Cyan
+    Read-Host
+    Exit
+}
+
 # Importar datos de usuarios desde el CSV descargado
 $usuarios = Import-Csv $usuariosPath
 
+# Validar si el archivo contiene datos
+if ($usuarios.Count -eq 0) {
+    Write-Host "❌ Error: El archivo usuarios.csv está vacío o corrupto." -ForegroundColor Red
+    Write-Host "`nPresiona Enter para cerrar..." -ForegroundColor Cyan
+    Read-Host
+    Exit
+}
+
 # Solicitar credenciales
 $nombreIngresado = Read-Host "Ingrese su nombre"
-$contrasenaIngresada = Read-Host "Ingrese su contrasena"
+$contrasenaIngresada = Read-Host "Ingrese su contraseña"
 
 # Limpieza de espacios y comparación sin diferenciar mayúsculas/minúsculas
 $autenticado = $usuarios | Where-Object { 
@@ -21,44 +37,41 @@ $autenticado = $usuarios | Where-Object {
     $_.Contrasena.Trim() -ieq $contrasenaIngresada.Trim() 
 }
 
+# Verificar autenticación
 if ($autenticado) {
-    Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
+    Write-Host "✅ Autenticación exitosa. Cargando el menú..." -ForegroundColor Green
     Start-Sleep -Seconds 2
 } else {
     Write-Host "❌ Error: Nombre o contraseña incorrectos." -ForegroundColor Red
+    Write-Host "`nPresiona Enter para cerrar..." -ForegroundColor Cyan
+    Read-Host
     Exit
 }
-
-# 🔹 Limpiar pantalla después de la autenticación exitosa
-Clear-Host
 
 # 🏷 Obtener el nombre y la fecha de vencimiento del usuario autenticado
 $nombreUsuario = $autenticado | Select-Object -ExpandProperty Nombre
 $fechaVencimiento = $autenticado | Select-Object -ExpandProperty Vence
 
-# 🔹 CONTINÚA EL MENÚ...
+# 🔹 Limpiar pantalla después de la autenticación exitosa
+Clear-Host
 
-do {
-    # Obtener el ancho de la ventana (para adaptarse a cambios)
-    $width = $Host.UI.RawUI.WindowSize.Width
-    # Crear una línea de "=" que llene el ancho de la ventana
-    $line = "=" * $width
+# 🏷 Mostrar nombre y fecha de vencimiento en el menú
+Write-Host "============================================" -ForegroundColor Cyan
+Write-Host " Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow
+Write-Host "============================================" -ForegroundColor Cyan
+Write-Host ""
 
-    Clear-Host
-    # Encabezado con fondo oscuro para resaltar datos del usuario autenticado
-    Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
-    Write-Host " Reparando.mercedes es un trabajo desarrollado por :" -ForegroundColor Yellow -BackgroundColor Black
-    Write-Host " Técnico: $nombreUsuario" -ForegroundColor Yellow -BackgroundColor Black
+# Verificar si el usuario tiene acceso ilimitado
+if ($fechaVencimiento -eq "Acceso de por vida") {
+    Write-Host "👨‍🔧 Técnico: $nombreUsuario" -ForegroundColor Yellow
+    Write-Host "📅 Vence: Acceso de por vida" -ForegroundColor Yellow
+} else {
+    Write-Host "👨‍🔧 Técnico: $nombreUsuario" -ForegroundColor Yellow
+    Write-Host "📅 Vence: $fechaVencimiento" -ForegroundColor Yellow
+}
 
-    # Verificar si el usuario tiene acceso ilimitado
-    if ($fechaVencimiento -eq "Acceso de por vida") {
-        Write-Host " Vence: Acceso de por vida" -ForegroundColor Yellow -BackgroundColor Black
-    } else {
-        Write-Host " Vence: $fechaVencimiento" -ForegroundColor Yellow -BackgroundColor Black
-    }
+Write-Host ""
 
-    Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
-    Write-Host ""
 
     # Mensaje de suscripción bien visible
     Write-Host "POR SUSCRIPCIÓN: COMUNICARSE AL +598 096790694" -ForegroundColor Magenta -BackgroundColor Black
