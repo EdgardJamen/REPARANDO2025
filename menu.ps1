@@ -77,21 +77,21 @@ Write-Host "Seleccione una opcion:" -ForegroundColor White
 
     Write-Host ""
 
-    Write-Host "Seleccione una opcion:" -ForegroundColor White -BackgroundColor DarkBlue
-    Write-Host " 1. Optimizacion del sistema" -ForegroundColor Green
-    Write-Host " 2. Activador de Windows (En desarrollo)" -ForegroundColor Yellow
-    Write-Host " 3. Activador de Excel (En desarrollo)" -ForegroundColor Yellow
-    Write-Host " 4. Limpieza de registros" -ForegroundColor Green
-    Write-Host " 5. Diagnostico y optimizacion del disco duro HDD" -ForegroundColor Green
-    Write-Host " 6. Diagnostico y optimizacion del disco duro SSD" -ForegroundColor Green
-    Write-Host " 7. Crear Punto de Restauracion" -ForegroundColor Green
-    Write-Host " 8. Optimizar inicio y servicios" -ForegroundColor Red
-    Write-Host " 9. Registro de actividades (Logs)" -ForegroundColor Green
-    Write-Host " 10. Listar los archivos disponibles" -ForegroundColor Green
+    Write-Host "Seleccione una opcion:]" -ForegroundColor White -BackgroundColor DarkBlue
+    Write-Host " 1.  [Optimizacion del sistema]" -ForegroundColor Green
+    Write-Host " 2.  [Activador de Windows (En desarrollo)]" -ForegroundColor Yellow
+    Write-Host " 3.  [Activador de Excel (En desarrollo)]" -ForegroundColor Yellow
+    Write-Host " 4.  [Limpieza de registros]" -ForegroundColor Green
+    Write-Host " 5.  [Diagnostico y optimizacion del disco duro HDD]" -ForegroundColor Green
+    Write-Host " 6.  [Diagnostico y optimizacion del disco duro SSD]" -ForegroundColor Green
+    Write-Host " 7.  [Crear Punto de Restauracion]" -ForegroundColor Green
+    Write-Host " 8.  [Optimizar inicio y servicios]" -ForegroundColor Red
+    Write-Host " 9.  [Registro de actividades (Logs)]" -ForegroundColor Green
+    Write-Host " 10. [Listar los archivos disponibles]" -ForegroundColor Green
     Write-Host " 11. [Disponible para futuras funciones]" -ForegroundColor Yellow
     Write-Host " 12. [Disponible para futuras funciones]" -ForegroundColor Yellow
-    Write-Host " 13. Descripcion del programa" -ForegroundColor Cyan
-    Write-Host " X. Salir" -ForegroundColor Red
+    Write-Host " 13. [Descripcion del programa" -ForegroundColor Cyan
+    Write-Host " X.  [Salir" -ForegroundColor Red
 
     # Capturar eleccion del usuario
 $opcion = Read-Host "Ingrese una opcion (1-13)"
