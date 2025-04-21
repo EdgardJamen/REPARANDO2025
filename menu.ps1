@@ -85,7 +85,7 @@ Write-Host "Seleccione una opcion:" -ForegroundColor White
     Write-Host " 5.  [Diagnostico y optimizacion del disco duro HDD]" -ForegroundColor Green
     Write-Host " 6.  [Diagnostico y optimizacion del disco duro SSD]" -ForegroundColor Green
     Write-Host " 7.  [Crear Punto de Restauracion]" -ForegroundColor Green
-    Write-Host " 8.  [Optimizar inicio y servicios]" -ForegroundColor Red
+    Write-Host " 8.  [Optimizar inicio y servicios]" -ForegroundColor Green
     Write-Host " 9.  [Registro de actividades (Logs)]" -ForegroundColor Green
     Write-Host " 10. [Listar los archivos disponibles]" -ForegroundColor Green
     Write-Host " 11. [Disponible para futuras funciones]" -ForegroundColor Yellow
