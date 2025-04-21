@@ -105,14 +105,14 @@ Write-Host "Suscripcion vence el: $suscripcionVence" -ForegroundColor Yellow
 Write-Host ""
 
 # Mensaje de suscripcion
-Write-Host "Por suscripcion o renovacion, comunicarse al +598 096790694" -ForegroundColor Magenta
+Write-Host "Por suscripcion o renovacion, comunicarse al +598 096790694" -ForegroundColor White
 
 # Advertencia recuadrada
-Write-Host "======================================" -ForegroundColor Red
-Write-Host "|  Recuerde que compartir el usuario  |" -ForegroundColor Red
-Write-Host "|  deribara en la suspencion del      |" -ForegroundColor Red
-Write-Host "|  servicio                           |" -ForegroundColor Red
-Write-Host "======================================" -ForegroundColor Red
+Write-Host "======================================" -ForegroundColor Yellow
+Write-Host "|  Recuerde que compartir el usuario  |" -ForegroundColor Yellow
+Write-Host "|  deribara en la suspencion del      |" -ForegroundColor Yellow
+Write-Host "|  servicio                           |" -ForegroundColor Yellow
+Write-Host "======================================" -ForegroundColor Yellow
 
 Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "          SELECCIONE UNA OPCION            " -ForegroundColor White -BackgroundColor DarkBlue
