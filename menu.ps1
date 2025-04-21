@@ -2,9 +2,6 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 # Asegurar que PowerShell tenga permisos para ejecutar scripts
 Set-ExecutionPolicy Bypass -Scope Process -Force
-# Establecer la codificacion para evitar errores con caracteres especiales
-[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
-
 # Asegurar que PowerShell tenga permisos para ejecutar scripts
 Set-ExecutionPolicy Bypass -Scope Process -Force
 
