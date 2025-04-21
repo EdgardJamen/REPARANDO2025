@@ -369,4 +369,7 @@ if ($opcion -ne "X") {
     Read-Host
 }
 
+# Mostrar la version estable en la parte inferior
+Write-Host "`nVersion ESTABLE 20.4.2025.22:33" -ForegroundColor DarkGray -BackgroundColor White
+
 } while ($true) # Cierre correcto del bucle do-while
