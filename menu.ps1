@@ -19,15 +19,16 @@ public class Win32 {
 }
 "@
 
-# Establecer dimensiones de ventana sin pantalla completa
+# Establecer dimensiones de ventana sin maximizar
 $consolePtr = [Win32]::GetConsoleWindow()
 [Win32]::ShowWindow($consolePtr, 2)  # Mantiene la ventana grande sin ocupar toda la pantalla
 
 # Ajustar ancho y alto para evitar espacios vacíos
 $window = $Host.UI.RawUI.WindowSize
-$window.Width = 85  # Ajusta el ancho (prueba valores entre 75-90)
+$window.Width = 50  # Reducir el ancho (prueba valores entre 70-80 para evitar la barra de desplazamiento)
 $window.Height = 30 # Ajusta la altura para que todo el contenido sea visible
 $Host.UI.RawUI.WindowSize = $window
+
 
 # Autenticacion antes de mostrar el menu
 Write-Host "Autenticando..." -ForegroundColor Yellow
