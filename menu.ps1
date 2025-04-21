@@ -119,21 +119,30 @@ Write-Host "Seleccione una opcion:" -ForegroundColor White
 
     Write-Host ""
 
-    Write-Host "Seleccione una opcion:]" -ForegroundColor White -BackgroundColor DarkBlue
-    Write-Host " 1.  [Optimizacion del sistema]" -ForegroundColor Green
-    Write-Host " 2.  [Activador de Windows (En desarrollo)]" -ForegroundColor Yellow
-    Write-Host " 3.  [Activador de Excel (En desarrollo)]" -ForegroundColor Yellow
-    Write-Host " 4.  [Limpieza de registros]" -ForegroundColor Green
-    Write-Host " 5.  [Diagnostico y optimizacion del disco duro HDD]" -ForegroundColor Green
-    Write-Host " 6.  [Diagnostico y optimizacion del disco duro SSD]" -ForegroundColor Green
-    Write-Host " 7.  [Crear Punto de Restauracion]" -ForegroundColor Green
-    Write-Host " 8.  [Optimizar inicio y servicios]" -ForegroundColor Green
-    Write-Host " 9.  [Registro de actividades (Logs)]" -ForegroundColor Green
-    Write-Host " 10. [Listar los archivos disponibles]" -ForegroundColor Green
-    Write-Host " 11. [Disponible para futuras funciones]" -ForegroundColor Yellow
-    Write-Host " 12. [Disponible para futuras funciones]" -ForegroundColor Yellow
-    Write-Host " 13. [Descripcion del programa]" -ForegroundColor Cyan
-    Write-Host " X.  [Salir]" -ForegroundColor Red
+   Write-Host "============================================" -ForegroundColor Cyan
+Write-Host "          SELECCIONE UNA OPCIÓN            " -ForegroundColor White -BackgroundColor DarkBlue
+Write-Host "============================================" -ForegroundColor Cyan
+
+Write-Host "  1.  [>] Optimizacion del sistema         " -ForegroundColor Green
+Write-Host "  2.  [!] Activador de Windows (En desarrollo)" -ForegroundColor Yellow
+Write-Host "  3.  [!] Activador de Excel (En desarrollo) " -ForegroundColor Yellow
+Write-Host "--------------------------------------------" -ForegroundColor DarkGray
+Write-Host "  4.  [#] Limpieza de registros            " -ForegroundColor Green
+Write-Host "  5.  [HDD] Diagnóstico y optimización HDD " -ForegroundColor Green
+Write-Host "  6.  [SSD] Diagnóstico y optimización SSD " -ForegroundColor Green
+Write-Host "--------------------------------------------" -ForegroundColor DarkGray
+Write-Host "  7.  [*] Crear Punto de Restauración      " -ForegroundColor Green
+Write-Host "  8.  [+] Optimizar inicio y servicios     " -ForegroundColor Green
+Write-Host "  9.  [~] Registro de actividades (Logs)   " -ForegroundColor Green
+Write-Host " 10.  [📂] Listar archivos disponibles     " -ForegroundColor Green
+Write-Host "--------------------------------------------" -ForegroundColor DarkGray
+Write-Host " 11.  [?] Disponible para futuras funciones" -ForegroundColor Yellow
+Write-Host " 12.  [?] Disponible para futuras funciones" -ForegroundColor Yellow
+Write-Host "--------------------------------------------" -ForegroundColor DarkGray
+Write-Host " 13.  [i] Descripción del programa         " -ForegroundColor Cyan
+Write-Host "  X.   [X] Salir                           " -ForegroundColor Red
+Write-Host "============================================" -ForegroundColor Cyan
+
 
     # Capturar eleccion del usuario
 $opcion = Read-Host "Ingrese una opcion (1-13)"
