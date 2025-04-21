@@ -97,7 +97,7 @@ Write-Host "Seleccione una opcion:" -ForegroundColor White
 $opcion = Read-Host "Ingrese una opcion (1-13)"
 
 switch ($opcion) {
-    "1" {
+   "1" {
     Write-Host "Ejecutando proceso de optimización..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/optimizacion.ps1"
     $scriptPath = "$env:TEMP\optimizacion.ps1"
@@ -107,19 +107,18 @@ switch ($opcion) {
     if (Test-Path $scriptPath) {
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Verb RunAs
-        
-        # Eliminar el script tras su ejecución
-        Start-Sleep -Seconds 2
+            -WindowStyle Normal -Wait -Verb RunAs
+
+        # Esperar que el usuario cierre la ejecución antes de eliminar el script
+        Write-Host "`nFINALIZANDO... Presiona Enter para continuar y eliminar el script." -ForegroundColor Cyan
+        Read-Host
+
+        # Borrar el script después de que el usuario termine
         Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
     } else {
         Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
     }
-
-    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
-    Read-Host
 }
-
 "2" {
     Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
     Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
