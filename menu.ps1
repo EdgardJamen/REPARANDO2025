@@ -362,14 +362,14 @@ Default {
 
 } # Cierre correcto del bloque switch
 
-# Si no se escogió la opción de salir, se pide presionar Enter para continuar.
+# Si no se escogio la opcion de salir, se pide presionar Enter para continuar.
 if ($opcion -ne "X") {
     Write-Host ""
     Write-Host "Presiona Enter para volver al menu ..." -ForegroundColor Cyan
     Read-Host
 }
 
-# Mostrar la version estable en la parte inferior
+# Mostrar la version estable en la parte inferior antes de volver al menu
 Write-Host "`nVersion ESTABLE 20.4.2025.22:33" -ForegroundColor DarkGray -BackgroundColor White
 
 } while ($true) # Cierre correcto del bucle do-while
