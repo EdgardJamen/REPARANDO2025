@@ -107,18 +107,21 @@ switch ($opcion) {
     if (Test-Path $scriptPath) {
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Wait -Verb RunAs
+            -WindowStyle Normal -Verb RunAs
 
-        # Esperar que el usuario cierre la ejecución antes de eliminar el script
-        Write-Host "`nFINALIZANDO... Presiona Enter para continuar y eliminar el script." -ForegroundColor Cyan
-        Read-Host
-
-        # Borrar el script después de que el usuario termine
+        # Esperar unos segundos para asegurar que el script comenzó su ejecución
+        Start-Sleep -Seconds 2
+        
+        # Borrar el script de TEMP inmediatamente después de iniciarse
         Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
     } else {
         Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
     }
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
+    Read-Host
 }
+
 "2" {
     Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
     Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
