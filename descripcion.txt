@@ -1,26 +1,8 @@
-$descripcionPath = "$env:TEMP\descripcion.txt"
-@"
-OPTIMIZACION DEL SISTEMA
-- Eliminacion de apps innecesarias
-- Ajuste de efectos visuales
-- Limpieza de archivos basura
 
-ACTIVADORES (En desarrollo)
-- Activador de Windows
-- Activador de Office
-
-LIMPIEZA Y OPTIMIZACION
-- Eliminacion de registros antiguos
-- Escaneo y reparacion de HDD
-- Diagnostico y optimizacion de SSD
-
-PUNTOS DE RESTAURACION
-- Genera respaldo del sistema en caso de fallos
-
-OPTIMIZACIONES VARIAS
-- Mejora de arranque
-- Registro de logs
-- Listado de archivos esenciales
-"@ | Out-File -Encoding UTF8 $descripcionPath
-
-Start-Process notepad.exe -ArgumentList $descripcionPath
+Mejoras de rendimiento	Otros
+Eliminacion de apps innecesarias	Activador de Windows (En desarrollo)
+Ajuste de efectos visuales	Activador de Office (En desarrollo)
+Limpieza de archivos basura	Comprobacion de discos con CHKDSK
+Optimizacion de inicio de Windows	Creacion de puntos de restauracion
+Diagnostico y optimizacion de HDD	Registro de actividades (Logs)
+Diagnostico y optimizacion de SSD	Listado de archivos esenciales
