@@ -70,9 +70,15 @@ Write-Host ""
 
 # Mensaje de suscripcion
 Write-Host "Por suscripcion o renovacion, comunicarse al +598 096790694" -ForegroundColor Magenta
-Write-Host "Recuerde que compartir el usuario deribara en la suspencion del servicio" -ForegroundColor Red
 
+# Advertencia recuadrada
+Write-Host "======================================" -ForegroundColor Red
+Write-Host "|  Recuerde que compartir el usuario  |" -ForegroundColor Red
+Write-Host "|  deribara en la suspencion del      |" -ForegroundColor Red
+Write-Host "|  servicio                           |" -ForegroundColor Red
+Write-Host "======================================" -ForegroundColor Red
 
+Write-Host ""  # Espacio adicional para separar el mensaje de las opciones
 Write-Host "Seleccione una opcion:" -ForegroundColor White
 
     Write-Host ""
