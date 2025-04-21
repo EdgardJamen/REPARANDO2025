@@ -56,8 +56,8 @@ function Write-Centered {
 # Crear un recuadro elegante para la cabecera
 Clear-Host
 Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
-Write-Centered "SISTEMA DESARROLLADO POR" -ForegroundColor White -BackgroundColor Black
-Write-Centered "TECNICO: GABRIEL JAMEN" -ForegroundColor Yellow -BackgroundColor Black
+Write-Centered "Version ESTABLE 20.4.2025.22:33" -ForegroundColor White -BackgroundColor Black
+Write-Centered "DESARROLLADO POR GABRIEL JAMEN" -ForegroundColor Yellow -BackgroundColor Black
 Write-Host $line -ForegroundColor Cyan -BackgroundColor Black
 Write-Host ""
 
@@ -368,8 +368,5 @@ if ($opcion -ne "X") {
     Write-Host "Presiona Enter para volver al menu ..." -ForegroundColor Cyan
     Read-Host
 }
-
-# Mostrar la version estable en la parte inferior antes de volver al menu
-Write-Host "`nVersion ESTABLE 20.4.2025.22:33" -ForegroundColor DarkGray -BackgroundColor White
 
 } while ($true) # Cierre correcto del bucle do-while
