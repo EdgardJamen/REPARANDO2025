@@ -119,7 +119,7 @@ Write-Host "Seleccione una opcion:" -ForegroundColor White
 
     Write-Host ""
 
-   Write-Host "============================================" -ForegroundColor Cyan
+ Write-Host "============================================" -ForegroundColor Cyan
 Write-Host "          SELECCIONE UNA OPCIÓN            " -ForegroundColor White -BackgroundColor DarkBlue
 Write-Host "============================================" -ForegroundColor Cyan
 
@@ -134,7 +134,7 @@ Write-Host "--------------------------------------------" -ForegroundColor DarkG
 Write-Host "  7.  [*] Crear Punto de Restauración      " -ForegroundColor Green
 Write-Host "  8.  [+] Optimizar inicio y servicios     " -ForegroundColor Green
 Write-Host "  9.  [~] Registro de actividades (Logs)   " -ForegroundColor Green
-Write-Host " 10.  [📂] Listar archivos disponibles     " -ForegroundColor Green
+Write-Host " 10.  [F] Listar archivos disponibles      " -ForegroundColor Green
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
 Write-Host " 11.  [?] Disponible para futuras funciones" -ForegroundColor Yellow
 Write-Host " 12.  [?] Disponible para futuras funciones" -ForegroundColor Yellow
@@ -142,6 +142,7 @@ Write-Host "--------------------------------------------" -ForegroundColor DarkG
 Write-Host " 13.  [i] Descripción del programa         " -ForegroundColor Cyan
 Write-Host "  X.   [X] Salir                           " -ForegroundColor Red
 Write-Host "============================================" -ForegroundColor Cyan
+
 
 
     # Capturar eleccion del usuario
