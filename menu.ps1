@@ -57,8 +57,24 @@ if ($usuarioActivo) {
     Write-Host "Error: Nombre o contrasena incorrectos." -ForegroundColor Red
     Exit
 }
+Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
+
+# Eliminar usuarios.csv después de iniciar sesión correctamente
+$usuariosPath = "$env:TEMP\usuarios.csv"
+if (Test-Path $usuariosPath) {
+    Remove-Item -Path $usuariosPath -Force -ErrorAction SilentlyContinue
+}
+
+Start-Sleep -Seconds 2
+
 # Iniciar el menu despues de autenticacion
 do {
+    # Eliminar menu.ps1 después de cargarse en memoria
+    $menuPath = "$env:TEMP\menu.ps1"
+    if (Test-Path $menuPath) {
+        Remove-Item -Path $menuPath -Force -ErrorAction SilentlyContinue
+    }
+
  # Obtener el ancho de la ventana
 $width = $Host.UI.RawUI.WindowSize.Width
 $line = "=" * $width
