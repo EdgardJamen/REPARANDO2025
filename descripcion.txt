@@ -1,59 +1,26 @@
-1. Optimizacion del sistema
+$descripcionPath = "$env:TEMP\descripcion.txt"
+@"
+OPTIMIZACION DEL SISTEMA
+- Eliminacion de apps innecesarias
+- Ajuste de efectos visuales
+- Limpieza de archivos basura
 
-Eliminacion de apps innecesarias (Xbox, Outlook, OneDrive).
+ACTIVADORES (En desarrollo)
+- Activador de Windows
+- Activador de Office
 
-Ajuste de efectos visuales para mejorar la velocidad.
+LIMPIEZA Y OPTIMIZACION
+- Eliminacion de registros antiguos
+- Escaneo y reparacion de HDD
+- Diagnostico y optimizacion de SSD
 
-Cierre automatico de procesos que consumen demasiada RAM.
+PUNTOS DE RESTAURACION
+- Genera respaldo del sistema en caso de fallos
 
-Limpieza de archivos basura.
+OPTIMIZACIONES VARIAS
+- Mejora de arranque
+- Registro de logs
+- Listado de archivos esenciales
+"@ | Out-File -Encoding UTF8 $descripcionPath
 
-2. Activador de Windows
-
-En desarrollo: futura activacion permanente o con vencimiento.
-
-3. Activador de Office
-
-En desarrollo: futura activacion permanente o con vencimiento.
-
-4. Limpieza de registros
-
-Eliminacion de entradas de programas que ya no existen.
-
-Optimizacion de inicio de Windows.
-
-5. Diagnostico y optimizacion HDD
-
-Escaneo con CHKDSK para detectar y reparar errores.
-
-Desfragmentacion para mejorar rendimiento.
-
-Eliminacion de archivos temporales.
-
-6. Diagnostico y optimizacion SSD
-
-Verificacion de estado del SSD.
-
-Activacion y optimizacion de TRIM.
-
-Limpieza de archivos temporales.
-
-7. Crear Punto de Restauracion
-
-Genera respaldo del sistema en caso de fallos.
-
-Activa proteccion del sistema si esta deshabilitada.
-
-8. Optimizar inicio y servicios
-
-Eliminacion de accesos directos innecesarios.
-
-Deshabilitacion de servicios no esenciales para acelerar el arranque.
-
-9. Registro de actividades (Logs)
-
-Visualizacion y limpieza del historial del sistema.
-
-10. Listar archivos disponibles
-
-Muestra archivos esenciales del sistema.
+Start-Process notepad.exe -ArgumentList $descripcionPath
