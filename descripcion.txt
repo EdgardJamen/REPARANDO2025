@@ -1,5 +1,5 @@
 
-Mejoras de rendimiento	Otros
+Mejoras de rendimiento	             Otros
 Eliminacion de apps innecesarias	Activador de Windows (En desarrollo)
 Ajuste de efectos visuales	        Activador de Office (En desarrollo)
 Limpieza de archivos basura	        Comprobacion de discos con CHKDSK
