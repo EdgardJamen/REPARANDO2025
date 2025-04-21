@@ -57,7 +57,7 @@ if ($usuarioActivo) {
     Write-Host "Error: Nombre o contrasena incorrectos." -ForegroundColor Red
     Exit
 }
-Write-Host "Autenticacion exitosa. Cargando el menu..." -ForegroundColor Green
+
 
 # Eliminar usuarios.csv después de iniciar sesión correctamente
 $usuariosPath = "$env:TEMP\usuarios.csv"
