@@ -98,23 +98,28 @@ $opcion = Read-Host "Ingrese una opcion (1-13)"
 
 switch ($opcion) {
     "1" {
-        Write-Host "Ejecutando proceso de optimizacion..." -ForegroundColor Green
-        $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/optimizacion.ps1"
-        $scriptPath = "$env:TEMP\optimizacion.ps1"
-        Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Write-Host "Ejecutando proceso de optimización..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/optimizacion.ps1"
+    $scriptPath = "$env:TEMP\optimizacion.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
 
-        # Verificar si la descarga fue exitosa antes de ejecutarlo
-        if (Test-Path $scriptPath) {
-            Start-Process -FilePath "powershell.exe" `
-                -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-                -WindowStyle Normal -Verb RunAs
-        } else {
-            Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
-        }
-
-        Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
-        Read-Host
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Normal -Verb RunAs
+        
+        # Eliminar el script tras su ejecución
+        Start-Sleep -Seconds 2
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+    } else {
+        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
     }
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
+    Read-Host
+}
+
 "2" {
     Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
     Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
