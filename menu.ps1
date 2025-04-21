@@ -2,6 +2,29 @@
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 # Asegurar que PowerShell tenga permisos para ejecutar scripts
 Set-ExecutionPolicy Bypass -Scope Process -Force
+# Establecer la codificacion para evitar errores con caracteres especiales
+[Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
+# Asegurar que PowerShell tenga permisos para ejecutar scripts
+Set-ExecutionPolicy Bypass -Scope Process -Force
+
+# Ajustar el tamaño de la ventana de PowerShell
+Add-Type -TypeDefinition @"
+using System;
+using System.Runtime.InteropServices;
+
+public class Win32 {
+    [DllImport("kernel32.dll")]
+    public static extern IntPtr GetConsoleWindow();
+
+    [DllImport("user32.dll")]
+    public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+}
+"@
+
+# Establecer dimensiones: 1 = Normal, 3 = Maximizada
+$consolePtr = [Win32]::GetConsoleWindow()
+[Win32]::ShowWindow($consolePtr, 3)  # Aumenta el tamaño de la ventana sin poner pantalla completa
 
 # Autenticacion antes de mostrar el menu
 Write-Host "Autenticando..." -ForegroundColor Yellow
