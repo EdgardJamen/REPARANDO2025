@@ -168,14 +168,22 @@ switch ($opcion) {
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
             -WindowStyle Normal -Wait -Verb RunAs
+
+        # Esperar unos segundos para asegurar que el script comenzó su ejecución
+        Start-Sleep -Seconds 2
+        
+        # Borrar el script de TEMP inmediatamente después de iniciarse
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
     } else {
         Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
     }
-     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+
 "6" {
-    Write-Host "Ejecutando proceso de diagnostico..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de diagnóstico..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoSSD.ps1"
     $scriptPath = "$env:TEMP\DiagnosticoSSD.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
@@ -185,6 +193,12 @@ switch ($opcion) {
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
             -WindowStyle Normal -Wait -Verb RunAs
+
+        # Esperar unos segundos para asegurar que el script comenzó su ejecución
+        Start-Sleep -Seconds 2
+        
+        # Borrar el script de TEMP inmediatamente después de iniciarse
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
     } else {
         Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
     }
@@ -192,6 +206,7 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+
 "7" {
     Write-Host "Ejecutando proceso de restauración..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
@@ -209,13 +224,20 @@ switch ($opcion) {
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
             -WindowStyle Normal -Verb RunAs
 
+        # Esperar unos segundos para asegurar que el script comenzó su ejecución
+        Start-Sleep -Seconds 2
+        
+        # Borrar el script de TEMP inmediatamente después de iniciarse
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+
         # Mantener la ventana abierta para ver errores
-        Write-Host "Creando punto de restauracion .Espere." -ForegroundColor Yellow
+        Write-Host "Creando punto de restauracion. Espere." -ForegroundColor Yellow
         Read-Host
     } else {
         Write-Host " Error: No se pudo encontrar el archivo." -ForegroundColor Red
     }
 }
+
 "8" {
     Write-Host "Ejecutando proceso de optimizacion de inicio y servicios..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
@@ -233,6 +255,12 @@ switch ($opcion) {
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
             -WindowStyle Normal -Verb RunAs
 
+        # Esperar unos segundos para asegurar que el script comenzó su ejecución
+        Start-Sleep -Seconds 2
+        
+        # Borrar el script de TEMP inmediatamente después de iniciarse
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+
         # Mantener la ventana abierta para ver errores
         Write-Host "Optimizando inicio y servicios. Espere..." -ForegroundColor Yellow
         Read-Host
@@ -240,6 +268,7 @@ switch ($opcion) {
         Write-Host " Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
     }
 }
+
 "9" {
     Write-Host "Ejecutando proceso de registro de actividades..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/RegistroActividades.ps1"
@@ -251,11 +280,17 @@ switch ($opcion) {
 
     # Verificar si el archivo existe antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Write-Host " Archivo encontrado. Procediendo con la ejecución..." -ForegroundColor Green
+        Write-Host " Archivo encontrado. Procediendo con la ejecucion..." -ForegroundColor Green
         
         Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
             -WindowStyle Normal -Verb RunAs
+
+        # Esperar unos segundos para asegurar que el script comenzo su ejecucion
+        Start-Sleep -Seconds 2
+        
+        # Borrar el script de TEMP inmediatamente despues de iniciarse
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
 
         # Mantener la ventana abierta para ver errores
         Write-Host "Registrando actividades. Espere..." -ForegroundColor Yellow
@@ -264,6 +299,7 @@ switch ($opcion) {
         Write-Host " Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
     }
 }
+
 "10" {
     Write-Host "Obteniendo lista de archivos disponibles..." -ForegroundColor Green
 
@@ -300,6 +336,12 @@ switch ($opcion) {
     if (Test-Path $descripcionPath) {
         Write-Host "`nDescripcion del programa:" -ForegroundColor Green
         Get-Content $descripcionPath | ForEach-Object { Write-Host $_ }
+
+        # Esperar unos segundos para asegurar que el usuario lo haya visto
+        Start-Sleep -Seconds 2
+        
+        # Borrar el archivo de descripcion despues de mostrarlo
+        Remove-Item -Path $descripcionPath -Force -ErrorAction SilentlyContinue
     } else {
         Write-Host " Error: No se pudo obtener la descripcion del programa." -ForegroundColor Red
     }
