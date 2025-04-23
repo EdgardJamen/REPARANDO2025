@@ -150,7 +150,7 @@ $opcion = Read-Host "Ingrese una opcion (1-13)"
 
 switch ($opcion) {
    "1" {
-    Write-Host "Ejecutando proceso de optimización..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de optimizacion..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/optimizacion.ps1"
     $scriptPath = "$env:TEMP\optimizacion.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
