@@ -97,9 +97,39 @@ if ($archivosEjecutables) {
     }
 }
 
-#  Pausa para evitar cierre automatico
-Write-Host "`nPresione X para cerrar la ventana o Y para ejecutar el escaneo avanzado." -ForegroundColor Cyan
-$accion = Read-Host "Ingrese su opcion (X/Y)"
+# Ruta del archivo de informe
+$reportePath = "$env:TEMP\Escaneo_Resultado.txt"
+
+# Crear el archivo e incluir resultados del escaneo
+Write-Host "Generando informe de seguridad..." -ForegroundColor Yellow
+@"
+====================================
+      INFORME DE ESCANEO DE SEGURIDAD
+====================================
+
+Procesos sospechosos encontrados:
+$($procesos | Out-String)
+
+Procesos con alto consumo de CPU:
+$($procesosCPU | Out-String)
+
+Archivos ocultos sospechosos detectados:
+$($archivosOcultos | Out-String)
+
+Archivos ejecutables fuera de ubicaciones seguras:
+$($archivosEjecutables | Out-String)
+
+Conexiones de red activas desconocidas:
+$($redConexiones | Out-String)
+
+====================================
+"@ | Out-File -FilePath $reportePath -Encoding UTF8 -Force
+Write-Host "Informe guardado en: $reportePath" -ForegroundColor Green
+
+
+# Opción adicional para descargar el informe
+Write-Host "`nPresione X para cerrar la ventana, Y para ejecutar el escaneo avanzado, o D para descargar el informe." -ForegroundColor Cyan
+$accion = Read-Host "Ingrese su opcion (X/Y/D)"
 
 if ($accion -eq "X") {
     Write-Host "Cerrando la ventana..." -ForegroundColor Red
@@ -109,8 +139,11 @@ if ($accion -eq "X") {
     Write-Host "Ejecutando escaneo avanzado con permisos elevados..." -ForegroundColor Green
     Start-Sleep -Seconds 1
     Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-ExecutionPolicy Bypass -File C:\Users\gabriel\Desktop\FUNCIONESAVANZADAS\Escaneoseguridad\EscaneoSeguridad.ps1" `
+        -ArgumentList "-ExecutionPolicy Bypass -File `"$env:TEMP\EscaneoSeguridad.ps1`"" `
         -Verb RunAs
+} elseif ($accion -eq "D") {
+    Write-Host "Abriendo carpeta TEMP para acceder al informe..." -ForegroundColor Green
+    Start-Process "explorer.exe" $env:TEMP
 } else {
     Write-Host "Opcion no valida. Intente nuevamente." -ForegroundColor Yellow
 }
