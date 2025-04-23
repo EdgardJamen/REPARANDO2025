@@ -117,7 +117,7 @@ Write-Host "Por suscripcion o renovacion, comunicarse al +598 096790694" -Foregr
 # Advertencia recuadrada
 Write-Host "======================================" -ForegroundColor Yellow
 Write-Host "|  Recuerde que compartir el usuario  |" -ForegroundColor Yellow
-Write-Host "|  deribara en la suspencion del      |" -ForegroundColor Yellow
+Write-Host "|  derivara en la suspension del      |" -ForegroundColor Yellow
 Write-Host "|  servicio                           |" -ForegroundColor Yellow
 Write-Host "======================================" -ForegroundColor Yellow
 
@@ -134,17 +134,19 @@ Write-Host "  5.  - Diagnostico y optimizacion SSD    " -ForegroundColor Green
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
 Write-Host "  6.  - Crear Punto de Restauracion       " -ForegroundColor Green
 Write-Host "  7.  - Registro de actividades (Logs)    " -ForegroundColor Green
-Write-Host " 8.  - Listar archivos disponibles       " -ForegroundColor Green
+Write-Host "  8.  - Listar archivos disponibles       " -ForegroundColor Green
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
-Write-Host " 9.  - Disponible para futuras funciones " -ForegroundColor Yellow
-Write-Host " 10.  - Disponible para futuras funciones " -ForegroundColor Yellow
+Write-Host "  9.  - Disponible para futuras funciones " -ForegroundColor Yellow
+Write-Host "  10.  - Disponible para futuras funciones " -ForegroundColor Yellow
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
-Write-Host " 11.  - Descripcion del programa          " -ForegroundColor Cyan
-Write-Host "  X.  - Salir                             " -ForegroundColor Red
+Write-Host "  11.  - Descripcion del programa          " -ForegroundColor Cyan
+Write-Host "  AV.  - Acceder a opciones avanzadas      " -ForegroundColor Magenta
+Write-Host "  X.  - Salir                              " -ForegroundColor Red
 Write-Host "============================================" -ForegroundColor Cyan
 
-    # Capturar eleccion del usuario
-$opcion = Read-Host "Ingrese una opcion (1-11)"
+    # Capturar elección del usuario
+$opcion = Read-Host "Ingrese una opción (1-11, AV, X)"
+
 
 switch ($opcion) {
    "1" {
