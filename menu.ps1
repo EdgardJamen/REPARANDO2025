@@ -126,27 +126,25 @@ Write-Host "          SELECCIONE UNA OPCION            " -ForegroundColor White 
 Write-Host "============================================" -ForegroundColor Cyan
 
 Write-Host "  1.  - Optimizacion del sistema          " -ForegroundColor Green
-Write-Host "  2.  - Activador de Windows/Office " -ForegroundColor Green
-Write-Host "  3.  - Informacion del sistema en desarrollo" -ForegroundColor Yellow
+Write-Host "  2.  - Informacion del sistema en desarrollo" -ForegroundColor Yellow
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
-Write-Host "  4.  - Limpieza de registros             " -ForegroundColor Green
-Write-Host "  5.  - Diagnostico y optimizacion HDD    " -ForegroundColor Green
-Write-Host "  6.  - Diagnostico y optimizacion SSD    " -ForegroundColor Green
+Write-Host "  3.  - Limpieza de registros             " -ForegroundColor Green
+Write-Host "  4.  - Diagnostico y optimizacion HDD    " -ForegroundColor Green
+Write-Host "  5.  - Diagnostico y optimizacion SSD    " -ForegroundColor Green
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
-Write-Host "  7.  - Crear Punto de Restauracion       " -ForegroundColor Green
-Write-Host "  8.  - Optimizar inicio y servicios      " -ForegroundColor Green
-Write-Host "  9.  - Registro de actividades (Logs)    " -ForegroundColor Green
-Write-Host " 10.  - Listar archivos disponibles       " -ForegroundColor Green
+Write-Host "  6.  - Crear Punto de Restauracion       " -ForegroundColor Green
+Write-Host "  7.  - Registro de actividades (Logs)    " -ForegroundColor Green
+Write-Host " 8.  - Listar archivos disponibles       " -ForegroundColor Green
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
-Write-Host " 11.  - Disponible para futuras funciones " -ForegroundColor Yellow
-Write-Host " 12.  - Disponible para futuras funciones " -ForegroundColor Yellow
+Write-Host " 9.  - Disponible para futuras funciones " -ForegroundColor Yellow
+Write-Host " 10.  - Disponible para futuras funciones " -ForegroundColor Yellow
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
-Write-Host " 13.  - Descripcion del programa          " -ForegroundColor Cyan
+Write-Host " 11.  - Descripcion del programa          " -ForegroundColor Cyan
 Write-Host "  X.  - Salir                             " -ForegroundColor Red
 Write-Host "============================================" -ForegroundColor Cyan
 
     # Capturar eleccion del usuario
-$opcion = Read-Host "Ingrese una opcion (1-13)"
+$opcion = Read-Host "Ingrese una opcion (1-11)"
 
 switch ($opcion) {
    "1" {
@@ -174,23 +172,11 @@ switch ($opcion) {
     Read-Host
 }
 "2" {
-    Write-Host "Ejecutando activador de Windows/Office..." -ForegroundColor Green
-
-    # Ejecutar MAS directamente desde la web
-    Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command irm https://get.activated.win | iex" `
-        -WindowStyle Normal -Verb RunAs
-
-    # Mantener la ventana abierta para ver errores si los hay
-    Write-Host "`nFINALIZANDO... Presiona Enter para volver al menu." -ForegroundColor Cyan
-    Read-Host
-}
-"3" {
     Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
     Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
     Read-Host
 }
-"4" {
+"3" {
     Write-Host "Ejecutando proceso de limpieza..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/LimpiezaRegistros.ps1"
     $scriptPath = "$env:TEMP\LimpiezaRegistros.ps1"
@@ -215,7 +201,7 @@ switch ($opcion) {
     Read-Host
 }
 
-"5" {
+"4" {
     Write-Host "Ejecutando proceso de diagnóstico..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoHDD.ps1"
     $scriptPath = "$env:TEMP\DiagnosticoHDD.ps1"
@@ -240,7 +226,7 @@ switch ($opcion) {
     Read-Host
 }
 
-"6" {
+"5" {
     Write-Host "Ejecutando proceso de diagnóstico..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoSSD.ps1"
     $scriptPath = "$env:TEMP\DiagnosticoSSD.ps1"
@@ -265,7 +251,7 @@ switch ($opcion) {
     Read-Host
 }
 
-"7" {
+"6" {
     Write-Host "Ejecutando proceso de restauración..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
     $scriptPath = "$env:TEMP\CrearPuntoRestauracion.ps1"
@@ -296,38 +282,7 @@ switch ($opcion) {
     }
 }
 
-"8" {
-    Write-Host "Ejecutando proceso de optimizacion de inicio y servicios..." -ForegroundColor Green
-    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/OptimizarInicioServicios.ps1"
-    $scriptPath = "$env:TEMP\OptimizarInicioServicios.ps1"
-
-    # Descargar el script
-    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-    Start-Sleep -Seconds 2
-
-    # Verificar si el archivo existe antes de ejecutarlo
-    if (Test-Path $scriptPath) {
-        Write-Host "   Procediendo con la ejecucion..." -ForegroundColor Green
-        
-        Start-Process -FilePath "powershell.exe" `
-            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Verb RunAs
-
-        # Esperar unos segundos para asegurar que el script comenzó su ejecución
-        Start-Sleep -Seconds 2
-        
-        # Borrar el script de TEMP inmediatamente después de iniciarse
-        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
-
-        # Mantener la ventana abierta para ver errores
-        Write-Host "Optimizando inicio y servicios. Espere..." -ForegroundColor Yellow
-        Read-Host
-    } else {
-        Write-Host " Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
-    }
-}
-
-"9" {
+"7" {
     Write-Host "Ejecutando proceso de registro de actividades..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/RegistroActividades.ps1"
     $scriptPath = "$env:TEMP\RegistroActividades.ps1"
@@ -358,7 +313,7 @@ switch ($opcion) {
     }
 }
 
-"10" {
+"8" {
     Write-Host "Obteniendo lista de archivos disponibles..." -ForegroundColor Green
 
     # Definir los archivos disponibles en línea
@@ -381,7 +336,17 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
-"13" {
+"9" {
+    Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
+    Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
+    Read-Host
+}
+"10" {
+    Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
+    Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
+    Read-Host
+}
+"11" {
     Write-Host "Cargando descripcion del programa..." -ForegroundColor Cyan
     $descripcionUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/descripcion.txt"
     $descripcionPath = "$env:TEMP\descripcion.txt"
