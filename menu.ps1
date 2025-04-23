@@ -388,10 +388,12 @@ switch ($opcion) {
     if (Test-Path $scriptPath) {  
         Write-Host "Menu avanzado encontrado. Ejecutando..." -ForegroundColor Green  
 
-        # Ejecutar directamente en la misma ventana
+        # Ejecutar directamente en la misma ventana de PowerShell
         powershell -ExecutionPolicy Bypass -NoProfile -File "$scriptPath"
 
+        # Eliminar el script después de ejecutarse
         Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue  
+
         Write-Host "`nMenu avanzado ejecutado correctamente." -ForegroundColor Cyan  
     } else {  
         Write-Host "Error: No se pudo cargar el menu avanzado." -ForegroundColor Red  
@@ -400,6 +402,7 @@ switch ($opcion) {
     Write-Host "`nPresiona Enter para volver al menu principal..." -ForegroundColor Cyan  
     Read-Host  
 }
+
 "X" {
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
     Start-Sleep -Seconds 1
