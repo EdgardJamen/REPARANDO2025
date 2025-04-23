@@ -127,7 +127,7 @@ Write-Host "============================================" -ForegroundColor Cyan
 
 Write-Host "  1.  - Optimizacion del sistema          " -ForegroundColor Green
 Write-Host "  2.  - Activador de Windows/Office " -ForegroundColor Green
-Write-Host "  3.  - Informacion del sistema" -ForegroundColor Yellow
+Write-Host "  3.  - Informacion del sistema en desarrollo" -ForegroundColor Yellow
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
 Write-Host "  4.  - Limpieza de registros             " -ForegroundColor Green
 Write-Host "  5.  - Diagnostico y optimizacion HDD    " -ForegroundColor Green
@@ -182,7 +182,7 @@ switch ($opcion) {
         -WindowStyle Normal -Verb RunAs
 
     # Mantener la ventana abierta para ver errores si los hay
-    Write-Host "`nFINALIZANDO... Presiona Enter para volver al menú." -ForegroundColor Cyan
+    Write-Host "`nFINALIZANDO... Presiona Enter para volver al menu." -ForegroundColor Cyan
     Read-Host
 }
 "3" {
