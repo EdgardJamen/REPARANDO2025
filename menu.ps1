@@ -380,7 +380,7 @@ switch ($opcion) {
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/AVANZADO/menu2.ps1"  
     $scriptPath = "$env:TEMP\menu2.ps1"  
 
-    # Descargar el script correcto
+    # Descargar el script correctamente
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath  
     Start-Sleep -Seconds 2  
 
@@ -388,11 +388,10 @@ switch ($opcion) {
     if (Test-Path $scriptPath) {  
         Write-Host "Menu avanzado encontrado. Ejecutando..." -ForegroundColor Green  
 
-        Start-Process "powershell.exe" -ArgumentList "-ExecutionPolicy Bypass -NoProfile -File `"$scriptPath`"" -Verb RunAs  
+        # Ejecutar directamente en la misma ventana
+        powershell -ExecutionPolicy Bypass -NoProfile -File "$scriptPath"
 
-        Start-Sleep -Seconds 2  
         Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue  
-
         Write-Host "`nMenu avanzado ejecutado correctamente." -ForegroundColor Cyan  
     } else {  
         Write-Host "Error: No se pudo cargar el menu avanzado." -ForegroundColor Red  
@@ -401,7 +400,6 @@ switch ($opcion) {
     Write-Host "`nPresiona Enter para volver al menu principal..." -ForegroundColor Cyan  
     Read-Host  
 }
-
 "X" {
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
     Start-Sleep -Seconds 1
