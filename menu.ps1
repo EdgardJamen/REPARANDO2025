@@ -173,7 +173,34 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
-https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/Activador.ps1
+"2" {
+    Write-Host "Ejecutando activador de Windows..." -ForegroundColor Green
+
+    # Descargar el script Activador.ps1 desde GitHub con la URL correcta
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/Activador.ps1"
+    $scriptPath = "$env:TEMP\Activador.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        # Ejecutar Activador.ps1 con privilegios elevados
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Hidden -Verb RunAs
+
+        # Esperar unos segundos para asegurar que la activación se ejecutó
+        Start-Sleep -Seconds 10
+        
+        # Borrar el script Activador.ps1 de TEMP una vez finalizado
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+    } else {
+        Write-Host "Error: No se pudo completar la ejecución del activador." -ForegroundColor Red
+    }
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para volver al menú." -ForegroundColor Cyan
+    Read-Host
+}
+
 "3" {
     Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
     Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
