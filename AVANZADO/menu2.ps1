@@ -1,7 +1,24 @@
 # Establecer la codificacion para evitar errores con caracteres especiales
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
+
 # Asegurar que PowerShell tenga permisos para ejecutar scripts
-Set-ExecutionPolicy Bypass -Scope Process -Force
+$ExecutionPolicy = Get-ExecutionPolicy
+if ($ExecutionPolicy -ne "Bypass") {
+    Set-ExecutionPolicy Bypass -Scope CurrentUser -Force
+}
+
+# Verificar si el script tiene privilegios de administrador
+function Check-Admin {
+    $currentUser = [Security.Principal.WindowsIdentity]::GetCurrent()
+    $principal = New-Object Security.Principal.WindowsPrincipal($currentUser)
+    return $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+}
+
+if (!(Check-Admin)) {
+    Write-Host "Error: Este script requiere permisos de administrador." -ForegroundColor Red
+    Start-Sleep -Seconds 5
+    Exit
+}
 
 do {
     Clear-Host
@@ -26,7 +43,7 @@ do {
             Write-Host "Ejecutando activador de Windows/Office..." -ForegroundColor Green
             Start-Process -FilePath "powershell.exe" `
                 -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command irm https://get.activated.win | iex" `
-                -WindowStyle Normal -Verb RunAs
+                -Verb RunAs
 
             Write-Host "`nFINALIZANDO... Presiona Enter para volver al menu." -ForegroundColor Cyan
             Read-Host
@@ -42,8 +59,8 @@ do {
             if (Test-Path $scriptPath) {
                 Write-Host "   Procediendo con la ejecucion..." -ForegroundColor Green
                 Start-Process -FilePath "powershell.exe" `
-                    -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-                    -WindowStyle Normal -Verb RunAs
+                    -ArgumentList "-ExecutionPolicy Bypass -File `"$scriptPath`"" `
+                    -Verb RunAs
 
                 Start-Sleep -Seconds 2
                 Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
