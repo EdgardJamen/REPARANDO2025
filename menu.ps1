@@ -173,6 +173,36 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+"2" {
+    Write-Host "Ejecutando activador de Windows..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/Activador.ps1"
+    $scriptPath = "$env:TEMP\Activador.ps1"
+
+    # Descargar el script
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Sleep -Seconds 2
+
+    # Verificar si el archivo existe antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Write-Host " Archivo encontrado. Procediendo con la ejecución..." -ForegroundColor Green
+        
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Normal -Verb RunAs
+
+        # Esperar unos segundos para asegurar que el script comenzó su ejecución
+        Start-Sleep -Seconds 2
+        
+        # Borrar el script de TEMP inmediatamente después de iniciarse
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+
+        # Mantener la ventana abierta para ver errores
+        Write-Host "Ejecutando activador. Espere..." -ForegroundColor Yellow
+        Read-Host
+    } else {
+        Write-Host " Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
+    }
+}
 
 "3" {
     Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
