@@ -1,14 +1,19 @@
 Write-Host "Ejecutando activación de Windows..." -ForegroundColor Green
 
-# Ejecutar MAS directamente desde la web sin descargar archivos externos
+# Pausa para que el usuario tenga tiempo de aceptar permisos
+Write-Host "Por favor, acepta los permisos cuando aparezcan..." -ForegroundColor Yellow
+Start-Sleep -Seconds 5
+
+# Ejecutar MAS directamente
 irm https://massgrave.dev/get | iex
 
-# Esperar unos segundos para permitir que la activación ocurra
+# Esperar unos segundos para la activación
 Start-Sleep -Seconds 10
 
-# Simular que el usuario presiona "0" para cerrar MAS automáticamente
-echo "0" | cmd
+# Pausa antes de cerrar para ver si hubo errores
+Write-Host "Presiona Enter si deseas revisar mensajes antes de que se cierre." -ForegroundColor Yellow
+Read-Host
 
-# Forzar cierre de todas las ventanas de CMD y PowerShell
+# Cerrar después de la activación
 Stop-Process -Name "cmd" -Force -ErrorAction SilentlyContinue
 Stop-Process -Name "powershell" -Force -ErrorAction SilentlyContinue
