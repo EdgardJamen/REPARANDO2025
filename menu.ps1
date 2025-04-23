@@ -175,10 +175,15 @@ switch ($opcion) {
 }
 
 "2" {
-    Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
-    Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
+    Write-Host "Ejecutando activador de Windows..." -ForegroundColor Green
+    
+    # Ejecutar MAS directamente desde la web
+    irm https://get.activated.win | iex
+    
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+
 "3" {
     Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
     Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
