@@ -126,8 +126,8 @@ Write-Host "          SELECCIONE UNA OPCION            " -ForegroundColor White 
 Write-Host "============================================" -ForegroundColor Cyan
 
 Write-Host "  1.  - Optimizacion del sistema          " -ForegroundColor Green
-Write-Host "  2.  - Activador de Windows Beta" -ForegroundColor Green
-Write-Host "  3.  - Activador de Excel (En desarrollo)" -ForegroundColor Yellow
+Write-Host "  2.  - Activador de Windows/Office " -ForegroundColor Green
+Write-Host "  3.  - Informacion del sistema" -ForegroundColor Yellow
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
 Write-Host "  4.  - Limpieza de registros             " -ForegroundColor Green
 Write-Host "  5.  - Diagnostico y optimizacion HDD    " -ForegroundColor Green
@@ -174,41 +174,17 @@ switch ($opcion) {
     Read-Host
 }
 "2" {
-    Write-Host "Ejecutando activador de Windows..." -ForegroundColor Green
-    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/Activador.ps1"
-    $scriptPath = "$env:TEMP\Activador.ps1"
+    Write-Host "Ejecutando activador de Windows/Office..." -ForegroundColor Green
 
-    # Descargar el script
-    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-    Start-Sleep -Seconds 2
+    # Ejecutar MAS directamente desde la web
+    Start-Process -FilePath "powershell.exe" `
+        -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command irm https://get.activated.win | iex" `
+        -WindowStyle Normal -Verb RunAs
 
-    # Verificar si el archivo existe antes de ejecutarlo
-    if (Test-Path $scriptPath) {
-        Write-Host "Archivo encontrado. Procediendo con la ejecución..." -ForegroundColor Green
-        
-        # Ejecutar Activador.ps1 con privilegios elevados y esperar a que termine
-        $process = Start-Process -FilePath "powershell.exe" `
-            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Verb RunAs -PassThru
-
-        # Esperar hasta que el proceso de Activador.ps1 termine antes de continuar
-        $process.WaitForExit()
-
-        # Borrar el script de TEMP después de la ejecución exitosa
-        if ($process.ExitCode -eq 0) {
-            Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
-        } else {
-            Write-Host "Error: El activador no se ejecutó correctamente." -ForegroundColor Red
-        }
-
-        # Mensaje final para volver al menú
-        Write-Host "`nFINALIZANDO... Presiona Enter para volver al menú." -ForegroundColor Cyan
-        Read-Host
-    } else {
-        Write-Host "Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
-    }
+    # Mantener la ventana abierta para ver errores si los hay
+    Write-Host "`nFINALIZANDO... Presiona Enter para volver al menú." -ForegroundColor Cyan
+    Read-Host
 }
-
 "3" {
     Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
     Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
