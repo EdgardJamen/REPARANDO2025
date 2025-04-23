@@ -372,6 +372,38 @@ switch ($opcion) {
     Write-Host "`nPresiona Enter para continuar..." -ForegroundColor Cyan
     Read-Host
 }
+"AV" {
+    Write-Host "Cargando menú avanzado..." -ForegroundColor Cyan
+    
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/AVANZADO/menu2.ps1"
+    $scriptPath = "$env:TEMP\menu2.ps1"
+
+    # Descargar el script
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Sleep -Seconds 2
+
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Write-Host "Menú avanzado encontrado. Ejecutando..." -ForegroundColor Green
+        
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Normal -Verb RunAs
+
+        # Esperar unos segundos para asegurar que el script comenzó su ejecución
+        Start-Sleep -Seconds 2
+        
+        # Borrar el script de TEMP después de iniciarse
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+        
+        Write-Host "`nMenú avanzado ejecutado correctamente." -ForegroundColor Cyan
+    } else {
+        Write-Host "Error: No se pudo cargar el menú avanzado." -ForegroundColor Red
+    }
+
+    Write-Host "`nPresiona Enter para volver al menú principal..." -ForegroundColor Cyan
+    Read-Host
+}
 
 "X" {
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
