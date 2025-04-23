@@ -126,7 +126,7 @@ Write-Host "          SELECCIONE UNA OPCION            " -ForegroundColor White 
 Write-Host "============================================" -ForegroundColor Cyan
 
 Write-Host "  1.  - Optimizacion del sistema          " -ForegroundColor Green
-Write-Host "  2.  - Activador de Windows Beta" -ForegroundColor Yellow
+Write-Host "  2.  - Activador de Windows Beta" -ForegroundColor Blue
 Write-Host "  3.  - Activador de Excel (En desarrollo)" -ForegroundColor Yellow
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
 Write-Host "  4.  - Limpieza de registros             " -ForegroundColor Green
@@ -177,18 +177,18 @@ switch ($opcion) {
 "2" {
     Write-Host "Ejecutando activador de Windows..." -ForegroundColor Green
 
-    # Ejecutar MAS directamente desde la web
+    # Ejecutar MAS directamente desde la web y seleccionar la opción 1 automáticamente
     Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://get.activated.win | iex`"" `
+        -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://get.activated.win | iex; echo '1' | cmd`"" `
         -WindowStyle Hidden -Verb RunAs
 
-    # Esperar unos segundos para asegurar que se ejecutó
+    # Esperar unos segundos para asegurar que la activación se complete
     Start-Sleep -Seconds 10 
 
-    # Forzar cierre de todas las instancias de PowerShell al finalizar
+    # Forzar cierre de todas las instancias de PowerShell para evitar que el activador se quede abierto
     Stop-Process -Name "powershell" -Force -ErrorAction SilentlyContinue
 
-    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
+    Write-Host "`nFINALIZANDO... Presiona Enter para volver al menú." -ForegroundColor Cyan
     Read-Host
 }
 
