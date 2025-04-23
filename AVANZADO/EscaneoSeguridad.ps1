@@ -1,8 +1,8 @@
-#  Modo estandar: Solo escanea
-$modo = Read-Host "Elige modo de escaneo (1=Estandar, 2=Avanzado)"
 # Limpiar archivos temporales antes de iniciar el escaneo
 Write-Host 'Limpiando archivos temporales...' -ForegroundColor Yellow
 Remove-Item -Path "$env:TEMP\*" -Recurse -Force -ErrorAction SilentlyContinue
+#  Modo estandar: Solo escanea
+$modo = Read-Host "Elige modo de escaneo (1=Estandar, 2=Avanzado)"
 
 
 #  Mensaje de advertencia si el usuario selecciona el modo avanzado
