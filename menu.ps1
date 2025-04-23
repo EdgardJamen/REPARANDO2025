@@ -140,12 +140,12 @@ Write-Host "  9.  - Disponible para futuras funciones " -ForegroundColor Yellow
 Write-Host "  10.  - Disponible para futuras funciones " -ForegroundColor Yellow
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
 Write-Host "  11.  - Descripcion del programa          " -ForegroundColor Cyan
-Write-Host "  AV.  - Acceder a opciones avanzadas      " -ForegroundColor Magenta
+Write-Host "  AV.  - ACCEDER A OPCIONES AVANZADAS      " -ForegroundColor Green
 Write-Host "  X.  - Salir                              " -ForegroundColor Red
 Write-Host "============================================" -ForegroundColor Cyan
 
     # Capturar elección del usuario
-$opcion = Read-Host "Ingrese una opción (1-11, AV, X)"
+$opcion = Read-Host "Ingrese una opcion (1-11, AV, X)"
 
 
 switch ($opcion) {
