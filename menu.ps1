@@ -183,9 +183,7 @@ switch ($opcion) {
 
     # Verificar si la descarga fue exitosa antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Start-Process -FilePath "powershell.exe" `
-            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Verb RunAs
+        powershell -ExecutionPolicy Bypass -NoProfile -File "$scriptPath"
 
         # Esperar unos segundos para asegurar que el script comenzo su ejecucion
         Start-Sleep -Seconds 2
