@@ -20,6 +20,12 @@ if (!(Check-Admin)) {
     Exit
 }
 
+# Eliminar el script `menu2.ps1` de TEMP al iniciar
+$scriptPath = "$env:TEMP\menu2.ps1"
+if (Test-Path $scriptPath) {
+    Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+}
+
 do {
     Clear-Host
     Write-Host "============================================" -ForegroundColor Cyan
@@ -92,5 +98,8 @@ do {
             Write-Host "Opcion no valida. Intenta nuevamente." -ForegroundColor Red
             Start-Sleep -Seconds 2
         }
+    }
+} while ($true)  # Mantiene el menu en ejecucion hasta que se seleccione "X"
+
     }
 } while ($true)  # Mantiene el menu en ejecucion hasta que se seleccione "X"
