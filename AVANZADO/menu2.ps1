@@ -77,9 +77,34 @@ do {
             }
         }
         "3" {
-            Write-Host "Escaneo de seguridad aun no implementado." -ForegroundColor Yellow
-            Read-Host "Presiona Enter para volver al menu..."
-        }
+    Write-Host "Descargando informacion sobre escaneo de seguridad..." -ForegroundColor Cyan
+
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/AVANZADO/Write.ps1"
+    $scriptPath = "$env:TEMP\Write.ps1"
+
+    # Descargar el script correctamente
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath  
+    Start-Sleep -Seconds 2  
+
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {  
+        Write-Host "Ejecutando informacion sobre escaneo de seguridad..." -ForegroundColor Green  
+
+        # Ejecutar `Write.ps1` en la misma ventana para mostrar la interfaz
+        powershell -ExecutionPolicy Bypass -NoProfile -File "$scriptPath"
+
+        # Eliminar el script después de ejecutarse
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue  
+
+        Write-Host "`nProceso completado." -ForegroundColor Cyan  
+    } else {  
+        Write-Host "Error: No se pudo cargar el escaneo de seguridad." -ForegroundColor Red  
+    }  
+
+    Write-Host "`nPresiona Enter para volver al menu..." -ForegroundColor Cyan  
+    Read-Host  
+}
+
         "4" {
             Write-Host "Esta funcion aun no esta implementada." -ForegroundColor Yellow
             Read-Host "Presiona Enter para volver al menu..."
