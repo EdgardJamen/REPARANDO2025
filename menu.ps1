@@ -126,7 +126,7 @@ Write-Host "          SELECCIONE UNA OPCION            " -ForegroundColor White 
 Write-Host "============================================" -ForegroundColor Cyan
 
 Write-Host "  1.  - Optimizacion del sistema          " -ForegroundColor Green
-Write-Host "  2.  - Informacion del sistema en desarrollo" -ForegroundColor Yellow
+Write-Host "  2.  - Informacion del sistema           " -ForegroundColor Green
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
 Write-Host "  3.  - Limpieza de registros             " -ForegroundColor Green
 Write-Host "  4.  - Diagnostico y optimizacion HDD    " -ForegroundColor Green
@@ -174,8 +174,29 @@ switch ($opcion) {
     Read-Host
 }
 "2" {
-    Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
-    Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
+    Write-Host "Obteniendo informacion detallada del sistema..." -ForegroundColor Cyan
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/InfoSistema.ps1"
+    $scriptPath = "$env:TEMP\InfoSistema.ps1"
+
+    # Descargar el script
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Normal -Verb RunAs
+
+        # Esperar unos segundos para asegurar que el script comenzo su ejecucion
+        Start-Sleep -Seconds 2
+        
+        # Borrar el script de TEMP inmediatamente despues de iniciarse
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+    } else {
+        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+    }
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
 "3" {
