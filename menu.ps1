@@ -229,7 +229,7 @@ switch ($opcion) {
 }
 
 "5" {
-    Write-Host "Ejecutando proceso de diagnóstico..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de diagnostico..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/DiagnosticoSSD.ps1"
     $scriptPath = "$env:TEMP\DiagnosticoSSD.ps1"
     Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
