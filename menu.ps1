@@ -184,23 +184,28 @@ switch ($opcion) {
 
     # Verificar si el archivo existe antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Write-Host " Archivo encontrado. Procediendo con la ejecución..." -ForegroundColor Green
+        Write-Host "Archivo encontrado. Procediendo con la ejecución..." -ForegroundColor Green
         
-        Start-Process -FilePath "powershell.exe" `
+        # Ejecutar Activador.ps1 con privilegios elevados y esperar a que termine
+        $process = Start-Process -FilePath "powershell.exe" `
             -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Verb RunAs
+            -WindowStyle Normal -Verb RunAs -PassThru
 
-        # Esperar unos segundos para asegurar que el script comenzó su ejecución
-        Start-Sleep -Seconds 2
-        
-        # Borrar el script de TEMP inmediatamente después de iniciarse
-        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+        # Esperar hasta que el proceso de Activador.ps1 termine antes de continuar
+        $process.WaitForExit()
 
-        # Mantener la ventana abierta para ver errores
-        Write-Host "Ejecutando activador. Espere..." -ForegroundColor Yellow
+        # Borrar el script de TEMP después de la ejecución exitosa
+        if ($process.ExitCode -eq 0) {
+            Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+        } else {
+            Write-Host "Error: El activador no se ejecutó correctamente." -ForegroundColor Red
+        }
+
+        # Mensaje final para volver al menú
+        Write-Host "`nFINALIZANDO... Presiona Enter para volver al menú." -ForegroundColor Cyan
         Read-Host
     } else {
-        Write-Host " Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
+        Write-Host "Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
     }
 }
 
