@@ -80,5 +80,7 @@ Write-Host "`n===================================" -ForegroundColor Cyan
 Write-Host "       FIN DEL INFORME       " -ForegroundColor Cyan
 Write-Host "===================================" -ForegroundColor Cyan
 
-Write-Host "`nPresiona Enter para volver al menu..." -ForegroundColor Green
+Write-Host "`nPresiona Enter para salir..." -ForegroundColor Green
+pause
+
 Read-Host
