@@ -30,6 +30,22 @@ Write-Host "Iniciando escaneo..." -ForegroundColor Yellow
 if ($modo -ne "2") {
     Write-Host "Escaneo estandar activado. No se eliminaran archivos." -ForegroundColor Cyan
 }
+# Evaluar consumo de CPU de procesos y detectar actividad inusual
+Write-Host "Evaluando procesos con alto consumo de CPU..." -ForegroundColor Yellow
+$procesosCPU = Get-Process | Sort-Object CPU -Descending | Select-Object -First 10
+
+if ($procesosCPU) {
+    Write-Host "Procesos que más consumen CPU:" -ForegroundColor Cyan
+    $procesosCPU | Format-Table ProcessName, CPU -AutoSize
+}
+# Escaneo de conexiones de red activas
+Write-Host "Detectando conexiones activas desconocidas..." -ForegroundColor Yellow
+$redConexiones = Get-NetTCPConnection | Where-Object { $_.State -eq "Established" -and $_.RemoteAddress -ne "127.0.0.1" }
+
+if ($redConexiones) {
+    Write-Host "Conexiones de red activas detectadas:" -ForegroundColor Cyan
+    $redConexiones | Format-Table LocalAddress, RemoteAddress, RemotePort, State -AutoSize
+}
 
 #  Escaneo de procesos sospechosos
 $procesos = Get-Process | Where-Object { $_.ProcessName -match "unknown" }
