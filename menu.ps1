@@ -374,39 +374,35 @@ switch ($opcion) {
     Write-Host "`nPresiona Enter para continuar..." -ForegroundColor Cyan
     Read-Host
 }
-"AV" {
-    Write-Host "Cargando menu avanzado..." -ForegroundColor Cyan
-    
-    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/AVANZADO/menu2.ps1"
-    $scriptPath = "$env:TEMP\menu2.ps1"
+"AV" {  
+    Write-Host "Cargando menu avanzado..." -ForegroundColor Cyan  
 
-    # Descargar el script
-    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-    Start-Sleep -Seconds 2
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/AVANZADO/menu2.ps1"  
+    $scriptPath = "$env:TEMP\menu2.ps1"  
+
+    # Descargar el script correcto
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath  
+    Start-Sleep -Seconds 2  
 
     # Verificar si la descarga fue exitosa antes de ejecutarlo
-    if (Test-Path $scriptPath) {
-        Write-Host "Menu avanzado encontrado. Ejecutando..." -ForegroundColor Green
-        
-        Start-Process -FilePath "powershell.exe" `
-            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Verb RunAs
+    if (Test-Path $scriptPath) {  
+        Write-Host "Menu avanzado encontrado. Ejecutando..." -ForegroundColor Green  
 
-        # Esperar unos segundos para asegurar que el script comenzó su ejecución
-        Start-Sleep -Seconds 2
-        
-        # Borrar el script de TEMP después de iniciarse
-        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
-        
-        Write-Host "`nMenu avanzado ejecutado correctamente." -ForegroundColor Cyan
-    } else {
-        Write-Host "Error: No se pudo cargar el menu avanzado." -ForegroundColor Red
-    }
+        Start-Process -FilePath "powershell.exe" `  
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `  
+            -WindowStyle Normal -Verb RunAs  
 
-    Write-Host "`nPresiona Enter para volver al menu principal..." -ForegroundColor Cyan
-    Read-Host
+        Start-Sleep -Seconds 2  
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue  
+
+        Write-Host "`nMenu avanzado ejecutado correctamente." -ForegroundColor Cyan  
+    } else {  
+        Write-Host "Error: No se pudo cargar el menu avanzado." -ForegroundColor Red  
+    }  
+
+    Write-Host "`nPresiona Enter para volver al menu principal..." -ForegroundColor Cyan  
+    Read-Host  
 }
-
 "X" {
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
     Start-Sleep -Seconds 1
