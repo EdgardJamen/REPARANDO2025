@@ -176,13 +176,14 @@ switch ($opcion) {
 
 "2" {
     Write-Host "Ejecutando activador de Windows..." -ForegroundColor Green
-    
+
     # Ejecutar MAS directamente desde la web
     irm https://get.activated.win | iex
-    
-    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
-    Read-Host
+
+    # Cerrar la ventana automáticamente después de la activación
+    exit
 }
+
 
 "3" {
     Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
