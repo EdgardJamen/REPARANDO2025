@@ -177,20 +177,31 @@ switch ($opcion) {
 "2" {
     Write-Host "Ejecutando activador de Windows..." -ForegroundColor Green
 
-    # Ejecutar MAS directamente desde la web y seleccionar la opción 1 automáticamente
-    Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-NoProfile -ExecutionPolicy Bypass -Command `"irm https://get.activated.win | iex; echo '1' | cmd`"" `
-        -WindowStyle Hidden -Verb RunAs
+    # Descargar el script Activador.ps1 desde GitHub con la URL correcta
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/Activador.ps1"
+    $scriptPath = "$env:TEMP\Activador.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
 
-    # Esperar unos segundos para asegurar que la activación se complete
-    Start-Sleep -Seconds 10 
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        # Ejecutar Activador.ps1 con privilegios elevados
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+            -WindowStyle Hidden -Verb RunAs
 
-    # Forzar cierre de todas las instancias de PowerShell para evitar que el activador se quede abierto
-    Stop-Process -Name "powershell" -Force -ErrorAction SilentlyContinue
+        # Esperar unos segundos para asegurar que la activación se ejecutó
+        Start-Sleep -Seconds 10
+        
+        # Borrar el script Activador.ps1 de TEMP una vez finalizado
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+    } else {
+        Write-Host "Error: No se pudo completar la ejecución del activador." -ForegroundColor Red
+    }
 
     Write-Host "`nFINALIZANDO... Presiona Enter para volver al menú." -ForegroundColor Cyan
     Read-Host
 }
+
 
 "3" {
     Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
