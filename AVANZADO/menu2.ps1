@@ -100,6 +100,3 @@ do {
         }
     }
 } while ($true)  # Mantiene el menu en ejecucion hasta que se seleccione "X"
-
-    }
-} while ($true)  # Mantiene el menu en ejecucion hasta que se seleccione "X"
