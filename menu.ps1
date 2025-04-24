@@ -281,7 +281,7 @@ switch ($opcion) {
 }
 
 "6" {
-    Write-Host "Ejecutando proceso de restauración..." -ForegroundColor Green
+    Write-Host "Ejecutando proceso de restauracion..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CrearPuntoRestauracion.ps1"
     $scriptPath = "$env:TEMP\CrearPuntoRestauracion.ps1"
 
