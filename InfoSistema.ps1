@@ -15,13 +15,14 @@ Write-Host "Memoria RAM instalada: $ram GB" -ForegroundColor Green
 
 # Temperatura del CPU
 Write-Host "`nTEMPERATURA DEL CPU" -ForegroundColor Yellow
-$cpuTempWmic = wmic /namespace:\\root\wmi PATH MSAcpi_ThermalZoneTemperature GET CurrentTemperature
+$cpuTempWmic = (wmic /namespace:\\root\wmi PATH MSAcpi_ThermalZoneTemperature GET CurrentTemperature) | Select-Object -First 1
 if ($cpuTempWmic -match "\d+") {
-    $tempCelsius = ($cpuTempWmic - 2732) / 10
-    Write-Host "Temperatura del CPU: $tempCelsius C" -ForegroundColor Green
+    $tempcelsius = ($cpuTempWmic - 2732) / 10
+    Write-Host "Temperatura del CPU: $tempcelsius C" -ForegroundColor Green
 } else {
     Write-Host "No se pudo obtener la temperatura del CPU." -ForegroundColor Red
 }
+
 
 # Estado de la bateria
 Write-Host "`nESTADO DE LA BATERIA" -ForegroundColor Yellow
