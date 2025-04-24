@@ -149,7 +149,7 @@ $opcion = Read-Host "Ingrese una opcion (1-11, AV, X)"
 
 
 switch ($opcion) {
-   "1" {
+  "1" {
     Write-Host "Ejecutando proceso de optimizacion..." -ForegroundColor Green
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/optimizacion.ps1"
     $scriptPath = "$env:TEMP\optimizacion.ps1"
@@ -157,9 +157,16 @@ switch ($opcion) {
 
     # Verificar si la descarga fue exitosa antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Start-Process -FilePath "powershell.exe" `
-            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Verb RunAs
+        # Detectar si el equipo es una Chuwi para evitar cierres inesperados
+        $marca = (Get-WmiObject Win32_ComputerSystem).Manufacturer
+        if ($marca -match "Chuwi") {
+            Write-Host "Detectada PC Chuwi. Ejecutando sin Start-Process..." -ForegroundColor Yellow
+            powershell -ExecutionPolicy Bypass -NoProfile -File "$scriptPath"
+        } else {
+            Start-Process -FilePath "powershell.exe" `
+                -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+                -WindowStyle Normal -Verb RunAs
+        }
 
         # Esperar unos segundos para asegurar que el script comenzó su ejecución
         Start-Sleep -Seconds 2
@@ -173,6 +180,7 @@ switch ($opcion) {
     Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+
 "2" {
     Write-Host "Obteniendo informacion detallada del sistema..." -ForegroundColor Cyan
     $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/InfoSistema.ps1"
