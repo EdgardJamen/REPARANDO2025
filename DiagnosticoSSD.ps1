@@ -26,8 +26,8 @@ Optimize-Volume -DriveLetter C -ReTrim -Verbose
 Write-Host ""
 
 # Información SMART del SSD
-Write-Host "Obteniendo atributos SMART..." -ForegroundColor Green
-wmic diskdrive get Model, Status, FirmwareRevision, SerialNumber, Size
+Write-Host "Obteniendo atributos SMART del SSD..." -ForegroundColor Green
+Get-Disk | Select-Object Number, FriendlyName, HealthStatus, OperationalStatus, SerialNumber | Format-Table -AutoSize
 Write-Host ""
 
 # Estado de sectores defectuosos en el SSD
