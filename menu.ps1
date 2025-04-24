@@ -291,25 +291,37 @@ switch ($opcion) {
 
     # Verificar si el archivo existe antes de ejecutarlo
     if (Test-Path $scriptPath) {
-        Write-Host "  Procediendo con la ejecución..." -ForegroundColor Green
-        
-        Start-Process -FilePath "powershell.exe" `
-            -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
-            -WindowStyle Normal -Verb RunAs
+        Write-Host "Procediendo con la ejecución..." -ForegroundColor Green
+
+        # Detectar si el script requiere permisos de administrador
+        $isAdmin = [bool](([System.Security.Principal.WindowsPrincipal] `
+            [System.Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole(`
+            [System.Security.Principal.WindowsBuiltInRole]::Administrator))
+
+        if ($isAdmin) {
+            Write-Host "Ejecutando con permisos elevados..." -ForegroundColor Yellow
+            Start-Process -FilePath "powershell.exe" `
+                -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+                -WindowStyle Normal
+        } else {
+            Write-Host "Ejecutando sin permisos de administrador..." -ForegroundColor Yellow
+            powershell -ExecutionPolicy Bypass -NoProfile -File "$scriptPath"
+        }
 
         # Esperar unos segundos para asegurar que el script comenzó su ejecución
-        Start-Sleep -Seconds 2
+        Start-Sleep -Seconds 5
         
-        # Borrar el script de TEMP inmediatamente después de iniciarse
+        # Borrar el script de TEMP después de suficiente tiempo de ejecución
         Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
 
         # Mantener la ventana abierta para ver errores
-        Write-Host "Creando punto de restauracion. Espere." -ForegroundColor Yellow
+        Write-Host "Creando punto de restauracion. Espere..." -ForegroundColor Yellow
         Read-Host
     } else {
-        Write-Host " Error: No se pudo encontrar el archivo." -ForegroundColor Red
+        Write-Host "Error: No se pudo encontrar el archivo." -ForegroundColor Red
     }
 }
+
 
 "7" {
     Write-Host "Ejecutando proceso de registro de actividades..." -ForegroundColor Green
