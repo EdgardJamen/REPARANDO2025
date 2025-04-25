@@ -1,5 +1,9 @@
 Rodriguez,1234,24/4/2025
+
 Edgard,password456,01/12/2025
+
 OtroUsuario,password789,15/07/2025
+
 Gabi33,150196,Acceso de por vida
+
 User,1234,17/04/2025
