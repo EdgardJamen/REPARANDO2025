@@ -1,7 +1,7 @@
 
 Mejoras de rendimiento	             Otros
-Eliminacion de apps innecesarias	Activador de Windows (En desarrollo)
-Ajuste de efectos visuales	        Activador de Office (En desarrollo)
+Eliminacion de apps innecesarias	Activador de Windows 
+Ajuste de efectos visuales	        Activador de Office 
 Limpieza de archivos basura	        Comprobacion de discos con CHKDSK
 Optimizacion de inicio de Windows	Creacion de puntos de restauracion
 Diagnostico y optimizacion de HDD	Registro de actividades (Logs)
