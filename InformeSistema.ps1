@@ -1,6 +1,15 @@
 # Establecer codificacion
 [Console]::OutputEncoding = [System.Text.Encoding]::UTF8
 
+# Crear la carpeta donde se guardará el informe si no existe
+$informeDirectorio = "C:\Usuarios\Publico\Documentos"
+if (!(Test-Path $informeDirectorio)) {
+    New-Item -ItemType Directory -Path $informeDirectorio -Force
+}
+
+# Definir ruta segura para el informe
+$archivoInforme = "$informeDirectorio\InformeMenu.txt"
+
 # Capturar estado inicial del sistema
 $inicioRAM = (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory / 1MB
 $inicioCPU = (Get-WmiObject Win32_PerfFormattedData_PerfOS_Processor | Where-Object {$_.Name -eq "_Total"}).PercentProcessorTime
@@ -19,7 +28,6 @@ ANTES DE EJECUTAR MENU.PS1:
 - Archivos temporales: $inicioArchivosTemp
 ===================================
 "@
-$archivoInforme = "C:\Usuarios\Publico\Documentos\InformeMenu.txt"
 $datosInicio | Out-File $archivoInforme
 
 # Esperar a que `menu.ps1` termine su ejecución
@@ -48,7 +56,13 @@ CAMBIOS DETECTADOS:
 "@
 $datosFinal | Out-File -Append $archivoInforme
 
-# Mostrar el informe en pantalla
+# Mostrar el informe solo al finalizar menu.ps1
+if ($args[0] -eq "mostrar") {
+    Get-Content $archivoInforme
+    Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Green
+    Pause
+}
+
 Get-Content $archivoInforme
 Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Green
 Pause
