@@ -62,22 +62,6 @@ if ($usuarioActivo) {
     Exit
 }
 
-# Descargar y ejecutar InformeSistema.ps1 en segundo plano antes de iniciar el menú
-Write-Host "Generando informe del sistema..." -ForegroundColor Yellow
-$scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/InformeSistema.ps1"
-$scriptPath = "$env:TEMP\InformeSistema.ps1"
-
-Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-Start-Sleep -Seconds 2
-
-if (Test-Path $scriptPath) {
-    Write-Host "Capturando estado inicial del sistema..." -ForegroundColor Green
-    Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-ExecutionPolicy Bypass -File `"$scriptPath`"" `
-        -WindowStyle Hidden -Verb RunAs
-} else {
-    Write-Host "Error: No se pudo generar `InformeSistema.ps1` correctamente." -ForegroundColor Red
-}
 
 # Eliminar usuarios.csv después de iniciar sesión correctamente
 $usuariosPath = "$env:TEMP\usuarios.csv"
@@ -459,18 +443,7 @@ switch ($opcion) {
     Write-Host "`nPresiona Enter para volver al menu principal..." -ForegroundColor Cyan  
     Read-Host  
 }
-"X" {# Ejecutar InformeSistema.ps1 y mostrar resultados antes de salir
-Write-Host "Generando informe comparativo del sistema..." -ForegroundColor Yellow
-
-if (Test-Path $scriptPath) {
-    powershell -ExecutionPolicy Bypass -File "$scriptPath" "mostrar"
-} else {
-    Write-Host "Error: No se pudo ejecutar `InformeSistema.ps1` al finalizar." -ForegroundColor Red
-}
-
-Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Green
-Pause
-
+"X" {
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
     Start-Sleep -Seconds 1
     Clear-Host
@@ -488,6 +461,5 @@ if ($opcion -ne "X") {
     Write-Host "Presiona Enter para volver al menu ..." -ForegroundColor Cyan
     Read-Host
 }
-
 
 } while ($true) # Cierre correcto del bucle do-while
