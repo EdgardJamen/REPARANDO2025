@@ -61,7 +61,45 @@ if ($usuarioActivo) {
     Write-Host "Error: Nombre o contrasena incorrectos." -ForegroundColor Red
     Exit
 }
+# Capturar estado inicial del sistema
+$inicioRAM = (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory / 1MB
+$inicioCPU = (Get-WmiObject Win32_PerfFormattedData_PerfOS_Processor | Where-Object {$_.Name -eq "_Total"}).PercentProcessorTime
+$inicioDisco = (Get-PSDrive C).Free / 1GB
+$inicioArchivosTemp = (Get-ChildItem "$env:TEMP" -Recurse | Measure-Object).Count
 
+# Ejecutar procesos del menú antes de capturar estado final
+Start-Sleep -Seconds 10
+
+# Capturar estado final del sistema
+$finalRAM = (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory / 1MB
+$finalCPU = (Get-WmiObject Win32_PerfFormattedData_PerfOS_Processor | Where-Object {$_.Name -eq "_Total"}).PercentProcessorTime
+$finalDisco = (Get-PSDrive C).Free / 1GB
+$finalArchivosTemp = (Get-ChildItem "$env:TEMP" -Recurse | Measure-Object).Count
+
+# Mostrar el informe comparativo antes de salir
+Write-Host "`n===================================" -ForegroundColor Cyan
+Write-Host "        INFORME DEL SISTEMA        " -ForegroundColor White
+Write-Host "===================================" -ForegroundColor Cyan
+Write-Host "ANTES DE MENU.PS1:" -ForegroundColor Yellow
+Write-Host "- RAM libre: $inicioRAM MB"
+Write-Host "- Uso de CPU: $inicioCPU%"
+Write-Host "- Espacio libre en C: $inicioDisco GB"
+Write-Host "- Archivos temporales: $inicioArchivosTemp"
+Write-Host "-----------------------------------" -ForegroundColor DarkGray
+Write-Host "DESPUÉS DE MENU.PS1:" -ForegroundColor Green
+Write-Host "- RAM libre: $finalRAM MB"
+Write-Host "- Uso de CPU: $finalCPU%"
+Write-Host "- Espacio libre en C: $finalDisco GB"
+Write-Host "- Archivos temporales: $finalArchivosTemp"
+Write-Host "===================================" -ForegroundColor Cyan
+Write-Host "CAMBIOS DETECTADOS:" -ForegroundColor Cyan
+Write-Host "- Diferencia de RAM: $(($finalRAM - $inicioRAM)) MB" -ForegroundColor Yellow
+Write-Host "- Diferencia de espacio en disco: $(($finalDisco - $inicioDisco)) GB" -ForegroundColor Yellow
+Write-Host "- Archivos temporales eliminados: $(($inicioArchivosTemp - $finalArchivosTemp))" -ForegroundColor Yellow
+Write-Host "===================================" -ForegroundColor Cyan
+
+Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Green
+Pause
 
 # Eliminar usuarios.csv después de iniciar sesión correctamente
 $usuariosPath = "$env:TEMP\usuarios.csv"
