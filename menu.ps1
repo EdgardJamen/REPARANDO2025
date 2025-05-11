@@ -61,46 +61,60 @@ if ($usuarioActivo) {
     Write-Host "Error: Nombre o contrasena incorrectos." -ForegroundColor Red
     Exit
 }
+
+# Obtener la ruta del escritorio del usuario
+$desktopPath = [System.Environment]::GetFolderPath("Desktop")
+$informePath = "$desktopPath\InformeMenu.txt"
+
 # Capturar estado inicial del sistema
 $inicioRAM = (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory / 1MB
 $inicioCPU = (Get-WmiObject Win32_PerfFormattedData_PerfOS_Processor | Where-Object {$_.Name -eq "_Total"}).PercentProcessorTime
 $inicioDisco = (Get-PSDrive C).Free / 1GB
 $inicioArchivosTemp = (Get-ChildItem "$env:TEMP" -Recurse | Measure-Object).Count
 
-# Ejecutar procesos del menú antes de capturar estado final
+# Guardar valores iniciales en el informe
+$datosInicio = @"
+===================================
+ INFORME DE ESTADO DEL SISTEMA
+===================================
+ANTES DE EJECUTAR MENU.PS1:
+- RAM libre: $inicioRAM MB
+- Uso de CPU: $inicioCPU%
+- Espacio libre en C: $inicioDisco GB
+- Archivos temporales: $inicioArchivosTemp
+===================================
+"@
+$datosInicio | Out-File $informePath -Encoding UTF8
+
+# Esperar ejecución de procesos antes de capturar el estado final
 Start-Sleep -Seconds 10
 
-# Capturar estado final del sistema
+# Capturar estado final del sistema después de las optimizaciones
 $finalRAM = (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory / 1MB
 $finalCPU = (Get-WmiObject Win32_PerfFormattedData_PerfOS_Processor | Where-Object {$_.Name -eq "_Total"}).PercentProcessorTime
 $finalDisco = (Get-PSDrive C).Free / 1GB
 $finalArchivosTemp = (Get-ChildItem "$env:TEMP" -Recurse | Measure-Object).Count
 
-# Mostrar el informe comparativo antes de salir
-Write-Host "`n===================================" -ForegroundColor Cyan
-Write-Host "        INFORME DEL SISTEMA        " -ForegroundColor White
-Write-Host "===================================" -ForegroundColor Cyan
-Write-Host "ANTES DE MENU.PS1:" -ForegroundColor Yellow
-Write-Host "- RAM libre: $inicioRAM MB"
-Write-Host "- Uso de CPU: $inicioCPU%"
-Write-Host "- Espacio libre en C: $inicioDisco GB"
-Write-Host "- Archivos temporales: $inicioArchivosTemp"
-Write-Host "-----------------------------------" -ForegroundColor DarkGray
-Write-Host "DESPUÉS DE MENU.PS1:" -ForegroundColor Green
-Write-Host "- RAM libre: $finalRAM MB"
-Write-Host "- Uso de CPU: $finalCPU%"
-Write-Host "- Espacio libre en C: $finalDisco GB"
-Write-Host "- Archivos temporales: $finalArchivosTemp"
-Write-Host "===================================" -ForegroundColor Cyan
-Write-Host "CAMBIOS DETECTADOS:" -ForegroundColor Cyan
-Write-Host "- Diferencia de RAM: $(($finalRAM - $inicioRAM)) MB" -ForegroundColor Yellow
-Write-Host "- Diferencia de espacio en disco: $(($finalDisco - $inicioDisco)) GB" -ForegroundColor Yellow
-Write-Host "- Archivos temporales eliminados: $(($inicioArchivosTemp - $finalArchivosTemp))" -ForegroundColor Yellow
-Write-Host "===================================" -ForegroundColor Cyan
+# Agregar valores finales al informe
+$datosFinal = @"
+DESPUÉS DE EJECUTAR MENU.PS1:
+- RAM libre: $finalRAM MB
+- Uso de CPU: $finalCPU%
+- Espacio libre en C: $finalDisco GB
+- Archivos temporales: $finalArchivosTemp
+===================================
+CAMBIOS DETECTADOS:
+- Diferencia de RAM: $(($finalRAM - $inicioRAM)) MB
+- Diferencia de espacio en disco: $(($finalDisco - $inicioDisco)) GB
+- Archivos temporales eliminados: $(($inicioArchivosTemp - $finalArchivosTemp))
+===================================
+"@
+$datosFinal | Out-File -Append $informePath -Encoding UTF8
 
-Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Green
+# Mostrar mensaje de confirmación
+Write-Host "Informe generado correctamente en: $informePath" -ForegroundColor Green
+Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Yellow
 Pause
-
 # Eliminar usuarios.csv después de iniciar sesión correctamente
 $usuariosPath = "$env:TEMP\usuarios.csv"
 if (Test-Path $usuariosPath) {
