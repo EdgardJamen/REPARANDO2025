@@ -477,16 +477,6 @@ if ($opcion -ne "X") {
     Write-Host "Presiona Enter para volver al menu ..." -ForegroundColor Cyan
     Read-Host
 }
-# Ejecutar InformeSistema.ps1 y mostrar resultados antes de salir
-Write-Host "Generando informe comparativo del sistema..." -ForegroundColor Yellow
 
-if (Test-Path $scriptPath) {
-    powershell -ExecutionPolicy Bypass -File "$scriptPath" "mostrar"
-} else {
-    Write-Host "Error: No se pudo ejecutar `InformeSistema.ps1` al finalizar." -ForegroundColor Red
-}
-
-Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Green
-Pause
 
 } while ($true) # Cierre correcto del bucle do-while
