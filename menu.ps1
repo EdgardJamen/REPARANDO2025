@@ -62,6 +62,22 @@ if ($usuarioActivo) {
     Exit
 }
 
+# Descargar y ejecutar InformeSistema.ps1 en segundo plano antes de iniciar el menú
+Write-Host "Generando informe del sistema..." -ForegroundColor Yellow
+$scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/InformeSistema.ps1"
+$scriptPath = "$env:TEMP\InformeSistema.ps1"
+
+Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+Start-Sleep -Seconds 2
+
+if (Test-Path $scriptPath) {
+    Write-Host "Capturando estado inicial del sistema..." -ForegroundColor Green
+    Start-Process -FilePath "powershell.exe" `
+        -ArgumentList "-ExecutionPolicy Bypass -File `"$scriptPath`"" `
+        -WindowStyle Hidden -Verb RunAs
+} else {
+    Write-Host "Error: No se pudo generar `InformeSistema.ps1` correctamente." -ForegroundColor Red
+}
 
 # Eliminar usuarios.csv después de iniciar sesión correctamente
 $usuariosPath = "$env:TEMP\usuarios.csv"
@@ -70,41 +86,6 @@ if (Test-Path $usuariosPath) {
 }
 
 Start-Sleep -Seconds 2
-# Descargar InformeSistema.ps1 antes de iniciar menu.ps1
-Write-Host "Descargando script de informe del sistema..." -ForegroundColor Yellow
-$scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/InformeSistema.ps1"
-$scriptPath = "$env:TEMP\InformeSistema.ps1"
-
-Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
-Start-Sleep -Seconds 2
-
-# Verificar si la descarga fue exitosa y ejecutar el script antes de menu.ps1
-if (Test-Path $scriptPath) {
-    Write-Host "Ejecutando informe inicial del sistema..." -ForegroundColor Green
-    Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-ExecutionPolicy Bypass -File `"$scriptPath`"" `
-        -Verb RunAs
-    Start-Sleep -Seconds 5
-} else {
-    Write-Host "Error: No se pudo descargar InformeSistema.ps1 correctamente." -ForegroundColor Red
-}
-
-# AQUÍ VA TU MENÚ ACTUAL SIN CAMBIOS
-
-# Integración al finalizar `menu.ps1`
-Write-Host "Generando informe comparativo del sistema..." -ForegroundColor Yellow
-
-if (Test-Path $scriptPath) {
-    Start-Process -FilePath "powershell.exe" `
-        -ArgumentList "-ExecutionPolicy Bypass -File `"$scriptPath`"" `
-        -Verb RunAs
-    Start-Sleep -Seconds 5
-} else {
-    Write-Host "Error: No se pudo ejecutar InformeSistema.ps1 al finalizar." -ForegroundColor Red
-}
-
-# Eliminar archivos temporales después de ejecutar
-Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
 
 # Iniciar el menu despues de autenticacion
 do {
@@ -496,5 +477,16 @@ if ($opcion -ne "X") {
     Write-Host "Presiona Enter para volver al menu ..." -ForegroundColor Cyan
     Read-Host
 }
+# Ejecutar InformeSistema.ps1 y mostrar resultados antes de salir
+Write-Host "Generando informe comparativo del sistema..." -ForegroundColor Yellow
+
+if (Test-Path $scriptPath) {
+    powershell -ExecutionPolicy Bypass -File "$scriptPath" "mostrar"
+} else {
+    Write-Host "Error: No se pudo ejecutar `InformeSistema.ps1` al finalizar." -ForegroundColor Red
+}
+
+Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Green
+Pause
 
 } while ($true) # Cierre correcto del bucle do-while
