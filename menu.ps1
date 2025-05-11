@@ -62,59 +62,7 @@ if ($usuarioActivo) {
     Exit
 }
 
-# Obtener la ruta del escritorio del usuario
-$desktopPath = [System.Environment]::GetFolderPath("Desktop")
-$informePath = "$desktopPath\InformeMenu.txt"
 
-# Capturar estado inicial del sistema
-$inicioRAM = (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory / 1MB
-$inicioCPU = (Get-WmiObject Win32_PerfFormattedData_PerfOS_Processor | Where-Object {$_.Name -eq "_Total"}).PercentProcessorTime
-$inicioDisco = (Get-PSDrive C).Free / 1GB
-$inicioArchivosTemp = (Get-ChildItem "$env:TEMP" -Recurse | Measure-Object).Count
-
-# Guardar valores iniciales en el informe
-$datosInicio = @"
-===================================
- INFORME DE ESTADO DEL SISTEMA
-===================================
-ANTES DE EJECUTAR MENU.PS1:
-- RAM libre: $inicioRAM MB
-- Uso de CPU: $inicioCPU%
-- Espacio libre en C: $inicioDisco GB
-- Archivos temporales: $inicioArchivosTemp
-===================================
-"@
-$datosInicio | Out-File $informePath -Encoding UTF8
-
-# Esperar ejecución de procesos antes de capturar el estado final
-Start-Sleep -Seconds 10
-
-# Capturar estado final del sistema después de las optimizaciones
-$finalRAM = (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory / 1MB
-$finalCPU = (Get-WmiObject Win32_PerfFormattedData_PerfOS_Processor | Where-Object {$_.Name -eq "_Total"}).PercentProcessorTime
-$finalDisco = (Get-PSDrive C).Free / 1GB
-$finalArchivosTemp = (Get-ChildItem "$env:TEMP" -Recurse | Measure-Object).Count
-
-# Agregar valores finales al informe
-$datosFinal = @"
-DESPUÉS DE EJECUTAR MENU.PS1:
-- RAM libre: $finalRAM MB
-- Uso de CPU: $finalCPU%
-- Espacio libre en C: $finalDisco GB
-- Archivos temporales: $finalArchivosTemp
-===================================
-CAMBIOS DETECTADOS:
-- Diferencia de RAM: $(($finalRAM - $inicioRAM)) MB
-- Diferencia de espacio en disco: $(($finalDisco - $inicioDisco)) GB
-- Archivos temporales eliminados: $(($inicioArchivosTemp - $finalArchivosTemp))
-===================================
-"@
-$datosFinal | Out-File -Append $informePath -Encoding UTF8
-
-# Mostrar mensaje de confirmación
-Write-Host "Informe generado correctamente en: $informePath" -ForegroundColor Green
-Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Yellow
-Pause
 # Eliminar usuarios.csv después de iniciar sesión correctamente
 $usuariosPath = "$env:TEMP\usuarios.csv"
 if (Test-Path $usuariosPath) {
