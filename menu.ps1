@@ -459,7 +459,18 @@ switch ($opcion) {
     Write-Host "`nPresiona Enter para volver al menu principal..." -ForegroundColor Cyan  
     Read-Host  
 }
-"X" {
+"X" {# Ejecutar InformeSistema.ps1 y mostrar resultados antes de salir
+Write-Host "Generando informe comparativo del sistema..." -ForegroundColor Yellow
+
+if (Test-Path $scriptPath) {
+    powershell -ExecutionPolicy Bypass -File "$scriptPath" "mostrar"
+} else {
+    Write-Host "Error: No se pudo ejecutar `InformeSistema.ps1` al finalizar." -ForegroundColor Red
+}
+
+Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Green
+Pause
+
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
     Start-Sleep -Seconds 1
     Clear-Host
