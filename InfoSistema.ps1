@@ -13,10 +13,11 @@ Write-Host "Procesador: $($cpu.Name)" -ForegroundColor Green
 Write-Host "Velocidad: $($cpu.MaxClockSpeed) MHz | Nucleos: $($cpu.NumberOfCores)" -ForegroundColor Green
 Write-Host "Memoria RAM instalada: $ram GB" -ForegroundColor Green
 
-# 🔹 Tiempo de uso desde el ultimo arranque
+# Tiempo de uso del sistema (corregido)
 Write-Host "`nTIEMPO DE USO DEL SISTEMA" -ForegroundColor Yellow
 $so = Get-WmiObject Win32_OperatingSystem | Select-Object LastBootUpTime
-$tiempoUso = (Get-Date) - $so.LastBootUpTime
+$ultimaInicio = [System.Management.ManagementDateTimeConverter]::ToDateTime($so.LastBootUpTime)
+$tiempoUso = (Get-Date) - $ultimaInicio
 Write-Host "Tiempo desde el ultimo arranque: $($tiempoUso.Days) dias, $($tiempoUso.Hours) horas, $($tiempoUso.Minutes) minutos" -ForegroundColor Green
 
 # Estado de la bateria
