@@ -169,6 +169,33 @@ foreach ($task in $tasksExtra) {
 
 Write-Host "Tareas adicionales deshabilitadas correctamente." -ForegroundColor Green  
 Write-Host "Continuando con la optimización del sistema..." -ForegroundColor Cyan
+# --- Modo de energía: Alto rendimiento ---
+Write-Host "Configurando plan de energía en modo ALTO RENDIMIENTO..." -ForegroundColor Green
+$powerScheme = powercfg /L | Select-String "Maximo rendimiento"
+if (!$powerScheme) {
+    powercfg -duplicatescheme e9a42b02-d5df-448d-aa00-03f14749eb61
+}
+powercfg -setactive e9a42b02-d5df-448d-aa00-03f14749eb61
+Write-Host "Modo de energía configurado correctamente." -ForegroundColor Cyan
+
+# --- Optimización del procesador ---
+Write-Host "Optimizando prioridad de procesos y CPU..." -ForegroundColor Green
+$regPathCPU = "HKLM:\SYSTEM\CurrentControlSet\Control\PriorityControl"
+if (!(Test-Path $regPathCPU)) {
+    New-Item -Path $regPathCPU -Force
+}
+Set-ItemProperty -Path $regPathCPU -Name "Win32PrioritySeparation" -Value 26
+Write-Host "Ajuste de rendimiento del procesador aplicado correctamente." -ForegroundColor Cyan
+
+# --- Deshabilitar procesos innecesarios en segundo plano ---
+Write-Host "Detectando procesos innecesarios y cerrándolos..." -ForegroundColor Green
+$procesosInnecesarios = "MicrosoftEdge", "Skype", "YourPhone", "OneDrive", "Widgets"
+foreach ($proceso in $procesosInnecesarios) {
+    Stop-Process -Name $proceso -Force -ErrorAction SilentlyContinue
+}
+Write-Host "Procesos innecesarios cerrados correctamente." -ForegroundColor Cyan
+
+Write-Host "Optimizaciones avanzadas aplicadas correctamente!" -ForegroundColor Green
 
 # --- Optimización de memoria RAM ---
 Write-Host "Optimizando uso de memoria RAM..." -ForegroundColor Green
