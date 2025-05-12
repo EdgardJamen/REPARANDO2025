@@ -61,6 +61,13 @@ if ($usuarioActivo) {
     Write-Host "Error: Nombre o contrasena incorrectos." -ForegroundColor Red
     Exit
 }
+# Capturar estado inicial del sistema
+$estadoInicial = @{
+    RAM = (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory / 1MB
+    CPU = (Get-WmiObject Win32_PerfFormattedData_PerfOS_Processor | Where-Object {$_.Name -eq "_Total"}).PercentProcessorTime
+    Disco = (Get-PSDrive C).Free / 1GB
+    ArchivosTemp = (Get-ChildItem "$env:TEMP" -Recurse | Measure-Object).Count
+}
 
 
 # Eliminar usuarios.csv después de iniciar sesión correctamente
@@ -444,6 +451,49 @@ switch ($opcion) {
     Read-Host  
 }
 "X" {
+    # Capturar estado final antes de salir
+$estadoFinal = @{
+    RAM = (Get-WmiObject Win32_OperatingSystem).FreePhysicalMemory / 1MB
+    CPU = (Get-WmiObject Win32_PerfFormattedData_PerfOS_Processor | Where-Object {$_.Name -eq "_Total"}).PercentProcessorTime
+    Disco = (Get-PSDrive C).Free / 1GB
+    ArchivosTemp = (Get-ChildItem "$env:TEMP" -Recurse | Measure-Object).Count
+}
+
+# Obtener la ruta del escritorio y guardar el informe
+$desktopPath = [System.Environment]::GetFolderPath("Desktop")
+$informePath = "$desktopPath\InformeMenu.txt"
+
+# Generar informe comparativo
+$datosInforme = @"
+===================================
+ INFORME DE ESTADO DEL SISTEMA
+===================================
+ANTES DE EJECUTAR MENU.PS1:
+- RAM libre: $($estadoInicial.RAM) MB
+- Uso de CPU: $($estadoInicial.CPU)%
+- Espacio libre en C: $($estadoInicial.Disco) GB
+- Archivos temporales: $($estadoInicial.ArchivosTemp)
+
+DESPUÉS DE EJECUTAR MENU.PS1:
+- RAM libre: $($estadoFinal.RAM) MB
+- Uso de CPU: $($estadoFinal.CPU)%
+- Espacio libre en C: $($estadoFinal.Disco) GB
+- Archivos temporales: $($estadoFinal.ArchivosTemp)
+
+===================================
+CAMBIOS DETECTADOS:
+- Diferencia de RAM: $($estadoFinal.RAM - $estadoInicial.RAM) MB
+- Diferencia de espacio en disco: $($estadoFinal.Disco - $estadoInicial.Disco) GB
+- Archivos temporales eliminados: $($estadoInicial.ArchivosTemp - $estadoFinal.ArchivosTemp)
+===================================
+"@
+$datosInforme | Out-File $informePath -Encoding UTF8
+
+# Mostrar mensaje de confirmación antes de cerrar
+Write-Host "Informe guardado en: $informePath" -ForegroundColor Green
+Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Yellow
+Pause
+
     Write-Host "Saliendo del sistema..." -ForegroundColor Red
     Start-Sleep -Seconds 1
     Clear-Host
