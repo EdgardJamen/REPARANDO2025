@@ -490,7 +490,7 @@ CAMBIOS DETECTADOS:
 $datosInforme | Out-File $informePath -Encoding UTF8
 
 # Mostrar mensaje de confirmación antes de cerrar
-Write-Host "Informe guardado en: $informePath" -ForegroundColor Green
+Write-Host "INFORME GUARDADO EN: $informePath" -ForegroundColor Green
 Write-Host "`nPresiona una tecla para salir..." -ForegroundColor Yellow
 Pause
 
