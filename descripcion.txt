@@ -3,6 +3,6 @@ Eliminacion de apps innecesarias      Activador de Windows
 Ajuste de efectos visuales            Activador de Office
 Limpieza de archivos basura           Comprobacion de discos con CHKDSK
 Optimizacion de inicio de Windows     Creacion de puntos de restauracion
-Diagnostico y optimizacion de HDD      Registro de actividades (Logs)
-Diagnostico y optimizacion de SSD      Mostrar informacion del equipo         
-Recuperacion de datos                  Escaneo de seguridad
+Diagnostico y optimizacion de HDD     Registro de actividades (Logs)
+Diagnostico y optimizacion de SSD     Mostrar informacion del equipo         
+Recuperacion de datos                 Escaneo de seguridad
