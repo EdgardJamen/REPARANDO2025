@@ -37,7 +37,7 @@ do {
     Write-Host "--------------------------------------------" -ForegroundColor DarkGray
     Write-Host "  3.  - Escaneo de seguridad " -ForegroundColor Green
     Write-Host "  4.  - Recuperacion de datos en unidades " -ForegroundColor Green
-    Write-Host "  5.  - Disponible para nuevas funciones " -ForegroundColor White
+    Write-Host "  5.  - Limpieza avanzada de archivos de usuario " -ForegroundColor Green
     Write-Host "--------------------------------------------" -ForegroundColor DarkGray
     Write-Host "  X.  - Volver al menu principal " -ForegroundColor Red
 
@@ -129,9 +129,28 @@ do {
 }
 
         "5" {
-            Write-Host "Esta funcion aun no esta implementada." -ForegroundColor Yellow
-            Read-Host "Presiona Enter para volver al menu..."
-        }
+    Write-Host "Ejecutando limpieza completa del sistema..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/refs/heads/main/AVANZADO/RestablecerSistema.ps1"
+    $scriptPath = "$env:TEMP\RestablecerSistema.ps1"
+
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+    Start-Sleep -Seconds 2
+
+    if (Test-Path $scriptPath) {
+        Write-Host "   Procediendo con la ejecucion..." -ForegroundColor Green
+        Start-Process -FilePath "powershell.exe" `
+            -ArgumentList "-ExecutionPolicy Bypass -File `"$scriptPath`"" `
+            -Verb RunAs
+
+        Start-Sleep -Seconds 2
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+        Write-Host "Ejecutando limpieza completa del sistema. Espere..." -ForegroundColor Yellow
+        Read-Host
+    } else {
+        Write-Host "Error: No se pudo encontrar correctamente el archivo." -ForegroundColor Red
+    }
+}
+
         "X" {
             Write-Host "Volviendo al menu principal..." -ForegroundColor Red
             Start-Sleep -Seconds 1
