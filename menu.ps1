@@ -143,7 +143,7 @@ Write-Host "  6.  - Crear Punto de Restauracion       " -ForegroundColor Green
 Write-Host "  7.  - Registro de actividades (Logs)    " -ForegroundColor Green
 Write-Host "  8.  - Listar archivos disponibles       " -ForegroundColor Green
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
-Write-Host "  9.  - Disponible para futuras funciones " -ForegroundColor Yellow
+Write-Host "  9.  - Clonacion del Sistema  " -ForegroundColor Green
 Write-Host "  10.  - Disponible para futuras funciones " -ForegroundColor Yellow
 Write-Host "--------------------------------------------" -ForegroundColor DarkGray
 Write-Host "  11.  - Descripcion del programa          " -ForegroundColor Cyan
@@ -385,10 +385,37 @@ switch ($opcion) {
     Read-Host
 }
 "9" {
-    Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
-    Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
+    Write-Host "Ejecutando proceso de clonacion de disco..." -ForegroundColor Green
+    $scriptUrl = "https://raw.githubusercontent.com/EdgardJamen/REPARANDO2025/main/CloneSys.ps1"
+    $scriptPath = "$env:TEMP\CloneSys.ps1"
+    Invoke-WebRequest -Uri $scriptUrl -OutFile $scriptPath
+
+    # Verificar si la descarga fue exitosa antes de ejecutarlo
+    if (Test-Path $scriptPath) {
+        # Detectar si el equipo es una Chuwi para evitar cierres inesperados
+        $marca = (Get-WmiObject Win32_ComputerSystem).Manufacturer
+        if ($marca -match "Chuwi") {
+            Write-Host "Detectada PC Chuwi. Ejecutando sin Start-Process..." -ForegroundColor Yellow
+            powershell -ExecutionPolicy Bypass -NoProfile -File "$scriptPath"
+        } else {
+            Start-Process -FilePath "powershell.exe" `
+                -ArgumentList "-ExecutionPolicy Bypass -File $scriptPath" `
+                -WindowStyle Normal -Verb RunAs
+        }
+
+        # Esperar unos segundos para asegurar que el script comenzó su ejecución
+        Start-Sleep -Seconds 2
+        
+        # Borrar el script de TEMP inmediatamente después de iniciarse
+        Remove-Item -Path $scriptPath -Force -ErrorAction SilentlyContinue
+    } else {
+        Write-Host "Error: No se pudo completar el proceso." -ForegroundColor Red
+    }
+
+    Write-Host "`nFINALIZANDO... Presiona Enter para continuar." -ForegroundColor Cyan
     Read-Host
 }
+
 "10" {
     Write-Host "Esta función aun no esta implementada." -ForegroundColor Yellow
     Write-Host "`nPresiona Enter para volver al menú..." -ForegroundColor Cyan
